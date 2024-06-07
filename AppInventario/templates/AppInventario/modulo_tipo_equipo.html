@@ -21,15 +21,11 @@
                     <tr>
                         <td>{{ tipoequipo.nombre }}</td>
                         <td>
-                            <ul class="list-group">
-                                {% for key, value in tipos_de_producto.items %}
-                                {% if key == tipoequipo.nombre %}
-                                {% for item in value %}
-                                <li>{{item}}</li>
+                            <ul class="list-group" style="list-style: none;">
+                                {% for item in tipoequipo.tipo_producto.all %}
+                                    <li class="">{{item}}</li>
                                 {% endfor %}
-                                {% endif %}
-                                {% comment %} <li class="list-group-item">iter</li> {% endcomment %}
-                                {% endfor %}
+                                      
                             </ul>
                         </td>
                         <td>

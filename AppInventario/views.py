@@ -27,16 +27,18 @@ def index(request):
 def modulo_tipo_equipo(request):
     tipos_de_equipo = TipoEquipo.objects.all()
 
-    tipos_de_producto = {}
-    for tipo_de_equipo in tipos_de_equipo:
-        tipos_de_producto[f"{tipo_de_equipo.nombre}"] = tipo_de_equipo.tipoproducto_set.all()
+    # tipos_de_producto = {}
+    # for tipo_de_equipo in tipos_de_equipo:
+    #     tipos_de_producto[f"{tipo_de_equipo.nombre}"] = tipo_de_equipo.tipoproducto_set.all()
+    # print(tipos_de_producto[tipos_de_equipo[0].nombre])
+    for item in tipos_de_equipo[0].tipo_producto.all():
+        print(item)
     
-    print(tipos_de_producto[tipos_de_equipo[0].nombre])
+    
     return render(
         request, 
         "AppInventario/modulo_tipo_equipo.html", 
         {
             "tipos_de_equipo": tipos_de_equipo,
-            "tipos_de_producto": tipos_de_producto,
         },
     )
