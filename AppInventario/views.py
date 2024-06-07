@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import login, logout, authenticate
-from .models import TipoProducto
+from .models import TipoProducto, UnidadMedida
 
 def login_web(request):
     if request.method == "POST":
@@ -25,6 +25,9 @@ def index(request):
 
 def tipo_de_producto(request):
     tipo_de_producto = TipoProducto.objects.all()
+    unidades = UnidadMedida.objects.all()
+    print(tipo_de_producto[0].unidad_medida)
     return render(request, "AppInventario/tipo_de_producto.html", {
         "tipo_de_producto": tipo_de_producto,
+        "unidades" : unidades,
     })
