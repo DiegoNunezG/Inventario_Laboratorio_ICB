@@ -8,5 +8,5 @@ urlpatterns = [
     path('', login_web, name="login"),
     path('', LogoutView.as_view(), name='logout'), #aqui se puede cambiar el path de logout
     path('index/', index),
-    path('unidadesmedidas/', unidades_de_medida, name='unidadesmedidas')
+    path('unidadesmedidas/', unidades_de_medida, name='unidadesmedidas'),
 ]
