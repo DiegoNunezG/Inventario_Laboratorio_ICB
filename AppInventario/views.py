@@ -26,16 +26,13 @@ def unidades_de_medida(request):
     editing = False
     id = None
     if request.method == "POST":
-        print(request.POST)
         if "Agregar" in request.POST:
             form = UnidadMedidaForm(request.POST)
-            print(form.is_valid())
             if form.is_valid():
-                print("SIIIIIIIIIIIIIII")
                 form.save()
                 form = UnidadMedidaForm()
+                return redirect('unidadesmedidas')
         elif "Editar" in request.POST:
-            print(request.POST) 
             seleccion = UnidadMedida.objects.get(id=request.POST.get("id"))
             form = UnidadMedidaForm(instance=seleccion)
             editing = True
@@ -49,7 +46,6 @@ def index(request):
 def tipo_de_producto(request):
     tipo_de_producto = TipoProducto.objects.all()
     unidades = UnidadMedida.objects.all()
-    print(tipo_de_producto[0].unidad_medida)
     form = TipoProductoForm()
     if request.method == "POST":
         if "agregar" in request.POST:
@@ -57,6 +53,7 @@ def tipo_de_producto(request):
             if form.is_valid():
                 form.save()
                 form = TipoProductoForm()
+                return redirect('tipo_de_producto')
 
     return render(request, "AppInventario/tipo_de_producto.html", {
         "tipo_de_producto": tipo_de_producto,
@@ -70,12 +67,12 @@ def modulo_tipo_equipo(request):
     form = TipoEquipoForm()
 
     if request.method == "POST":
-        print(request.POST)
         if "agregar" in request.POST:
             form = TipoEquipoForm(request.POST)
             if form.is_valid():
                 form.save()
                 form = TipoEquipoForm()
+                return redirect('modulotipoequipo')
 
     return render(
         request, 

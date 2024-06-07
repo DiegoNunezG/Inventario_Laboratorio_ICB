@@ -16,15 +16,6 @@
             text-decoration: none; /* Elimina la subrayado */
         }
     </style>
-
-    <style>
-        .disabled {
-            pointer-events: none;  /* Evita clics */
-            cursor: not-allowed;   /* Cambia el cursor para indicar que está desactivado */
-            color: #6c757d;        /* Cambia el color para parecer desactivado */
-            text-decoration: none; /* Elimina la subrayado */
-        }
-    </style>
     
 </head>
 
@@ -72,19 +63,19 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link link-body-emphasis disabled-link">
+                            <a href="" class="nav-link link-body-emphasis disabled-link">
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
                                 Módulo de Productos
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link link-body-emphasis disabled-link">
+                            <a href="" class="nav-link link-body-emphasis disabled-link">
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
                                 Módulo de Egreso
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link link-body-emphasis disabled-link">
+                            <a href="" class="nav-link link-body-emphasis disabled-link">
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
                                 Módulo de Ingreso
                             </a>
@@ -96,13 +87,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link link-body-emphasis disabled-link">
+                            <a href="" class="nav-link link-body-emphasis disabled-link">
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
                                 Marca de Producto
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link link-body-emphasis disabled-link">
+                            <a href="" class="nav-link link-body-emphasis disabled-link">
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
                                 Módulo Proveedores
                             </a>
@@ -119,16 +110,16 @@
 
                         </a>
                         <ul class="dropdown-menu text-small shadow">
-                            {% comment %} <li><a class="dropdown-item" href="#">Perfil</a></li>
-                            <li><hr class="dropdown-divider"></li> {% endcomment %}
-                            <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="col-md-9 content border border-2">
-                {% block content %}
-                {% endblock %}
+                <div class="container overflow-auto">
+                    {% block content %}
+                    {% endblock %}
+                </div>
             </div>
         </div>
             

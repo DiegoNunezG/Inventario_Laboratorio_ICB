@@ -19,10 +19,13 @@ class TipoEquipoForm(ModelForm):
     class Meta:
         model = TipoEquipo
         fields = ["nombre", "tipo_producto"]
+        widgets = {
+            'nombre': TextInput(attrs={'class': 'form-control rounded-3'}),
+            "tipo_producto": CheckboxSelectMultiple(attrs={'class':"form-check-input"})
+        }
     
     nombre = TextInput()
     tipo_producto = ModelMultipleChoiceField(
         queryset=TipoProducto.objects.all(),
         widget=CheckboxSelectMultiple,
     )
-

@@ -6,11 +6,11 @@
 <div class="row mt-3 mx-3">
     <div class="col-12 text-end">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUnidad">
-            Agregar Unidad de Medida
+            Agregar
         </button>
     </div>
 </div>
-<div class="container mt-5">
+<div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <table class="table table-striped text-center">
@@ -27,10 +27,8 @@
                         <td>{{ unidad.nombre }}</td>
                         <td>{{ unidad.simbolo }}</td>
                         <td>
-                            <button type="button" name="Editar" class="btn btn-secondary disabled"
-                                data-bs-toggle="modal" data-bs-target="#modalUnidadEditar">
-                                Editar
-                            </button>
+                            <button type="button" name="Editar" class="btn btn-secondary disabled-link text-white"
+                                data-bs-toggle="modal" data-bs-target="#modalUnidadEditar">Editar</button>
                         </td>
                     </tr>
                     {% endfor %}
@@ -41,7 +39,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalUnidad" tabindex="-1" aria-labelledby="modalUnidadLabel" aria-hidden="true">
+<div class="modal fade" id="modalUnidad" tabindex="-1" aria-labelledby="modalUnidadLabel" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -49,53 +47,28 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" id="formUnidad">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="nombreUnidad" class="form-label">Unidad de Medida</label>
-                        <input type="text" name="nombre" class="form-control" id="nombreUnidad"
-                            placeholder="Ejemplo: Metros">
-                    </div>
-                    <div class="mb-3">
-                        <label for="simboloUnidad" class="form-label">Símbolo</label>
-                        <input type="text" name="simbolo" class="form-control" id="simboloUnidad"
-                            placeholder="Ejemplo: m">
-                    </div>
-                    <button type="submit" name="Agregar" class="btn btn-primary">Guardar</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                </form>
+                <div class="container">
+                    <form method="POST" id="formUnidad">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="nombreUnidad" class="form-label">Unidad de Medida</label>
+                            <input type="text" name="nombre" class="form-control" id="nombreUnidad"
+                                placeholder="Ejemplo: Metros">
+                        </div>
+                        <div class="mb-3">
+                            <label for="simboloUnidad" class="form-label">Símbolo</label>
+                            <input type="text" name="simbolo" class="form-control" id="simboloUnidad"
+                                placeholder="Ejemplo: m">
+                        </div>
+                        <div class="text-end">
+                            <button type="submit" name="Agregar" class="btn btn-primary">Guardar</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="modalUnidadEditar" tabindex="-1" aria-labelledby="modalUnidadLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalUnidadLabel">Editar Unidad de Medida</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body">
-                <form method="POST" id="formUnidad">
-                    {% csrf_token %}
-
-                    <input type="hidden" name="id" value="{{ id }}">
-                    <div class="mb-3">
-                        <label for="nombreUnidad" class="form-label">Unidad de Medida</label>
-                        <input type="text" name="nombre" class="form-control" id="nombreUnidad"
-                            placeholder="Ejemplo: Metros">
-                    </div>
-                    <div class="mb-3">
-                        <label for="simboloUnidad" class="form-label">Símbolo</label>
-                        <input type="text" name="simbolo" class="form-control" id="simboloUnidad"
-                            placeholder="Ejemplo: m">
-                    </div>
-                    <button type="submit" name="Editar" class="btn btn-primary">Guardar</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 {% endblock %}
