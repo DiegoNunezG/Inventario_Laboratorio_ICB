@@ -23,7 +23,7 @@ def login_web(request):
 def unidades_de_medida(request):
     unidades = UnidadMedida.objects.all()
     
-    return render(request, "AppInventario/unidadmedida.html",{"unidades":unidades})
+    return render(request, "AppInventario/unidad_medida.html",{"unidades":unidades})
 
 def index(request):
     return render(request, "AppInventario/base.html")
