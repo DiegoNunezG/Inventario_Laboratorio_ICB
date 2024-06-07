@@ -18,8 +18,3 @@ def login_web(request):
     else:
         form = AuthenticationForm()
     return render(request, "AppInventario/login.html", {"form":form})
-
-def salir(request):
-    #logout(request)
-    print("LOGOUT CORRECTO")
-    #return redirect("")
