@@ -1,0 +1,26 @@
+{% extends "./base.html" %}
+{% block content %}
+<div class="row bg-secondary">
+    <p class="my-3 px-5 fs-4 fw-bold">Tipo de Producto</p>
+</div>
+
+<div class="container mt-5">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Unidad de medida</th>
+          </tr>
+        </thead>
+        <tbody>
+        {%for producto in tipo_de_producto%}
+          <tr>
+            <td>{{producto.nombre}}</td>
+            <td>{{producto.unidad_medida}}</td>
+          </tr>
+        {%endfor%}
+        </tbody>
+      </table>
+</div>
+
+{% endblock %}
