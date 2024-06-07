@@ -1,5 +1,14 @@
-from django.forms import ModelForm, TextInput, ModelMultipleChoiceField, CheckboxSelectMultiple
-from .models import UnidadMedida, TipoEquipo, TipoProducto
+from django.forms import ModelForm, TextInput, Select, ModelMultipleChoiceField, CheckboxSelectMultiple
+from .models import TipoProducto, UnidadMedida, TipoEquipo
+
+class TipoProductoForm(ModelForm):
+    class Meta:
+        model = TipoProducto
+        fields = ['nombre', 'unidad_medida']
+        widgets = {
+            'nombre': TextInput(attrs={'class': 'form-control rounded-3'}),
+            'unidad_medida': Select(attrs={'class': 'form-control rounded-3'}),
+        }
 
 class UnidadMedidaForm(ModelForm):
     class Meta:

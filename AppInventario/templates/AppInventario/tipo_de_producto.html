@@ -1,15 +1,61 @@
 {% extends "./base.html" %}
 {% block content %}
+
+<style>
+    .disabled {
+        pointer-events: none;  /* Evita clics */
+        cursor: not-allowed;   /* Cambia el cursor para indicar que está desactivado */
+        color: #6c757d;        /* Cambia el color para parecer desactivado */
+        text-decoration: none; /* Elimina la subrayado */
+    }
+</style>
+
 <div class="row bg-secondary">
     <p class="my-3 px-5 fs-4 fw-bold">Tipo de Producto</p>
 </div>
 
-<div class="container mt-5">
+<div class="row mt-3 mx-3">
+    <div class="col-12 text-end">
+        <button class="btn btn-primary" name="agregar" data-bs-toggle="modal" data-bs-target="#agregartipoproducto">Agregar</button>
+    </div>
+</div>
+<div class="modal fade" id="agregartipoproducto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Título del Modal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-floating mb-3">
+                            {{ form.as_p }}
+                            <div class="container mt-3">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button name="agregar" type="submit" class="btn btn-primary">Guardar cambios</button>
+                            </div>
+                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+<div class="container mt-3">
     <table class="table table-striped">
         <thead>
           <tr>
             <th scope="col">Nombre</th>
             <th scope="col">Unidad de medida</th>
+            <th scope="col">Acción</th>
           </tr>
         </thead>
         <tbody>
@@ -17,10 +63,41 @@
           <tr>
             <td>{{producto.nombre}}</td>
             <td>{{producto.unidad_medida}}</td>
+            <td> <button class="btn btn-secondary disabled" name="editar" data-bs-toggle="modal" data-bs-target="#agregartipoproducto">Editar</button></td>
           </tr>
         {%endfor%}
         </tbody>
       </table>
 </div>
+
+<div class="modal fade" id="editartipoproducto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Título del Modal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-floating mb-3">
+                            {{ form.as_p }}
+                            <div class="container mt-3">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button name="agregar" type="submit" class="btn btn-primary">Guardar cambios</button>
+                            </div>
+                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
 
 {% endblock %}
