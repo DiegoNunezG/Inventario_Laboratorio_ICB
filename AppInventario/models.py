@@ -43,7 +43,7 @@ class Producto(models.Model):
     tipo_producto = models.ForeignKey(TipoProducto, on_delete=models.PROTECT)
     modelo = models.CharField(max_length=150)
     marca = models.ForeignKey(Marca, on_delete=models.PROTECT)
-    numero_serie = models.CharField(max_length=200, blank=True, unique=True)
+    numero_serie = models.CharField(max_length=200, blank=True)
     equipo = models.ForeignKey(Equipo, on_delete=models.PROTECT)
 
     def __str__(self):
