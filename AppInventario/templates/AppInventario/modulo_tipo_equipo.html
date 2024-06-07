@@ -1,0 +1,49 @@
+{% extends './base.html' %}
+
+{% block content %}
+<div class="row bg-secondary">
+    <p class="my-3 px-5 fs-4 fw-bold">Tipos de Equipo</p>
+</div>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <table class="table table-striped text-center">
+                <thead class="bg-info">
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Componentes</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tipoequipo in tipos_de_equipo %}
+                    <tr>
+                        <td>{{ tipoequipo.nombre }}</td>
+                        <td>
+                            <ul class="list-group">
+                                {% for key, value in tipos_de_producto.items %}
+                                {% if key == tipoequipo.nombre %}
+                                {% for item in value %}
+                                <li>{{item}}</li>
+                                {% endfor %}
+                                {% endif %}
+                                {% comment %} <li class="list-group-item">iter</li> {% endcomment %}
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td>
+                            <a href="" class="btn btn-warning btn-sm">Editar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="text-center mt-3">
+                <a href="" class="btn btn-success">Agregar Tipo de Equipo</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

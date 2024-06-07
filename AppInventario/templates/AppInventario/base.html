@@ -23,7 +23,7 @@
     <main>
         <div class="row">
             <div class="container">
-                <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+                <header class="d-flex flex-wrap justify-content-center py-3 border-bottom">
                   <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
                     <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
                     <span class="fs-4">Inventario Laboratorio ICB</span>
@@ -42,19 +42,19 @@
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
-                            <a href="#" class="nav-link link-body-emphasis disabled-link" aria-current="page">
+                            <a href="{% url 'modulotipoequipo' %}" class="nav-link link-body-emphasis" aria-current="page">
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
                                 Tipo de Equipo
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link link-body-emphasis disabled-link">
+                            <a href="" class="nav-link link-body-emphasis disabled-link">
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
                                 Tipo de Producto
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link link-body-emphasis disabled-link">
+                            <a href="" class="nav-link link-body-emphasis disabled-link">
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
                                 Módulo de Equipos
                             </a>
@@ -110,7 +110,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-9 content">
+            <div class="col-md-9 content border border-2">
                 {% block content %}
                 {% endblock %}
             </div>
