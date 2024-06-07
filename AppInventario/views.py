@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import login, logout, authenticate
-
+from .models import UnidadMedida
 
 def login_web(request):
     if request.method == "POST":
@@ -20,7 +20,10 @@ def login_web(request):
         form = AuthenticationForm()
     return render(request, "AppInventario/login.html", {"form":form})
 
-
+def unidades_de_medida(request):
+    unidades = UnidadMedida.objects.all()
+    
+    return render(request, "AppInventario/unidadmedida.html",{})
 
 def index(request):
     return render(request, "AppInventario/base.html")
