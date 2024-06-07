@@ -16,10 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from AppInventario.views import index, tipo_de_producto
+from AppInventario.views import index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),
-    path('tipo-de-producto/', tipo_de_producto, name="tipo_de_producto"),
 ]
