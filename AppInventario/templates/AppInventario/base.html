@@ -10,135 +10,102 @@
 
     <style>
         .disabled-link {
-            pointer-events: none;
-            /* Evita clics */
-            cursor: not-allowed;
-            /* Cambia el cursor para indicar que está desactivado */
-            color: #6c757d;
-            /* Cambia el color para parecer desactivado */
-            text-decoration: none;
-            /* Elimina la subrayado */
+            pointer-events: none;  /* Evita clics */
+            cursor: not-allowed;   /* Cambia el cursor para indicar que está desactivado */
+            color: #6c757d;        /* Cambia el color para parecer desactivado */
+            text-decoration: none; /* Elimina la subrayado */
         }
     </style>
-
+    
 </head>
 
 <body>
     <main>
         <div class="row">
             <div class="container">
-                <header class="d-flex flex-wrap justify-content-center py-3 border-bottom">
-                    <a href="/"
-                        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                        <svg class="bi me-2" width="40" height="32">
-                            <use xlink:href="#bootstrap"></use>
-                        </svg>
-                        <span class="fs-4">Inventario Laboratorio ICB</span>
-                    </a>
-
+                <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+                  <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+                    <span class="fs-4">Inventario Laboratorio ICB</span>
+                  </a>
+            
                 </header>
             </div>
         </div>
         <div class="row">
             <div class="col-md-3 Sidebar">
                 <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary h-100" style="width: 280px;">
-                    <a href="/"
-                        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                        <svg class="bi pe-none me-2" width="40" height="32">
-                            <use xlink:href="#bootstrap"></use>
-                        </svg>
+                    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                        <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
                         <span class="fs-4">Módulos</span>
                     </a>
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
                             <a href="#" class="nav-link link-body-emphasis disabled-link" aria-current="page">
-                                <svg class="bi pe-none me-2" width="16" height="16">
-                                    <use xlink:href="#home"></use>
-                                </svg>
+                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
                                 Tipo de Equipo
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'tipo_de_producto' %}" class="nav-link link-body-emphasis">
-                                <svg class="bi pe-none me-2" width="16" height="16">
-                                    <use xlink:href="#speedometer2"></use>
-                                </svg>
+                            <a href="#" class="nav-link link-body-emphasis disabled-link">
+                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
                                 Tipo de Producto
                             </a>
                         </li>
                         <li>
                             <a href="#" class="nav-link link-body-emphasis disabled-link">
-                                <svg class="bi pe-none me-2" width="16" height="16">
-                                    <use xlink:href="#table"></use>
-                                </svg>
+                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
                                 Módulo de Equipos
                             </a>
                         </li>
                         <li>
                             <a href="#" class="nav-link link-body-emphasis disabled-link">
-                                <svg class="bi pe-none me-2" width="16" height="16">
-                                    <use xlink:href="#grid"></use>
-                                </svg>
+                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
                                 Módulo de Productos
                             </a>
                         </li>
                         <li>
                             <a href="#" class="nav-link link-body-emphasis disabled-link">
-                                <svg class="bi pe-none me-2" width="16" height="16">
-                                    <use xlink:href="#people-circle"></use>
-                                </svg>
+                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
                                 Módulo de Egreso
                             </a>
                         </li>
                         <li>
                             <a href="#" class="nav-link link-body-emphasis disabled-link">
-                                <svg class="bi pe-none me-2" width="16" height="16">
-                                    <use xlink:href="#people-circle"></use>
-                                </svg>
+                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
                                 Módulo de Ingreso
                             </a>
                         </li>
                         <li>
                             <a href="#" class="nav-link link-body-emphasis disabled-link">
-                                <svg class="bi pe-none me-2" width="16" height="16">
-                                    <use xlink:href="#people-circle"></use>
-                                </svg>
+                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
                                 Unidad de Medida
                             </a>
                         </li>
                         <li>
                             <a href="#" class="nav-link link-body-emphasis disabled-link">
-                                <svg class="bi pe-none me-2" width="16" height="16">
-                                    <use xlink:href="#people-circle"></use>
-                                </svg>
+                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
                                 Marca de Producto
                             </a>
                         </li>
                         <li>
                             <a href="#" class="nav-link link-body-emphasis disabled-link">
-                                <svg class="bi pe-none me-2" width="16" height="16">
-                                    <use xlink:href="#people-circle"></use>
-                                </svg>
+                                <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
                                 Módulo Proveedores
                             </a>
                         </li>
                     </ul>
                     <hr>
                     <div class="dropdown">
-                        <a href="#"
-                            class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://cdn-icons-png.flaticon.com/512/9187/9187604.png" alt="" width="32"
-                                height="32" class="rounded-circle me-2">
+                        <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://cdn-icons-png.flaticon.com/512/9187/9187604.png" alt="" width="32" height="32" class="rounded-circle me-2">
                             <strong>Usuario</strong>
                         </a>
                         <ul class="dropdown-menu text-small shadow">
                             {% comment %} <li><a class="dropdown-item" href="#">Perfil</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li> {% endcomment %}
-                            <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a></li>
+                            <li><hr class="dropdown-divider"></li> {% endcomment %}
+                            <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
                         </ul>
                     </div>
                 </div>
@@ -148,9 +115,8 @@
                 {% endblock %}
             </div>
         </div>
-
+            
     </main>
     {% bootstrap_javascript %}
 </body>
-
 </html>
