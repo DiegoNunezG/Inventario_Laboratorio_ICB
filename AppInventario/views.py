@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import login, logout, authenticate
 from .models import TipoEquipo, TipoProducto
+from .forms import TipoEquipoForm
 
 def login_web(request):
     if request.method == "POST":
@@ -26,19 +27,22 @@ def index(request):
 
 def modulo_tipo_equipo(request):
     tipos_de_equipo = TipoEquipo.objects.all()
+    form = TipoEquipoForm()
 
-    # tipos_de_producto = {}
-    # for tipo_de_equipo in tipos_de_equipo:
-    #     tipos_de_producto[f"{tipo_de_equipo.nombre}"] = tipo_de_equipo.tipoproducto_set.all()
-    # print(tipos_de_producto[tipos_de_equipo[0].nombre])
-    for item in tipos_de_equipo[0].tipo_producto.all():
-        print(item)
-    
-    
+    if request.method == "POST":
+        print(request.POST)
+        if "agregar" in request.POST:
+            form = TipoEquipoForm(request.POST)
+            if form.is_valid():
+                form.save()
+                form = TipoEquipoForm()
+
+
     return render(
         request, 
         "AppInventario/modulo_tipo_equipo.html", 
         {
             "tipos_de_equipo": tipos_de_equipo,
+            "form": form,
         },
     )
