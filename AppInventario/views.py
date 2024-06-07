@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import login, logout, authenticate
 from .models import TipoProducto
-from .forms import TipoProductoForm
 
 def login_web(request):
     if request.method == "POST":
