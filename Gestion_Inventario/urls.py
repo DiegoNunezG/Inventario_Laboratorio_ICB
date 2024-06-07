@@ -6,6 +6,6 @@ from AppInventario.views import login_web, index
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', login_web, name="login"),
-    path('logout/', LogoutView.as_view(), name='logout'),
+    path('', LogoutView.as_view(), name='logout'), #aqui se puede cambiar el path de logout
     path('index/', index),
 ]
