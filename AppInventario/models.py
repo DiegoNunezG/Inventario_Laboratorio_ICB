@@ -8,22 +8,21 @@ class UnidadMedida(models.Model):
     def __str__(self):
         return self.nombre
 
+class TipoProducto(models.Model):
+    nombre = models.CharField(max_length=100, unique=True)
+    unidad_medida = models.ForeignKey(UnidadMedida, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.nombre
+
+
 class TipoEquipo(models.Model):
     nombre = models.CharField(max_length=100, unique=True)
+    tipo_producto = models.ManyToManyField(TipoProducto)
 
     def __str__(self):
         return self.nombre
     
-
-class TipoProducto(models.Model):
-    nombre = models.CharField(max_length=100, unique=True)
-    unidad_medida = models.ForeignKey(UnidadMedida, on_delete=models.PROTECT)
-    tipo_equipo = models.ManyToManyField(TipoEquipo)
-
-    def __str__(self):
-        return self.nombre
-
-
 class Equipo(models.Model):
     nombre = models.CharField(max_length=100, unique=True, default='')
     tipo_equipo = models.ForeignKey(TipoEquipo, on_delete=models.PROTECT)
