@@ -1,5 +1,5 @@
 from django.forms import ModelForm, TextInput, Select, ModelMultipleChoiceField, CheckboxSelectMultiple
-from .models import TipoProducto, UnidadMedida, TipoEquipo
+from .models import TipoProducto, UnidadMedida, TipoEquipo, Equipo
 
 class TipoProductoForm(ModelForm):
     class Meta:
@@ -29,3 +29,12 @@ class TipoEquipoForm(ModelForm):
         queryset=TipoProducto.objects.all(),
         widget=CheckboxSelectMultiple,
     )
+
+class EquipoForm(ModelForm):
+    class Meta:
+        model = Equipo
+        fields = ['nombre', 'tipo_equipo']
+        widgets = {
+            'nombre': TextInput(attrs={'class': 'form-control rounded-3'}),
+            'tipo_equipo': Select(attrs={'class': 'form-control rounded-3'}),
+        }

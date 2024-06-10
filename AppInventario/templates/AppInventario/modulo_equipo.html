@@ -3,21 +3,21 @@
 
 
 <div class="row bg-secondary">
-    <p class="my-3 px-5 fs-4 fw-bold">Tipo de Producto</p>
+    <p class="my-3 px-5 fs-4 fw-bold">Módulo de Equipos</p>
 </div>
 
 <div class="row mt-3 mx-3">
     <div class="col-12 text-end">
         <button class="btn btn-primary" name="agregar" data-bs-toggle="modal"
-            data-bs-target="#agregartipoproducto">Agregar</button>
+            data-bs-target="#agregarequipo">Agregar</button>
     </div>
 </div>
-<div class="modal fade" data-bs-backdrop="static" id="agregartipoproducto" tabindex="-1" role="dialog"
+<div class="modal fade" data-bs-backdrop="static" id="agregarequipo" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Agregar Tipo de Producto</h5>
+                <h5 class="modal-title" id="myModalLabel">Agregar Equipo</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -48,17 +48,17 @@
                 <thead>
                     <tr>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Unidad de medida</th>
+                        <th scope="col">Tipo de equipo</th>
                         <th scope="col">Acción</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {%for producto in tipo_de_producto%}
+                    {%for Equipo in equipo%}
                     <tr>
-                        <td>{{producto.nombre}}</td>
-                        <td>{{producto.unidad_medida}}</td>
+                        <td>{{Equipo.nombre}}</td>
+                        <td>{{Equipo.tipo_equipo}}</td>
                         <td> <button class="btn btn-secondary disabled-link text-white" name="editar"
-                                data-bs-toggle="modal" data-bs-target="#agregartipoproducto">Editar</button></td>
+                                data-bs-toggle="modal" data-bs-target="#editarequipo">Editar</button></td>
                     </tr>
                     {%endfor%}
                 </tbody>
