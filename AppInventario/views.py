@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import login, logout, authenticate
-from .models import UnidadMedida, TipoEquipo, TipoProducto, Equipo
-from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, EquipoForm
+from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca, Equipo
+from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm
+
 
 def login_web(request):
     if request.method == "POST":
@@ -83,6 +84,31 @@ def modulo_tipo_equipo(request):
         },
     )
 
+
+def marca_de_producto(request):
+    marcas = Marca.objects.all()
+    form = MarcaForm()
+    editing = False
+    id = None
+    if request.method == "POST":
+        print(request.POST)
+        if "Agregar" in request.POST:
+            form = MarcaForm(request.POST)
+            if form.is_valid():
+                form.save()
+                form = MarcaForm()
+                return redirect('marcadeproducto')
+        elif "Editar" in request.POST:
+            seleccion = Marca.objects.get(id=request.POST.get("id"))
+            form = MarcaForm(instance=seleccion)
+            editing = True
+            id = seleccion.id
+        elif "Eliminar" in request.POST:
+            Marca.objects.get(id=request.POST.get("id")).delete()
+            return redirect('modulotipoequipo')
+    return render(request, "AppInventario/marca_de_producto.html",{"marcas":marcas, "editing": editing, "id" : id,})
+
+
 def equipo(request):
     equipo =   Equipo.objects.all()
     tipo_equipo = TipoEquipo.objects.all()
@@ -104,3 +130,4 @@ def equipo(request):
         "equipo" : equipo,
         "form": form
     })
+
