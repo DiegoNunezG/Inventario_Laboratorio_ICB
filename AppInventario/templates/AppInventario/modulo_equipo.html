@@ -49,6 +49,7 @@
                     <tr>
                         <th scope="col">Nombre</th>
                         <th scope="col">Tipo de equipo</th>
+                        <th scope="col">Componentes</th>
                         <th scope="col">Acción</th>
                     </tr>
                 </thead>
@@ -57,8 +58,15 @@
                     <tr>
                         <td>{{Equipo.nombre}}</td>
                         <td>{{Equipo.tipo_equipo}}</td>
+                        <td>
+                            <ul class="list-group" style="list-style: none;">
+                                {% for item in tipo_equipo.tipo_producto.all %}
+                                <li class="">{{item}}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
                         <td> <button class="btn btn-secondary disabled-link text-white" name="editar"
-                                data-bs-toggle="modal" data-bs-target="#editarequipo">Editar</button></td>
+                                data-bs-toggle="modal" data-bs-target="#editarequipo">Editar</button> </td>
                     </tr>
                     {%endfor%}
                 </tbody>

@@ -86,7 +86,9 @@ def modulo_tipo_equipo(request):
 def equipo(request):
     equipo =   Equipo.objects.all()
     tipo_equipo = TipoEquipo.objects.all()
+    print(tipo_equipo)
     form = EquipoForm()
+
     if request.method == "POST":
         if "agregar" in request.POST:
             form = EquipoForm(request.POST)
