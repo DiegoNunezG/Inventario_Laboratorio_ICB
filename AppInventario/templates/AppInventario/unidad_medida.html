@@ -29,6 +29,8 @@
                         <td>
                             <button type="button" name="Editar" class="btn btn-secondary disabled-link text-white"
                                 data-bs-toggle="modal" data-bs-target="#modalUnidadEditar">Editar</button>
+                            <button class="btn btn-danger disabled-link text-white" name="eliminar" data-bs-toggle="modal"
+                                data-bs-target="#eliminarum">Eliminar</button>
                         </td>
                     </tr>
                     {% endfor %}
@@ -39,7 +41,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalUnidad" tabindex="-1" aria-labelledby="modalUnidadLabel" aria-hidden="true" data-bs-backdrop="static">
+<div class="modal fade" id="modalUnidad" tabindex="-1" aria-labelledby="modalUnidadLabel" aria-hidden="true"
+    data-bs-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

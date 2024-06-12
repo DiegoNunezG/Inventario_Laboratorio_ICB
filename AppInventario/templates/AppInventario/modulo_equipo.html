@@ -1,0 +1,58 @@
+{% extends "./base.html" %}
+{% block content %}
+
+
+<div class="row bg-secondary">
+    <p class="my-3 px-5 fs-4 fw-bold">Módulo de Equipos</p>
+</div>
+
+<div class="row mt-3 mx-3">
+    <div class="col-12 text-end">
+        <button class="btn btn-primary disabled-link" name="agregar" data-bs-toggle="modal"
+            data-bs-target="#agregarequipo">Agregar</button>
+    </div>
+</div>
+
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <table class="table table-striped text-center">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Tipo de equipo</th>
+                        <th scope="col">Componentes</th>
+                        <th scope="col">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for Equipo in equipo%}
+                    <form method="post">
+                        {% csrf_token %}
+                        <tr>
+                            <td>{{Equipo.nombre}}</td>
+                            <td>{{Equipo.tipo_equipo}}</td>
+                            <td>
+                                <ul class="list-group" style="list-style: none;">
+                                    {% for item in Equipo.productos.all %}
+                                    <li class="">{{item.tipo_producto}}: {{item}}</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>
+                                <input type="hidden" name="id" value="{{Equipo.id}}">
+                                <button class="btn btn-secondary disabled-link text-white" name="editar"
+                                    data-bs-toggle="modal" data-bs-target="#editarequipo">Editar</button>
+                                <button type="submit" class="btn btn-danger text-white" name="eliminar"
+                                    data-bs-toggle="modal" data-bs-target="#eliminarequipo">Eliminar</button>
+                            </td>
+                        </tr>
+                    </form>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
