@@ -5,7 +5,7 @@
 </div>
 <div class="row mt-3 mx-3">
     <div class="col-12 text-end">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUnidad">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalmarca">
             Agregar
         </button>
     </div>
@@ -22,13 +22,22 @@
                 </thead>
                 <tbody>
                     {% for marca in marcas %}
+                    <form method="POST">
+                        {% csrf_token %}
                     <tr>
+                        <input type="hidden" name="id" value="{{ marca.id }}">
+                        <input type="hidden" name="editing" value="{{ editing}}">
                         <td>{{ marca.nombre }}</td>
                         <td>
-                            <button type="button" name="Editar" class="btn btn-secondary disabled-link text-white"
-                                data-bs-toggle="modal" data-bs-target="#modalUnidadEditar">Editar</button>
+                            <button type="button" name="Editar" class="btn btn-warning text-white"
+                                data-bs-toggle="modal" data-bs-target="#modalmarca">Editar</button>
+                        </td>
+                        <td>
+                            <button type="submit" name="Eliminar" class="btn btn-danger text-white"
+                                >Eliminar</button>
                         </td>
                     </tr>
+                </form>
                     {% endfor %}
                 </tbody>
             </table>
@@ -37,7 +46,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalUnidad" tabindex="-1" aria-labelledby="modalUnidadLabel" aria-hidden="true" data-bs-backdrop="static">
+<div class="modal fade" id="modalmarca" tabindex="-1" aria-labelledby="modalUnidadLabel" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -50,8 +59,12 @@
                         {% csrf_token %}
                         <div class="mb-3">
                             <label for="nombreUnidad" class="form-label">Marca</label>
+                            {% if editing %}
+                            <input type="text" name="nombre" class="form-control" id="nombremarca" value='{{id}}'>
+                            {% else %}
                             <input type="text" name="nombre" class="form-control" id="nombremarca"
                                 placeholder="Ingresa el nombre">
+                            {% endif %}
                         </div>
                         <div class="text-end">
                             <button type="submit" name="Agregar" class="btn btn-primary">Guardar</button>

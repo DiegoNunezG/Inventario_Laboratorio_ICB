@@ -89,6 +89,7 @@ def marca_de_producto(request):
     editing = False
     id = None
     if request.method == "POST":
+        print(request.POST)
         if "Agregar" in request.POST:
             form = MarcaForm(request.POST)
             if form.is_valid():
@@ -99,6 +100,11 @@ def marca_de_producto(request):
             seleccion = Marca.objects.get(id=request.POST.get("id"))
             form = MarcaForm(instance=seleccion)
             editing = True
-            id = post.id
-    return render(request, "AppInventario/marca_de_producto.html",{"marcas":marcas,})
+            id = seleccion.id
+        elif "Eliminar" in request.POST:
+            Marca.objects.get(id=request.POST.get("id")).delete()
+            return redirect('modulotipoequipo')
+    return render(request, "AppInventario/marca_de_producto.html",{"marcas":marcas,
+                      "editing": editing, 
+                      "id" : id,                                             })
 
