@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import login, logout, authenticate
-from .models import UnidadMedida, TipoEquipo, TipoProducto
-from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm
+from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca
+from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm
 
 def login_web(request):
     if request.method == "POST":
@@ -82,3 +82,23 @@ def modulo_tipo_equipo(request):
             "form": form,
         },
     )
+
+def marca_de_producto(request):
+    marcas = Marca.objects.all()
+    form = MarcaForm()
+    editing = False
+    id = None
+    if request.method == "POST":
+        if "Agregar" in request.POST:
+            form = MarcaForm(request.POST)
+            if form.is_valid():
+                form.save()
+                form = MarcaForm()
+                return redirect('marcadeproducto')
+        elif "Editar" in request.POST:
+            seleccion = Marca.objects.get(id=request.POST.get("id"))
+            form = MarcaForm(instance=seleccion)
+            editing = True
+            id = post.id
+    return render(request, "AppInventario/marca_de_producto.html",{"marcas":marcas,})
+
