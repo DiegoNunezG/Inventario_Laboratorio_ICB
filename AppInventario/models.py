@@ -23,13 +23,6 @@ class TipoEquipo(models.Model):
     def __str__(self):
         return self.nombre
     
-class Equipo(models.Model):
-    nombre = models.CharField(max_length=100, unique=True, default='')
-    tipo_equipo = models.ForeignKey(TipoEquipo, on_delete=models.PROTECT)
-
-    def __str__(self):
-        return self.nombre
-
 
 class Marca(models.Model):
     nombre = models.CharField(max_length=100, unique=True)
@@ -43,10 +36,18 @@ class Producto(models.Model):
     modelo = models.CharField(max_length=150)
     marca = models.ForeignKey(Marca, on_delete=models.PROTECT)
     numero_serie = models.CharField(max_length=200, blank=True)
-    equipo = models.ForeignKey(Equipo, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.modelo
+
+
+class Equipo(models.Model):
+    nombre = models.CharField(max_length=100, unique=True, default='')
+    tipo_equipo = models.ForeignKey(TipoEquipo, on_delete=models.PROTECT)
+    productos = models.ManyToManyField(Producto, blank=True, null=True)
+
+    def __str__(self):
+        return self.nombre
 
 
 class Proveedor(models.Model):

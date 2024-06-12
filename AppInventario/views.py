@@ -86,7 +86,6 @@ def modulo_tipo_equipo(request):
 def equipo(request):
     equipo =   Equipo.objects.all()
     tipo_equipo = TipoEquipo.objects.all()
-    print(tipo_equipo)
     form = EquipoForm()
 
     if request.method == "POST":
@@ -96,6 +95,9 @@ def equipo(request):
                 form.save()
                 form = EquipoForm()
                 return redirect('equipo')
+        elif "eliminar" in request.POST:
+            Equipo.objects.get(id=request.POST.get("id")).delete()
+            return redirect('equipo')
 
     return render(request, "AppInventario/modulo_equipo.html", {
         "tipo_equipo": tipo_equipo,
