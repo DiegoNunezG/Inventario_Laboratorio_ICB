@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import login, logout, authenticate
-from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca
-from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm
+from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca, Equipo
+from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm
+
 
 def login_web(request):
     if request.method == "POST":
@@ -83,6 +84,7 @@ def modulo_tipo_equipo(request):
         },
     )
 
+
 def marca_de_producto(request):
     marcas = Marca.objects.all()
     form = MarcaForm()
@@ -104,7 +106,28 @@ def marca_de_producto(request):
         elif "Eliminar" in request.POST:
             Marca.objects.get(id=request.POST.get("id")).delete()
             return redirect('modulotipoequipo')
-    return render(request, "AppInventario/marca_de_producto.html",{"marcas":marcas,
-                      "editing": editing, 
-                      "id" : id,                                             })
+    return render(request, "AppInventario/marca_de_producto.html",{"marcas":marcas, "editing": editing, "id" : id,})
+
+
+def equipo(request):
+    equipo =   Equipo.objects.all()
+    tipo_equipo = TipoEquipo.objects.all()
+    form = EquipoForm()
+
+    if request.method == "POST":
+        if "agregar" in request.POST:
+            form = EquipoForm(request.POST)
+            if form.is_valid():
+                form.save()
+                form = EquipoForm()
+                return redirect('equipo')
+        elif "eliminar" in request.POST:
+            Equipo.objects.get(id=request.POST.get("id")).delete()
+            return redirect('equipo')
+
+    return render(request, "AppInventario/modulo_equipo.html", {
+        "tipo_equipo": tipo_equipo,
+        "equipo" : equipo,
+        "form": form
+    })
 

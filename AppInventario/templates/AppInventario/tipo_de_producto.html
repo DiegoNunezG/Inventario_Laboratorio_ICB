@@ -8,10 +8,12 @@
 
 <div class="row mt-3 mx-3">
     <div class="col-12 text-end">
-        <button class="btn btn-primary" name="agregar" data-bs-toggle="modal" data-bs-target="#agregartipoproducto">Agregar</button>
+        <button class="btn btn-primary" name="agregar" data-bs-toggle="modal"
+            data-bs-target="#agregartipoproducto">Agregar</button>
     </div>
 </div>
-<div class="modal fade" data-bs-backdrop="static" id="agregartipoproducto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" data-bs-backdrop="static" id="agregartipoproducto" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -24,7 +26,7 @@
                         {% csrf_token %}
                         <div class="form-floating mb-3">
                             {{ form.as_p }}
-                            
+
                         </div>
                         <div class="mt-3 text-end">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -33,7 +35,7 @@
                     </form>
                 </div>
             </div>
-            
+
         </div>
     </div>
 </div>
@@ -42,25 +44,25 @@
 <div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-md-12">
-        <table class="table table-striped text-center">
-        <thead>
-          <tr>
-            <th scope="col">Nombre</th>
-            <th scope="col">Unidad de medida</th>
-            <th scope="col">Acción</th>
-          </tr>
-        </thead>
-        <tbody>
-        {%for producto in tipo_de_producto%}
-          <tr>
-            <td>{{producto.nombre}}</td>
-            <td>{{producto.unidad_medida}}</td>
-            <td> <button class="btn btn-secondary disabled-link text-white" 
-                name="editar" data-bs-toggle="modal" data-bs-target="#agregartipoproducto">Editar</button></td>
-          </tr>
-        {%endfor%}
-        </tbody>
-      </table>
+            <table class="table table-striped text-center">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Unidad de medida</th>
+                        <th scope="col">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for producto in tipo_de_producto%}
+                    <tr>
+                        <td>{{producto.nombre}}</td>
+                        <td>{{producto.unidad_medida}}</td>
+                        <td> <button class="btn btn-secondary disabled-link text-white" name="editar"
+                                data-bs-toggle="modal" data-bs-target="#agregartipoproducto">Editar</button></td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
