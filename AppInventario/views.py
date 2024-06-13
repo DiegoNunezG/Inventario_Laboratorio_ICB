@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import login, logout, authenticate
-from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca, Equipo
-from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm
+from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca, Equipo, Producto
+from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm, ProductoForm
 
 
 def login_web(request):
@@ -131,3 +131,20 @@ def equipo(request):
         "form": form
     })
 
+def producto(request):
+    producto = Producto.objects.all()
+    tipo_producto = TipoProducto.objects.all()
+    form = ProductoForm()
+    if request.method == "POST":
+        if "agregar" in request.POST:
+            form = ProductoForm(request.POST)
+            if form.is_valid():
+                form.save()
+                form = ProductoForm()
+                return redirect('producto')
+
+    return render(request, "AppInventario/modulo_producto.html", {
+        "productos": producto,
+        "tipo_producto": tipo_producto,
+        "form": form
+    })
