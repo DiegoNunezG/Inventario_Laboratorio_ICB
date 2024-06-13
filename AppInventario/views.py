@@ -105,7 +105,7 @@ def marca_de_producto(request):
             id = seleccion.id
         elif "Eliminar" in request.POST:
             Marca.objects.get(id=request.POST.get("id")).delete()
-            return redirect('modulotipoequipo')
+            return redirect('marcadeproducto')
     return render(request, "AppInventario/marca_de_producto.html",{"marcas":marcas, "editing": editing, "id" : id,})
 
 
