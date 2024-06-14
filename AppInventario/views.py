@@ -25,24 +25,41 @@ def unidades_de_medida(request):
     unidades = UnidadMedida.objects.all()
     form = UnidadMedidaForm()
     editing = False
-    id = None
+    id_ = None
+
     if request.method == "POST":
-        if "Agregar" in request.POST:
+        if "agregar" in request.POST:
             form = UnidadMedidaForm(request.POST)
+            if "editing" in request.POST:
+                form = UnidadMedidaForm(request.POST, instance=UnidadMedida.objects.get(id=request.POST.get("id")))
             if form.is_valid():
-                form.save()
-                form = UnidadMedidaForm()
-                return redirect('unidadesmedidas')
-        elif "Editar" in request.POST:
-            seleccion = UnidadMedida.objects.get(id=request.POST.get("id"))
-            form = UnidadMedidaForm(instance=seleccion)
+                if "editing" in request.POST:
+                    selection = UnidadMedida.objects.get(id=request.POST.get("id"))
+                    selection.nombre = form.cleaned_data["nombre"]
+                    selection.simbolo = form.cleaned_data["simbolo"]
+                    selection.save()
+                    editing = False
+                    form = UnidadMedida()
+                else:
+                    form.save()
+                    form = UnidadMedida()
+            return redirect('unidadesmedidas')
+        
+        elif "editar" in request.POST:
+            selection = UnidadMedida.objects.get(id=request.POST.get("id"))
+            data = {'id': selection.id, 'nombre': selection.nombre, 'simbolo': selection.simbolo}
+            form = UnidadMedidaForm(initial=data)
             editing = True
-            id = post.id
-    return render(request, "AppInventario/unidad_medida.html",{"unidades":unidades,})
+            id_ = selection.id
+
+    return render(request, "AppInventario/unidad_medida.html",{
+        "unidades":unidades,
+        "form": form,
+        "editing": editing,
+        "id": id_,})
 
 def index(request):
     return render(request, "AppInventario/base.html")
-
 
 def tipo_de_producto(request):
     tipo_de_producto = TipoProducto.objects.all()
