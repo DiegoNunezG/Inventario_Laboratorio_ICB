@@ -11,9 +11,9 @@
 </div>
 
 {% if editing %}
-<div class="activar_form" id="bloqueformagregar" style="display:block;"></div>
+<div class="activar_form" id="bloqueformagregar" style="display:block;">
 {% else %}
-<div class="" id="bloqueformagregar" style="display:none;"></div>
+<div class="" id="bloqueformagregar" style="display:none;">
 {% endif %}
 
 <div class="container border border-secondary rounded p-3 mt-3">
@@ -32,6 +32,8 @@
     </div>
     </form>
 </div>
+</div>
+
 <div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -53,7 +55,7 @@
                             <td>{{ unidad.simbolo }}</td>
                             <td>
                                 <input type="hidden" name="id" value="{{unidad.id}}">
-                                <button id="editarregistro_te" class="btn btn-warning" name="editar">Editar</button>                               
+                                <button id="editarregistro" class="btn btn-warning" name="editar">Editar</button>                               
                             </td>
                         </tr>
                     </form>
@@ -66,3 +68,27 @@
 </div>
 
 {% endblock %}
+
+{% block scripts %}
+<script>
+    var form_agregar = document.getElementById("bloqueformagregar");
+    var btn_agregar = document.getElementById("btnformagregar");
+    var btn_editar = document.getElementById("editarregistro");
+    var btn_cerrar = document.getElementById("botoncerrarform");
+
+    btn_agregar.addEventListener("click", toggle_form_agregar);
+    btn_editar.addEventListener("click", toggle_form_agregar);
+    btn_cerrar.addEventListener("click", toggle_form_agregar);
+
+    function toggle_form_agregar() {
+        form_agregar.classList.toggle("activar_form");
+
+        if (form_agregar.classList.contains("activar_form")){
+            form_agregar.style.display = "block";
+            form_agregar.scrollIntoView({behavior:'smooth'});
+        } else {
+            form_agregar.style.display = "none";
+        }
+    }
+</script>
+{% endblock scripts %}

@@ -41,15 +41,14 @@
 
 <div class="row mt-3 mx-3">
     <div class="col-12 text-end">
-        <button class="btn btn-primary" id ="btnformagregar"name="agregar" data-bs-toggle="modal"
-            data-bs-target="#agregarequipo">Agregar</button>
+        <button class="btn btn-primary" id ="btnformagregar" name="agregar">Agregar</button>
     </div>
 </div>
 
 {% if editing %}
-<div class="activar_form" id="bloqueformagregar" style="display:block;"></div>
+<div class="activar_form" id="bloqueformagregar" style="display:block;">
 {% else %}
-<div class="" id="bloqueformagregar" style="display:none;"></div>
+<div class="" id="bloqueformagregar" style="display:none;">
 {% endif %}
 
 <div class="container border border-secondary rounded p-3 mt-3">
@@ -67,6 +66,7 @@
         <button id ="" name="agregar" type="submit" class="btn btn-primary">Guardar</button>
     </div>
     </form>
+</div>
 </div>
 
 {% if deleting %}
@@ -96,6 +96,7 @@
   </div>
 {% endif %}
 
+
 <div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -124,7 +125,7 @@
                             </td>
                             <td>
                                 <input type="hidden" name="id" value="{{Equipo.id}}">
-                                <button id="editarregistro_te" class="btn btn-warning" name="editar">Editar</button>
+                                <button id="editarregistro" class="btn btn-warning" name="editar">Editar</button>
                                 <button type="submit" class="btn btn-danger text-white" name="eliminar"
                                     data-bs-toggle="modal" data-bs-target="#eliminarequipo">Eliminar</button>
                             </td>
@@ -143,7 +144,7 @@
 <script>
     var form_agregar = document.getElementById("bloqueformagregar");
     var btn_agregar = document.getElementById("btnformagregar");
-    var btn_editar = document.getElementById("editarregistro_te");
+    var btn_editar = document.getElementById("editarregistro");
     var btn_cerrar = document.getElementById("botoncerrarform");
 
     btn_agregar.addEventListener("click", toggle_form_agregar);
