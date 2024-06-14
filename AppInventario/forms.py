@@ -1,5 +1,5 @@
-from django.forms import ModelForm, TextInput, Select, ModelMultipleChoiceField, CheckboxSelectMultiple, HiddenInput
-from .models import TipoProducto, UnidadMedida, TipoEquipo, Marca, Equipo
+from django.forms import ModelForm, TextInput, Select, ModelMultipleChoiceField, CheckboxSelectMultiple
+from .models import TipoProducto, UnidadMedida, TipoEquipo, Marca, Equipo, Producto
 
 class TipoProductoForm(ModelForm):
     class Meta:
@@ -14,6 +14,10 @@ class UnidadMedidaForm(ModelForm):
     class Meta:
         model = UnidadMedida
         fields = ["nombre","simbolo"]
+        widgets = {
+            'nombre': TextInput(attrs={'class': 'form-control rounded-3'}),
+            'simbolo': TextInput(attrs={'class': 'form-control rounded-3'}),
+        }
 
 class TipoEquipoForm(ModelForm):
     class Meta:
@@ -35,12 +39,37 @@ class MarcaForm(ModelForm):
     class Meta:
         model = Marca
         fields = ["nombre"]
+        widgets = {
+            'nombre': TextInput(attrs={'class': 'form-control rounded-3'})
+        }
+    nombre = TextInput()
 
 class EquipoForm(ModelForm):
     class Meta:
         model = Equipo
-        fields = ['nombre', 'tipo_equipo']
+        fields = ['nombre', 'tipo_equipo', 'productos']
         widgets = {
             'nombre': TextInput(attrs={'class': 'form-control rounded-3'}),
             'tipo_equipo': Select(attrs={'class': 'form-control rounded-3'}),
+
+            'productos': CheckboxSelectMultiple(attrs={'class':"form-check-input"}),
         }
+    nombre = TextInput()
+    tipo_equipo = Select()
+    productos = ModelMultipleChoiceField(
+        queryset=Producto.objects.all(),
+        widget=CheckboxSelectMultiple,
+    )
+        }
+
+class ProductoForm(ModelForm):
+    class Meta:
+        model = Producto
+        fields = ['tipo_producto', 'modelo', 'marca', 'numero_serie']
+        widgets = {
+            'tipo_producto': Select(attrs={'class': 'form-control rounded-3'}),
+            'modelo': TextInput(attrs={'class': 'form-control rounded-3'}),
+            'marca': Select(attrs={'class': 'form-control rounded-3'}),
+            'numero_serie': TextInput(attrs={'class': 'form-control rounded-3'})
+        }
+

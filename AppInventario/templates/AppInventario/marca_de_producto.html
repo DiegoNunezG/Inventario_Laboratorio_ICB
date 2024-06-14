@@ -1,4 +1,5 @@
 {% extends "./base.html" %}
+{% load static %}
 {% block content %}
 <div class="row bg-secondary">
     <p class="my-3 px-5 fs-4 fw-bold">Marcas de Productos</p>
@@ -10,6 +11,26 @@
         </button>
     </div>
 </div>
+
+<div>
+    <div class="container border border-secondary rounded p-3 mt-3">
+        <form method="POST" id="formUnidad">
+            {% csrf_token %}
+            {% if editing %}
+            <input name="id" value="{{id}}" type="hidden">
+            <input name="editing" value="{{editing}}" type="hidden">
+            {% endif %}
+            <div class="mb-3">
+                {{form.as_p}}
+            </div>
+            <div class="text-end">
+                <button type="submit" name="Agregar" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -25,16 +46,12 @@
                     <form method="POST">
                         {% csrf_token %}
                     <tr>
-                        <input type="hidden" name="id" value="{{ marca.id }}">
+                        <input id="inputidmarca" type="hidden" name="id" value="{{ marca.id }}">
                         <input type="hidden" name="editing" value="{{ editing}}">
+                        <input type="hidden" id="inputnombremarca" value="{{marca.nombre}}">
                         <td>{{ marca.nombre }}</td>
                         <td>
-                            <button type="button" name="Editar" class="btn btn-warning text-white"
-                                data-bs-toggle="modal" data-bs-target="#modalmarca">Editar</button>
-                        </td>
-                        <td>
-                            <button type="submit" name="Eliminar" class="btn btn-danger text-white"
-                                >Eliminar</button>
+                            <button type="submit" name="Editar" class="btn btn-warning text-white" id="botoneditarmarca">Editar</button>
                         </td>
                     </tr>
                 </form>
@@ -46,35 +63,9 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalmarca" tabindex="-1" aria-labelledby="modalUnidadLabel" aria-hidden="true" data-bs-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalUnidadLabel">Agregar Marca</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <form method="POST" id="formUnidad">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="nombreUnidad" class="form-label">Marca</label>
-                            {% if editing %}
-                            <input type="text" name="nombre" class="form-control" id="nombremarca" value='{{id}}'>
-                            {% else %}
-                            <input type="text" name="nombre" class="form-control" id="nombremarca"
-                                placeholder="Ingresa el nombre">
-                            {% endif %}
-                        </div>
-                        <div class="text-end">
-                            <button type="submit" name="Agregar" class="btn btn-primary">Guardar</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
+
+{% endblock %}
+{% block scripts %}
+<script href="{% static 'js/funciones.js' %}"></script>
 {% endblock %}
