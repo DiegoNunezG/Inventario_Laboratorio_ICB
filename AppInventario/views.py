@@ -65,19 +65,33 @@ def tipo_de_producto(request):
     tipo_de_producto = TipoProducto.objects.all()
     unidades = UnidadMedida.objects.all()
     form = TipoProductoForm()
+    editing = False
+    id = None
     if request.method == "POST":
         if "agregar" in request.POST:
             form = TipoProductoForm(request.POST)
+            if "editing" in request.POST:
+                print(request.POST)
+                form = TipoProductoForm(request.POST, instance=TipoProducto.objects.get(id=request.POST.get("id")))
             if form.is_valid():
-                form.save()
-                form = TipoProductoForm()
-                return redirect('tipo_de_producto')
-
-    return render(request, "AppInventario/tipo_de_producto.html", {
-        "tipo_de_producto": tipo_de_producto,
-        "unidades" : unidades,
-        "form": form
-    })
+                if "editing" in request.POST:
+                    seleccion = TipoProducto.objects.get(id=request.POST.get("id"))
+                    seleccion.nombre = form.cleaned_data["nombre"]
+                    seleccion.unidad_medida = form.cleaned_data["unidad_medida"]
+                    seleccion.save()
+                    editing = False
+                    id = None
+                else:
+                    form.save()
+                    form = TipoProductoForm()
+            return redirect('tipo_de_producto')
+        elif "Editar" in request.POST:
+            seleccion = TipoProducto.objects.get(id=request.POST.get("id"))
+            form = TipoProductoForm(instance=seleccion)
+            editing = True
+            id = seleccion.id            
+         
+    return render(request, "AppInventario/tipo_de_producto.html",{"tipo_de_producto":tipo_de_producto, "editing": editing, "id" : id, "form": form})
 
   
 def modulo_tipo_equipo(request):
@@ -170,7 +184,7 @@ def equipo(request):
                 if "editing" in request.POST:
                     selection = Equipo.objects.get(id=request.POST.get("id"))
                     selection.nombre = form.cleaned_data["nombre"]
-                    selection.tipo_producto = form.cleaned_data["tipo_equipo"]
+                    selection.tipo_equipo = form.cleaned_data["tipo_equipo"]
                     selection.productos.set(form.cleaned_data["productos"])
                     selection.save()
                     editing = False
