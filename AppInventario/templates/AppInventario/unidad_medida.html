@@ -5,8 +5,32 @@
 </div>
 <div class="row mt-3 mx-3">
     <div class="col-12 text-end">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUnidad">Agregar</button>
+        <button class="btn btn-primary" id ="btnformagregar"name="agregar" data-bs-toggle="modal"
+            data-bs-target="#agregarequipo">Agregar</button>
     </div>
+</div>
+
+{% if editing %}
+<div class="activar_form" id="bloqueformagregar" style="display:block;"></div>
+{% else %}
+<div class="" id="bloqueformagregar" style="display:none;"></div>
+{% endif %}
+
+<div class="container border border-secondary rounded p-3 mt-3">
+    <form method="POST">
+    {% csrf_token %}
+    {% if editing %}
+    <input type="hidden" name="id" value="{{id}}">
+    <input type="hidden" name="editing" value="{{editing}}">
+    {% endif %}
+    <div class="form-floating mb-3">
+        {{ form.as_p }}
+    </div>
+    <div class="mt-3 text-end">
+        <button id ="botoncerrarform" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button id ="" name="agregar" type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+    </form>
 </div>
 <div class="container mt-3">
     <div class="row justify-content-center">
@@ -29,11 +53,7 @@
                             <td>{{ unidad.simbolo }}</td>
                             <td>
                                 <input type="hidden" name="id" value="{{unidad.id}}">
-                                <button type="button" name="Editar" class="btn btn-secondary disabled-link text-white" data-bs-toggle="modal" data-bs-target="#modalUnidadEditar">Editar</button>
-
-                                <button type="submit" class="btn btn-danger text-white" name="Eliminar"
-                                data-bs-toggle="modal" data-bs-target="#eliminarum">Eliminar</button>
-                                
+                                <button id="editarregistro_te" class="btn btn-secondary text-white" name="editar">Editar</button>                               
                             </td>
                         </tr>
                     </form>
@@ -41,39 +61,6 @@
                 </tbody>
             </table>
 
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modalUnidad" tabindex="-1" aria-labelledby="modalUnidadLabel" aria-hidden="true"
-    data-bs-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalUnidadLabel">Agregar Unidad de Medida</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <form method="POST" id="formUnidad">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="nombreUnidad" class="form-label">Unidad de Medida</label>
-                            <input type="text" name="nombre" class="form-control" id="nombreUnidad"
-                                placeholder="Ejemplo: Metros">
-                        </div>
-                        <div class="mb-3">
-                            <label for="simboloUnidad" class="form-label">Símbolo</label>
-                            <input type="text" name="simbolo" class="form-control" id="simboloUnidad"
-                                placeholder="Ejemplo: m">
-                        </div>
-                        <div class="text-end">
-                            <button type="submit" name="Agregar" class="btn btn-primary">Guardar</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
 </div>

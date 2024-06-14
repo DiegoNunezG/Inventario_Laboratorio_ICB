@@ -14,6 +14,10 @@ class UnidadMedidaForm(ModelForm):
     class Meta:
         model = UnidadMedida
         fields = ["nombre","simbolo"]
+        widgets = {
+            'nombre': TextInput(attrs={'class': 'form-control rounded-3'}),
+            'simbolo': TextInput(attrs={'class': 'form-control rounded-3'}),
+        }
 
 class TipoEquipoForm(ModelForm):
     class Meta:
