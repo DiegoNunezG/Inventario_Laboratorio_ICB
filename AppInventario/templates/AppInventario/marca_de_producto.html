@@ -1,4 +1,5 @@
 {% extends "./base.html" %}
+{% load static %}
 {% block content %}
 <div class="row bg-secondary">
     <p class="my-3 px-5 fs-4 fw-bold">Marcas de Productos</p>
@@ -25,11 +26,12 @@
                     <form method="POST">
                         {% csrf_token %}
                     <tr>
-                        <input type="hidden" name="id" value="{{ marca.id }}">
+                        <input id="inputidmarca" type="hidden" name="id" value="{{ marca.id }}">
                         <input type="hidden" name="editing" value="{{ editing}}">
+                        <input type="hidden" id="inputnombremarca" value="{{marca.nombre}}">
                         <td>{{ marca.nombre }}</td>
                         <td>
-                            <button type="button" name="Editar" class="btn btn-warning text-white"
+                            <button type="button" name="Editar" class="btn btn-warning text-white" id="botoneditarmarca" onclick="cargar_modal()"
                                 data-bs-toggle="modal" data-bs-target="#modalmarca">Editar</button>
                         </td>
                         <td>
@@ -59,12 +61,8 @@
                         {% csrf_token %}
                         <div class="mb-3">
                             <label for="nombreUnidad" class="form-label">Marca</label>
-                            {% if editing %}
-                            <input type="text" name="nombre" class="form-control" id="nombremarca" value='{{id}}'>
-                            {% else %}
-                            <input type="text" name="nombre" class="form-control" id="nombremarca"
+                            <input id="inputmodalmarca" type="text" name="nombre" class="form-control" id="nombremarca"
                                 placeholder="Ingresa el nombre">
-                            {% endif %}
                         </div>
                         <div class="text-end">
                             <button type="submit" name="Agregar" class="btn btn-primary">Guardar</button>
@@ -77,4 +75,8 @@
     </div>
 </div>
 
+
+{% endblock %}
+{% block scripts %}
+<script href="{% static 'js/funciones.js' %}"></script>
 {% endblock %}
