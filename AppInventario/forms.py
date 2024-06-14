@@ -24,7 +24,7 @@ class TipoEquipoForm(ModelForm):
         model = TipoEquipo
         fields = ["nombre", "tipo_producto"]
         widgets = {
-            'nombre': TextInput(attrs={'class': 'form-control rounded-3'}),
+            "nombre": TextInput(attrs={'class': 'form-control rounded-3'}),
             "tipo_producto": CheckboxSelectMultiple(attrs={'class':"form-check-input"})
         }
     

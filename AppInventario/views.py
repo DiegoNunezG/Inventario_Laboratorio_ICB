@@ -83,14 +83,35 @@ def tipo_de_producto(request):
 def modulo_tipo_equipo(request):
     tipos_de_equipo = TipoEquipo.objects.all()
     form = TipoEquipoForm()
+    editing = False
 
     if request.method == "POST":
         if "agregar" in request.POST:
             form = TipoEquipoForm(request.POST)
+            if "editing" in request.POST:
+                form = TipoEquipoForm(request.POST, instance=TipoEquipo.objects.get(id=request.POST.get("id")))
             if form.is_valid():
-                form.save()
-                form = TipoEquipoForm()
+                if "editing" in request.POST:
+                    selection = TipoEquipo.objects.get(id=request.POST.get("id"))
+                    selection.nombre = form.cleaned_data["nombre"]
+                    selection.tipo_producto.set(form.cleaned_data["tipo_producto"])
+                    selection.save()
+                    editing = False
+                    form = TipoEquipoForm()
+                else:
+                    form.save()
+                    form = TipoEquipoForm()
                 return redirect('modulotipoequipo')
+            else:
+                print(form.errors)
+
+        if "editar" in request.POST:
+            selection = TipoEquipo.objects.get(id=request.POST.get("id"))
+            data = {'id':selection.id, 'nombre':selection.nombre, "tipo_producto":selection.tipo_producto.all()}
+            form = TipoEquipoForm(initial=data)
+            editing = True
+            id_ = selection.id
+            return render(request, "AppInventario/modulo_tipo_equipo.html", {"form":form, "tipos_de_equipo": tipos_de_equipo, "editing":editing, "id":id_})
 
     return render(
         request, 
@@ -98,6 +119,7 @@ def modulo_tipo_equipo(request):
         {
             "tipos_de_equipo": tipos_de_equipo,
             "form": form,
+            "editing": editing,
         },
     )
   
@@ -108,7 +130,7 @@ def marca_de_producto(request):
     editing = False
     id = None
     if request.method == "POST":
-        print(request.POST)
+        #print(request.POST)
         if "Agregar" in request.POST:
             form = MarcaForm(request.POST)
             if "editing" in request.POST:
