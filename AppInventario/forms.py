@@ -35,6 +35,10 @@ class MarcaForm(ModelForm):
     class Meta:
         model = Marca
         fields = ["nombre"]
+        widgets = {
+            'nombre': TextInput(attrs={'class': 'form-control rounded-3'})
+        }
+    nombre = TextInput()
 
 class EquipoForm(ModelForm):
     class Meta:
