@@ -6,11 +6,18 @@
 </div>
 <div class="row mt-3 mx-3">
     <div class="col-12 text-end">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalmarca">
+        <button type="button" class="btn btn-primary" id="btnformagregar">
             Agregar
         </button>
     </div>
 </div>
+
+{% if editing %}
+<div class="activar_form" id="bloqueformagregar" style="display:block">
+{% else %}
+<div class="" id="bloqueformagregar" style="display:none">
+{% endif %}
+
 
 <div>
     <div class="container border border-secondary rounded p-3 mt-3">
@@ -25,9 +32,10 @@
             </div>
             <div class="text-end">
                 <button type="submit" name="Agregar" class="btn btn-primary">Guardar</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-secondary" id="botoncerrarform">Cerrar</button>
             </div>
         </form>
+    </div>
     </div>
 </div>
 
@@ -66,6 +74,27 @@
 
 
 {% endblock %}
+
 {% block scripts %}
-<script href="{% static 'js/funciones.js' %}"></script>
-{% endblock %}
+<script>
+    var form_agregar = document.getElementById("bloqueformagregar");
+    var btn_agregar = document.getElementById("btnformagregar");
+    var btn_editar = document.getElementById("botoneditarmarca");
+    var btn_cerrar = document.getElementById("botoncerrarform");
+
+    btn_agregar.addEventListener("click", toggle_form_agregar);
+    btn_editar.addEventListener("click", toggle_form_agregar);
+    btn_cerrar.addEventListener("click", toggle_form_agregar);
+
+    function toggle_form_agregar() {
+        form_agregar.classList.toggle("activar_form");
+
+        if (form_agregar.classList.contains("activar_form")){
+            form_agregar.style.display = "block";
+            form_agregar.scrollIntoView({behavior:'smooth'});
+        } else {
+            form_agregar.style.display = "none";
+        }
+    }
+</script>
+{% endblock scripts %}
