@@ -1,4 +1,4 @@
-from django.forms import ModelForm, TextInput, Select, ModelMultipleChoiceField, CheckboxSelectMultiple
+from django.forms import ModelForm, TextInput, Select, ModelMultipleChoiceField, CheckboxSelectMultiple, HiddenInput
 from .models import TipoProducto, UnidadMedida, TipoEquipo, Marca, Equipo
 
 class TipoProductoForm(ModelForm):
@@ -20,7 +20,7 @@ class TipoEquipoForm(ModelForm):
         model = TipoEquipo
         fields = ["nombre", "tipo_producto"]
         widgets = {
-            'nombre': TextInput(attrs={'class': 'form-control rounded-3'}),
+            "nombre": TextInput(attrs={'class': 'form-control rounded-3'}),
             "tipo_producto": CheckboxSelectMultiple(attrs={'class':"form-check-input"})
         }
     
