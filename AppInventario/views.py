@@ -111,19 +111,25 @@ def marca_de_producto(request):
         print(request.POST)
         if "Agregar" in request.POST:
             form = MarcaForm(request.POST)
+            if "editing" in request.POST:
+                form = MarcaForm(request.POST, instance=Marca.objects.get(id=request.POST.get("id")))
             if form.is_valid():
-                form.save()
-                form = MarcaForm()
-                return redirect('marcadeproducto')
+                if "editing" in request.POST:
+                    seleccion = Marca.objects.get(id=request.POST.get("id"))
+                    seleccion.nombre = form.cleaned_data["nombre"]
+                    seleccion.save()
+                    editing = False
+                    id = None
+                else:
+                    form.save()
+                    form = MarcaForm()
+            return redirect('marcadeproducto')
         elif "Editar" in request.POST:
             seleccion = Marca.objects.get(id=request.POST.get("id"))
             form = MarcaForm(instance=seleccion)
             editing = True
             id = seleccion.id
-        elif "Eliminar" in request.POST:
-            Marca.objects.get(id=request.POST.get("id")).delete()
-            return redirect('marcadeproducto')
-    return render(request, "AppInventario/marca_de_producto.html",{"marcas":marcas, "editing": editing, "id" : id,})
+    return render(request, "AppInventario/marca_de_producto.html",{"marcas":marcas, "editing": editing, "id" : id, "form": form})
 
 
 def equipo(request):
@@ -152,14 +158,8 @@ def producto(request):
     producto = Producto.objects.all()
     tipo_producto = TipoProducto.objects.all()
     form = ProductoForm()
-    if request.method == "POST":
-        if "agregar" in request.POST:
-            form = ProductoForm(request.POST)
-            if form.is_valid():
-                form.save()
-                form = ProductoForm()
-                return redirect('producto')
-
+    editing = False
+    id = None
     return render(request, "AppInventario/modulo_producto.html", {
         "productos": producto,
         "tipo_producto": tipo_producto,
