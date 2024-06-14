@@ -41,10 +41,34 @@
 
 <div class="row mt-3 mx-3">
     <div class="col-12 text-end">
-        <button class="btn btn-primary" name="agregar" data-bs-toggle="modal"
+        <button class="btn btn-primary" id ="btnformagregar"name="agregar" data-bs-toggle="modal"
             data-bs-target="#agregarequipo">Agregar</button>
     </div>
 </div>
+
+{% if editing %}
+<div class="activar_form" id="bloqueformagregar" style="display:block;"></div>
+{% else %}
+<div class="" id="bloqueformagregar" style="display:none;"></div>
+{% endif %}
+
+<div class="container border border-secondary rounded p-3 mt-3">
+    <form method="POST">
+    {% csrf_token %}
+    {% if editing %}
+    <input type="hidden" name="id" value="{{id}}">
+    <input type="hidden" name="editing" value="{{editing}}">
+    {% endif %}
+    <div class="form-floating mb-3">
+        {{ form.as_p }}
+    </div>
+    <div class="mt-3 text-end">
+        <button id ="botoncerrarform" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button id ="" name="agregar" type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+    </form>
+</div>
+
 
 <div class="container mt-3">
     <div class="row justify-content-center">
@@ -54,7 +78,7 @@
                     <tr>
                         <th scope="col">Nombre</th>
                         <th scope="col">Tipo de equipo</th>
-                        <th scope="col">Componentes</th>
+                        <th scope="col">Productos</th>
                         <th scope="col">Acción</th>
                     </tr>
                 </thead>
@@ -74,8 +98,7 @@
                             </td>
                             <td>
                                 <input type="hidden" name="id" value="{{Equipo.id}}">
-                                <button class="btn btn-secondary disabled-link text-white" name="editar"
-                                    data-bs-toggle="modal" data-bs-target="#editarequipo">Editar</button>
+                                <button id="editarregistro_te" class="btn btn-secondary text-white" name="editar">Editar</button>
                                 <button type="submit" class="btn btn-danger text-white" name="eliminar"
                                     data-bs-toggle="modal" data-bs-target="#eliminarequipo">Eliminar</button>
                             </td>
@@ -89,3 +112,27 @@
 </div>
 
 {% endblock %}
+
+{% block scripts %}
+<script>
+    var form_agregar = document.getElementById("bloqueformagregar");
+    var btn_agregar = document.getElementById("btnformagregar");
+    var btn_editar = document.getElementById("editarregistro_te");
+    var btn_cerrar = document.getElementById("botoncerrarform");
+
+    btn_agregar.addEventListener("click", toggle_form_agregar);
+    btn_editar.addEventListener("click", toggle_form_agregar);
+    btn_cerrar.addEventListener("click", toggle_form_agregar);
+
+    function toggle_form_agregar() {
+        form_agregar.classList.toggle("activar_form");
+
+        if (form_agregar.classList.contains("activar_form")){
+            form_agregar.style.display = "block";
+            form_agregar.scrollIntoView({behavior:'smooth'});
+        } else {
+            form_agregar.style.display = "none";
+        }
+    }
+</script>
+{% endblock scripts %}

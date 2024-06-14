@@ -47,10 +47,19 @@ class MarcaForm(ModelForm):
 class EquipoForm(ModelForm):
     class Meta:
         model = Equipo
-        fields = ['nombre', 'tipo_equipo']
+        fields = ['nombre', 'tipo_equipo', 'productos']
         widgets = {
             'nombre': TextInput(attrs={'class': 'form-control rounded-3'}),
             'tipo_equipo': Select(attrs={'class': 'form-control rounded-3'}),
+
+            'productos': CheckboxSelectMultiple(attrs={'class':"form-check-input"}),
+        }
+    nombre = TextInput()
+    tipo_equipo = Select()
+    productos = ModelMultipleChoiceField(
+        queryset=Producto.objects.all(),
+        widget=CheckboxSelectMultiple,
+    )
         }
 
 class ProductoForm(ModelForm):
@@ -63,3 +72,4 @@ class ProductoForm(ModelForm):
             'marca': Select(attrs={'class': 'form-control rounded-3'}),
             'numero_serie': TextInput(attrs={'class': 'form-control rounded-3'})
         }
+
