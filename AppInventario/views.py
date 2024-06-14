@@ -33,16 +33,15 @@ def unidades_de_medida(request):
                 form.save()
                 form = UnidadMedidaForm()
                 return redirect('unidadesmedidas')
-        elif "Editar" in request.POST:
-            seleccion = UnidadMedida.objects.get(id=request.POST.get("id"))
-            form = UnidadMedidaForm(instance=seleccion)
-            editing = True
-            id = post.id
+
+        elif "Eliminar" in request.POST:
+            UnidadMedida.objects.get(id=request.POST.get("id")).delete()
+            return redirect('unidadesmedidas')
+
     return render(request, "AppInventario/unidad_medida.html",{"unidades":unidades,})
 
 def index(request):
     return render(request, "AppInventario/base.html")
-
 
 def tipo_de_producto(request):
     tipo_de_producto = TipoProducto.objects.all()

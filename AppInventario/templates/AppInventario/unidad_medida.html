@@ -5,9 +5,7 @@
 </div>
 <div class="row mt-3 mx-3">
     <div class="col-12 text-end">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUnidad">
-            Agregar
-        </button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalUnidad">Agregar</button>
     </div>
 </div>
 <div class="container mt-3">
@@ -22,17 +20,23 @@
                     </tr>
                 </thead>
                 <tbody>
+                    
                     {% for unidad in unidades %}
-                    <tr>
-                        <td>{{ unidad.nombre }}</td>
-                        <td>{{ unidad.simbolo }}</td>
-                        <td>
-                            <button type="button" name="Editar" class="btn btn-secondary disabled-link text-white"
-                                data-bs-toggle="modal" data-bs-target="#modalUnidadEditar">Editar</button>
-                            <button class="btn btn-danger disabled-link text-white" name="eliminar" data-bs-toggle="modal"
-                                data-bs-target="#eliminarum">Eliminar</button>
-                        </td>
-                    </tr>
+                    <form method="post">
+                        {% csrf_token %}
+                        <tr>
+                            <td>{{ unidad.nombre }}</td>
+                            <td>{{ unidad.simbolo }}</td>
+                            <td>
+                                <input type="hidden" name="id" value="{{unidad.id}}">
+                                <button type="button" name="Editar" class="btn btn-secondary disabled-link text-white" data-bs-toggle="modal" data-bs-target="#modalUnidadEditar">Editar</button>
+
+                                <button type="submit" class="btn btn-danger text-white" name="Eliminar"
+                                data-bs-toggle="modal" data-bs-target="#eliminarum">Eliminar</button>
+                                
+                            </td>
+                        </tr>
+                    </form>
                     {% endfor %}
                 </tbody>
             </table>
