@@ -170,7 +170,7 @@ def equipo(request):
                 if "editing" in request.POST:
                     selection = Equipo.objects.get(id=request.POST.get("id"))
                     selection.nombre = form.cleaned_data["nombre"]
-                    selection.tipo_producto = form.cleaned_data["tipo_equipo"]
+                    selection.tipo_equipo = form.cleaned_data["tipo_equipo"]
                     selection.productos.set(form.cleaned_data["productos"])
                     selection.save()
                     editing = False

@@ -60,7 +60,7 @@ class EquipoForm(ModelForm):
         queryset=Producto.objects.all(),
         widget=CheckboxSelectMultiple,
     )
-        }
+
 
 class ProductoForm(ModelForm):
     class Meta:
