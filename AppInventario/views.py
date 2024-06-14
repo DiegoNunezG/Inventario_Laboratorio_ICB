@@ -173,9 +173,12 @@ def equipo(request):
     tipo_equipo = TipoEquipo.objects.all()
     form = EquipoForm()
     editing = False
+    deleting = False
     id_ = None
 
     if request.method == "POST":
+        print(request.POST)
+
         if "agregar" in request.POST:
             form = EquipoForm(request.POST)
             if "editing" in request.POST:
@@ -202,14 +205,27 @@ def equipo(request):
             id_ = selection.id
 
         elif "eliminar" in request.POST:
-            Equipo.objects.get(id=request.POST.get("id")).delete()
-            return redirect('equipo')
+            selection = Equipo.objects.get(id=request.POST.get("id"))
+            id_ = selection.id
+            deleting = True
+        
+        elif "deleting" in request.POST:
+            deleting = False
+            id_ = None
+            if "cancelar_delete" in request.POST:
+                print()
+                return redirect('equipo')
+            elif "confirmar_delete" in request.POST: 
+                Equipo.objects.get(id=request.POST.get("id")).delete()
+                return redirect('equipo')
+
 
     return render(request, "AppInventario/modulo_equipo.html", {
         "tipo_equipo": tipo_equipo,
         "equipo" : equipo,
         "form": form,
         "editing": editing,
+        "deleting": deleting,
         "id": id_,
         "form": form,
     })
