@@ -80,12 +80,11 @@ def modulo_tipo_equipo(request):
                     selection.tipo_producto.set(form.cleaned_data["tipo_producto"])
                     selection.save()
                     editing = False
-                    id_ = selection.id
                     form = TipoEquipoForm()
                 else:
                     form.save()
                     form = TipoEquipoForm()
-                    return redirect('modulotipoequipo')
+                return redirect('modulotipoequipo')
             else:
                 print(form.errors)
 
