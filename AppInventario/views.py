@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import login, logout, authenticate
-from .models import UnidadMedida, TipoEquipo, TipoProducto, Equipo, Producto
-from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, EquipoForm
+from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca, Equipo, Producto
+from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm, ProductoForm
 
 def login_web(request):
     if request.method == "POST":
@@ -24,25 +24,42 @@ def unidades_de_medida(request):
     unidades = UnidadMedida.objects.all()
     form = UnidadMedidaForm()
     editing = False
-    id = None
+    id_ = None
+
     if request.method == "POST":
-        if "Agregar" in request.POST:
+        if "agregar" in request.POST:
             form = UnidadMedidaForm(request.POST)
+            if "editing" in request.POST:
+                form = UnidadMedidaForm(request.POST, instance=UnidadMedida.objects.get(id=request.POST.get("id")))
             if form.is_valid():
-                form.save()
-                form = UnidadMedidaForm()
-                return redirect('unidadesmedidas')
-        elif "Editar" in request.POST:
-            seleccion = UnidadMedida.objects.get(id=request.POST.get("id"))
-            form = UnidadMedidaForm(instance=seleccion)
+                if "editing" in request.POST:
+                    selection = UnidadMedida.objects.get(id=request.POST.get("id"))
+                    selection.nombre = form.cleaned_data["nombre"]
+                    selection.simbolo = form.cleaned_data["simbolo"]
+                    selection.save()
+                    editing = False
+                    form = UnidadMedida()
+                else:
+                    form.save()
+                    form = UnidadMedida()
+            return redirect('unidadesmedidas')
+        
+        elif "editar" in request.POST:
+            selection = UnidadMedida.objects.get(id=request.POST.get("id"))
+            data = {'id': selection.id, 'nombre': selection.nombre, 'simbolo': selection.simbolo}
+            form = UnidadMedidaForm(initial=data)
             editing = True
-            id = post.id
-    return render(request, "AppInventario/unidad_medida.html",{"unidades":unidades,})
+            id_ = selection.id
+
+    return render(request, "AppInventario/unidad_medida.html",{
+        "unidades":unidades,
+        "form": form,
+        "editing": editing,
+        "id": id_,})
 
 
 def index(request):
     return render(request, "AppInventario/base.html")
-
 
 def tipo_de_producto(request):
     tipo_de_producto = TipoProducto.objects.all()
@@ -83,6 +100,36 @@ def modulo_tipo_equipo(request):
             "form": form,
         },
     )
+  
+
+def marca_de_producto(request):
+    marcas = Marca.objects.all()
+    form = MarcaForm()
+    editing = False
+    id = None
+    if request.method == "POST":
+        print(request.POST)
+        if "Agregar" in request.POST:
+            form = MarcaForm(request.POST)
+            if "editing" in request.POST:
+                form = MarcaForm(request.POST, instance=Marca.objects.get(id=request.POST.get("id")))
+            if form.is_valid():
+                if "editing" in request.POST:
+                    seleccion = Marca.objects.get(id=request.POST.get("id"))
+                    seleccion.nombre = form.cleaned_data["nombre"]
+                    seleccion.save()
+                    editing = False
+                    id = None
+                else:
+                    form.save()
+                    form = MarcaForm()
+            return redirect('marcadeproducto')
+        elif "Editar" in request.POST:
+            seleccion = Marca.objects.get(id=request.POST.get("id"))
+            form = MarcaForm(instance=seleccion)
+            editing = True
+            id = seleccion.id
+    return render(request, "AppInventario/marca_de_producto.html",{"marcas":marcas, "editing": editing, "id" : id, "form": form})
 
 
 def equipo(request):
@@ -128,4 +175,17 @@ def equipo(request):
         "form": form,
         "editing": editing,
         "id": id_,
+        "form": form,
+    })
+
+def producto(request):
+    producto = Producto.objects.all()
+    tipo_producto = TipoProducto.objects.all()
+    form = ProductoForm()
+    editing = False
+    id = None
+    return render(request, "AppInventario/modulo_producto.html", {
+        "productos": producto,
+        "tipo_producto": tipo_producto,
+        "form": form,
     })
