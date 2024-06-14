@@ -9,6 +9,8 @@ class TipoProductoForm(ModelForm):
             'nombre': TextInput(attrs={'class': 'form-control rounded-3'}),
             'unidad_medida': Select(attrs={'class': 'form-control rounded-3'}),
         }
+    nombre = TextInput()
+    unidad_medida = Select()
 
 class UnidadMedidaForm(ModelForm):
     class Meta:
