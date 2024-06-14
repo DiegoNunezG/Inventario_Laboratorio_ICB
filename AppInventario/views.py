@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import login, logout, authenticate
-from .models import UnidadMedida, TipoEquipo, TipoProducto, Equipo
+from .models import UnidadMedida, TipoEquipo, TipoProducto, Equipo, Producto
 from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, EquipoForm
 
 def login_web(request):
@@ -38,6 +38,7 @@ def unidades_de_medida(request):
             editing = True
             id = post.id
     return render(request, "AppInventario/unidad_medida.html",{"unidades":unidades,})
+
 
 def index(request):
     return render(request, "AppInventario/base.html")
@@ -83,18 +84,40 @@ def modulo_tipo_equipo(request):
         },
     )
 
+
 def equipo(request):
     equipo =   Equipo.objects.all()
     tipo_equipo = TipoEquipo.objects.all()
     form = EquipoForm()
+    editing = False
+    id_ = None
 
     if request.method == "POST":
         if "agregar" in request.POST:
             form = EquipoForm(request.POST)
+            if "editing" in request.POST:
+                form = EquipoForm(request.POST, instance=Equipo.objects.get(id=request.POST.get("id")))
             if form.is_valid():
-                form.save()
-                form = EquipoForm()
-                return redirect('equipo')
+                if "editing" in request.POST:
+                    selection = Equipo.objects.get(id=request.POST.get("id"))
+                    selection.nombre = form.cleaned_data["nombre"]
+                    selection.tipo_producto = form.cleaned_data["tipo_equipo"]
+                    selection.productos.set(form.cleaned_data["productos"])
+                    selection.save()
+                    editing = False
+                    form = EquipoForm()
+                else:
+                    form.save()
+                    form = EquipoForm()
+            return redirect('equipo')
+        
+        elif "editar" in request.POST:
+            selection = Equipo.objects.get(id=request.POST.get("id"))
+            data = {'id': selection.id, 'nombre': selection.nombre, 'tipo_equipo': selection.tipo_equipo, 'productos': selection.productos.all()}
+            form = EquipoForm(initial=data)
+            editing = True
+            id_ = selection.id
+
         elif "eliminar" in request.POST:
             Equipo.objects.get(id=request.POST.get("id")).delete()
             return redirect('equipo')
@@ -102,5 +125,7 @@ def equipo(request):
     return render(request, "AppInventario/modulo_equipo.html", {
         "tipo_equipo": tipo_equipo,
         "equipo" : equipo,
-        "form": form
+        "form": form,
+        "editing": editing,
+        "id": id_,
     })
