@@ -75,3 +75,5 @@ class ProductoForm(ModelForm):
             'numero_serie': TextInput(attrs={'class': 'form-control rounded-3'})
         }
 
+class ProveedorForm(ModelForm):
+    pass

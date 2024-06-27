@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import login, logout, authenticate
-from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca, Equipo, Producto
-from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm, ProductoForm
+from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca, Equipo, Producto, Proveedor
+from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm, ProductoForm, ProveedorForm
 
 def login_web(request):
     if request.method == "POST":
@@ -236,6 +236,17 @@ def producto(request):
     form = ProductoForm()
     editing = False
     id = None
+    return render(request, "AppInventario/modulo_producto.html", {
+        "productos": producto,
+        "tipo_producto": tipo_producto,
+        "form": form,
+    })
+
+def proveedor(request):
+    unidades = Proveedor.objects.all()
+    form = ProveedorForm()
+    editing = False
+    id_ = None
     return render(request, "AppInventario/modulo_producto.html", {
         "productos": producto,
         "tipo_producto": tipo_producto,

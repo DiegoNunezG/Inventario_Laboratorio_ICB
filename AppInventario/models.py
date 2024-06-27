@@ -1,4 +1,5 @@
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
 class UnidadMedida(models.Model):
@@ -53,6 +54,11 @@ class Equipo(models.Model):
 class Proveedor(models.Model):
     nombre = models.CharField(max_length=100, unique=True)
     rut = models.CharField(max_length=100, unique=True)
+    email_contacto = models.EmailField(unique=True)
+    telefono_contacto = PhoneNumberField()
+    direccion = models.CharField(max_length=100)
+    region = models.CharField(max_length=100)
+    comuna = models.CharField(max_length=100)
 
     def __str__(self):
         return self.nombre
