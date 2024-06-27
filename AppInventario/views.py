@@ -3,6 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca, Equipo, Producto
 from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm, ProductoForm
+from django.contrib.auth.decorators import login_required
 
 def login_web(request):
     if request.method == "POST":
@@ -93,7 +94,7 @@ def tipo_de_producto(request):
          
     return render(request, "AppInventario/tipo_de_producto.html",{"tipo_de_producto":tipo_de_producto, "editing": editing, "id" : id, "form": form})
 
-  
+@login_required(login_url='login')
 def modulo_tipo_equipo(request):
     tipos_de_equipo = TipoEquipo.objects.all()
     form = TipoEquipoForm()
