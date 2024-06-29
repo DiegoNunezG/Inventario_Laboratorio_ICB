@@ -54,11 +54,11 @@ class Equipo(models.Model):
 class Proveedor(models.Model):
     nombre = models.CharField(max_length=100, unique=True)
     rut = models.CharField(max_length=100, unique=True)
-    email_contacto = models.EmailField(unique=True)
-    telefono_contacto = PhoneNumberField()
-    direccion = models.CharField(max_length=100)
-    region = models.CharField(max_length=100)
-    comuna = models.CharField(max_length=100)
+    email_contacto = models.EmailField(default="")
+    telefono_contacto = PhoneNumberField(default="")
+    direccion = models.CharField(max_length=100, default="")
+    region = models.CharField(max_length=100, default="")
+    comuna = models.CharField(max_length=100, default="")
 
     def __str__(self):
         return self.nombre
