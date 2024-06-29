@@ -11,13 +11,9 @@
     <style>
         .disabled-link {
             pointer-events: none;
-            /* Evita clics */
             cursor: not-allowed;
-            /* Cambia el cursor para indicar que está desactivado */
             color: #6c757d;
-            /* Cambia el color para parecer desactivado */
             text-decoration: none;
-            /* Elimina la subrayado */
         }
 
         body,
@@ -28,22 +24,45 @@
 
         main {
             display: flex;
-            height: 100vh;
+            height: calc(100vh - 56px); /* Ajusta la altura del main menos el header */
             overflow: hidden;
         }
 
+        header {
+            height: 56px; /* Ajusta la altura del header */
+        }
 
+        .offcanvas-collapse {
+            position: fixed;
+            top: 56px; /* Posiciona justo debajo del header */
+            bottom: 0;
+            left: 0;
+            z-index: 1045;
+            visibility: hidden;
+            background-color: #ace9fa;
+            width: 250px;
+            transition: visibility .3s ease-in-out, -webkit-transform .3s ease-in-out;
+            transition: visibility .3s ease-in-out, transform .3s ease-in-out;
+            transition: visibility .3s ease-in-out, transform .3s ease-in-out, -webkit-transform .3s ease-in-out;
+            -webkit-transform: translateX(-100%);
+            transform: translateX(-100%);
+        }
+
+        .offcanvas-collapse.open {
+            visibility: visible;
+            -webkit-transform: translateX(0);
+            transform: translateX(0);
+        }
     </style>
 </head>
 
 <body>
-    <header class="d-flex flex-wrap justify-content-center py-3 border-bottom">
-        <button class="navbar-toggler ml-3 collapsed border bg-dark border-danger" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbarsExampleXxl" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+    <header class="d-flex flex-wrap justify-content-center bg-info py-3 border-bottom">
+        <button class="navbar-toggler ml-3 collapsed border bg-dark border-danger" type="button" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
         
-        <a href=""
-            class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <a href="" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-dark text-decoration-none">
             <svg class="bi me-2" width="40" height="32">
                 <use xlink:href="#bootstrap"></use>
             </svg>
@@ -52,66 +71,66 @@
     </header>
 
     <main>
-        <div class="navbar-collapse collapse" id="navbar" style="">
+        <div class="offcanvas-collapse" id="navbar">
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item">
-                    <a href="{% url 'modulotipoequipo' %}" class="nav-link link-body-emphasis" aria-current="page">
+                    <a href="{% url 'modulotipoequipo' %}" class="nav-link link-body-emphasis text-dark" aria-current="page">
                         <svg class="" width="16" height="16"></svg>
                         Tipo de Equipo
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'tipo_de_producto' %}" class="nav-link link-body-emphasis">
+                    <a href="{% url 'tipo_de_producto' %}" class="nav-link link-body-emphasis text-dark">
                         <svg class="" width="16" height="16"></svg>
                         Tipo de Producto
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'equipo' %}" class="nav-link link-body-emphasis">
+                    <a href="{% url 'equipo' %}" class="nav-link link-body-emphasis text-dark">
                         <svg class="" width="16" height="16"></svg>
                         Módulo de Equipos
                     </a>
                 </li>
                 <li>
-                    <a href={% url 'producto' %} class="nav-link link-body-emphasis">
+                    <a href={% url 'producto' %} class="nav-link link-body-emphasis text-dark">
                         <svg class="" width="16" height="16"></svg>
                         Módulo de Productos
                     </a>
                 </li>
                 <li>
-                    <a href="" class="nav-link link-body-emphasis disabled-link">
+                    <a href="" class="nav-link link-body-emphasis text-dark disabled-link">
                         <svg class="" width="16" height="16"></svg>
                         Módulo de Egreso
                     </a>
                 </li>
                 <li>
-                    <a href="" class="nav-link link-body-emphasis disabled-link">
+                    <a href="" class="nav-link link-body-emphasis text-dark disabled-link">
                         <svg class="" width="16" height="16"></svg>
                         Módulo de Ingreso
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'unidadesmedidas' %}" class="nav-link link-body-emphasis">
+                    <a href="{% url 'unidadesmedidas' %}" class="nav-link link-body-emphasis text-dark">
                         <svg class="" width="16" height="16"></svg>
                         Unidad de Medida
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'marcadeproducto' %}" class="nav-link link-body-emphasis">
+                    <a href="{% url 'marcadeproducto' %}" class="nav-link link-body-emphasis text-dark">
                         <svg class="" width="16" height="16"></svg>
                         Marca de Producto
                     </a>
                 </li>
                 <li>
-                    <a href="" class="nav-link link-body-emphasis disabled-link">
+                    <a href="" class="nav-link link-body-emphasis text-dark disabled-link">
                         <svg class="" width="16" height="16"></svg>
                         Módulo Proveedores
                     </a>
                 </li>
             </ul>
 
-            <div class="dropdown">
-                <a href="" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
+            <div class="dropdown mt-auto">
+                <a href="" class="d-flex align-items-center link-body-emphasis text-dark text-decoration-none dropdown-toggle"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="https://cdn-icons-png.flaticon.com/512/9187/9187604.png" alt="" width="32" height="32"
                         class="rounded-circle me-2">
@@ -121,14 +140,20 @@
                     <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a></li>
                 </ul>
             </div>
-          </div>
-            <div class="container overflow-auto">
-                {% block content %}
-                {% endblock %}
-            </div>
+        </div>
 
+        <div class="container overflow-auto">
+            {% block content %}
+            {% endblock %}
+        </div>
     </main>
+
     {% bootstrap_javascript %}
+    <script>
+        document.querySelector('.navbar-toggler').addEventListener('click', function() {
+            document.getElementById('navbar').classList.toggle('open');
+        });
+    </script>
     {% block scripts %}
     {% endblock scripts %}
 
