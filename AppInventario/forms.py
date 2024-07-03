@@ -85,6 +85,13 @@ class ProveedorForm(ModelForm):
             'email_contacto': TextInput(attrs={'class': 'form-control rounded-3'}),
             'telefono_contacto': TextInput(attrs={'class': 'form-control rounded-3'}),
             'direccion': TextInput(attrs={'class': 'form-control rounded-3'}),
-            'region': TextInput(attrs={'class': 'form-control rounded-3'}),
-            'comuna': TextInput(attrs={'class': 'form-control rounded-3'})
+            'region': Select(attrs={'class': 'form-control rounded-3'}),
+            'comuna': Select(attrs={'class': 'form-control rounded-3'})
         }
+    nombre = TextInput()
+    rut = TextInput()
+    email_contacto = TextInput()
+    telefono_contacto = TextInput()
+    direccion = TextInput()
+    region = Select()
+    comuna = Select()
