@@ -74,18 +74,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for proveedor in proveedores %}
+                    {% for prov in proveedor %}
                     <form method="POST">
                         {% csrf_token %}
-                        <input type="hidden" name="id" value="{{proveedor.id}}">
+                        <input type="hidden" name="id" value="{{prov.id}}">
                         <tr>
-                            <td>{{ proveedor.nombre }}</td>
-                            <td>{{ proveedor.rut }}</td>
-                            <td>{{ proveedor.email_contacto }}</td>
-                            <td>{{ proveedor.telefono_contacto }}</td>
-                            <td>{{ proveedor.direccion }}</td>
-                            <td>{{ proveedor.region }}</td>
-                            <td>{{ proveedor.comuna }}</td>
+                            <td>{{ prov.nombre }}</td>
+                            <td>{{ prov.rut }}</td>
+                            <td>{{ prov.email_contacto }}</td>
+                            <td>{{ prov.telefono_contacto }}</td>
+                            <td>{{ prov.direccion }}</td>
+                            <td>{{ prov.region }}</td>
+                            <td>{{ prov.comuna }}</td>
                             <td>
                                 {% comment %} <a href="" class="text-white btn btn-secondary btn-sm disabled-link">Editar</a> {% endcomment %}
                                 <button class="btn btn-warning" id="editarregistro_te" name="editar" type="submit">Editar</button>

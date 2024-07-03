@@ -298,4 +298,7 @@ def proveedor(request):
     return render(request, "AppInventario/modulo_proveedor.html", {
         "proveedor": proveedor,
         "form": form,
+        "editing": editing,
+        "deleting": deleting,
+        "id": id_
     })
