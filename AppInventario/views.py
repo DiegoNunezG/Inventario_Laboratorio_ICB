@@ -4,6 +4,8 @@ from django.contrib.auth import login, logout, authenticate
 from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca, Equipo, Producto
 from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm, ProductoForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LogoutView
+from django.urls import reverse_lazy
 
 def login_web(request):
     if request.method == "POST":
@@ -19,8 +21,12 @@ def login_web(request):
     else:
         form = AuthenticationForm()
     return render(request, "AppInventario/login.html", {"form":form})
+    
+class CustomLogoutView(LogoutView):
+    next_page = reverse_lazy('login') # Redirige a la página de inicio de sesión después de cerrar sesión
 
 
+@login_required(login_url='login')
 def unidades_de_medida(request):
     unidades = UnidadMedida.objects.all()
     form = UnidadMedidaForm()
@@ -58,10 +64,11 @@ def unidades_de_medida(request):
         "editing": editing,
         "id": id_,})
 
-
+@login_required(login_url='login')
 def index(request):
     return render(request, "AppInventario/base.html")
 
+@login_required(login_url='login')
 def tipo_de_producto(request):
     tipo_de_producto = TipoProducto.objects.all()
     unidades = UnidadMedida.objects.all()
@@ -138,7 +145,7 @@ def modulo_tipo_equipo(request):
         },
     )
   
-
+@login_required(login_url='login')
 def marca_de_producto(request):
     marcas = Marca.objects.all()
     form = MarcaForm()
@@ -168,7 +175,7 @@ def marca_de_producto(request):
             id = seleccion.id
     return render(request, "AppInventario/marca_de_producto.html",{"marcas":marcas, "editing": editing, "id" : id, "form": form})
 
-
+@login_required(login_url='login')
 def equipo(request):
     equipo =   Equipo.objects.all()
     tipo_equipo = TipoEquipo.objects.all()
@@ -231,6 +238,7 @@ def equipo(request):
         "form": form,
     })
 
+@login_required(login_url='login')
 def producto(request):
     producto = Producto.objects.all()
     tipo_producto = TipoProducto.objects.all()
