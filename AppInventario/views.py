@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import login, logout, authenticate
-from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca, Equipo, Producto, OrdenIngreso, DetalleIngreso
-from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm, ProductoForm, OrdenIngresoForm
+from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca, Equipo, Producto, OrdenIngreso, DetalleIngreso, OrdenEgreso, DetalleEgreso
+from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm, ProductoForm, OrdenIngresoForm, OrdenEgresoForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LogoutView
 from django.urls import reverse_lazy
@@ -263,6 +263,19 @@ def orden_ingreso(request):
     form = OrdenIngresoForm()
 
     return render(request, "AppInventario/orden_ingreso.html", {
+        "ordenes": ordenes,
+        "detalles": detalles,
+        "form": form,
+    })
+
+
+@login_required(login_url='login')
+def orden_egreso(request):
+    ordenes = OrdenEgreso.objects.all()
+    detalles = DetalleEgreso.objects.all()
+    form = OrdenEgresoForm()
+
+    return render(request, "AppInventario/orden_egreso.html", {
         "ordenes": ordenes,
         "detalles": detalles,
         "form": form,
