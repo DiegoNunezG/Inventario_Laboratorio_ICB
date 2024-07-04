@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import login, logout, authenticate
 from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca, Equipo, Producto, OrdenIngreso, DetalleIngreso, OrdenEgreso, DetalleEgreso
-from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm, ProductoForm, OrdenIngresoForm, OrdenEgresoForm
+from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm, ProductoForm, OrdenIngresoForm, OrdenEgresoForm, ProductoFormSet
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LogoutView
 from django.urls import reverse_lazy
@@ -284,7 +284,7 @@ def orden_egreso(request):
 
 
 class AddEgreso(TemplateView):
-    template_name="AppInventario/interfaz_ingreso.html"
+    template_name="AppInventario/interfaz_egreso.html"
 
     def get(self, *args, **kargs):
         formset = ProductoFormSet(queryset=Producto.objects.none())

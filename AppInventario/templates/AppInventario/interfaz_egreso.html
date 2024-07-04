@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Egreso de Productos</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
     <style>
         body {
             background-color: #222;
@@ -61,7 +63,7 @@
 <body class="d-flex justify-content-center align-items-center">
 
     <div class="container fondo-container text-center rounded-3">
-        <h2>Nueva Orden de Ingreso</h2>
+        <h2>Nueva Orden de Egreso</h2>
         <p class="border-top border-4"></p>
 
         <div class="container">
@@ -76,7 +78,7 @@
                 </div>
                 {% endfor %}
                 <button id="add-form" type="button">Añadir otro producto</button>
-                <button type="submit">Guardar Orden Ingreso</button>
+                <button type="submit">Guardar Orden Egreso</button>
             </form>
         </div>
     </div>

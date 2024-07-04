@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
-from AppInventario.views import login_web, index, unidades_de_medida, modulo_tipo_equipo, tipo_de_producto, marca_de_producto, equipo, producto, CustomLogoutView, orden_ingreso, orden_egreso
+from AppInventario.views import login_web, index, unidades_de_medida, modulo_tipo_equipo, tipo_de_producto, marca_de_producto, equipo, producto, CustomLogoutView, orden_ingreso, orden_egreso, AddEgreso
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -17,4 +17,5 @@ urlpatterns = [
     path('modulo-de-producto/', producto, name='producto'),
     path('orden-ingreso/', orden_ingreso, name= 'orden_ingreso'),
     path('orden-egreso/', orden_egreso, name= 'orden_egreso'),
+    path('out/', AddEgreso.as_view(), name= 'interfaz_egreso'),
 ]
