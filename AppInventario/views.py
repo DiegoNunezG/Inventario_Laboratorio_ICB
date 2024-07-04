@@ -248,6 +248,7 @@ def proveedor(request):
     editing = False
     deleting = False
     id_ = None
+    error_eliminar = False
 
     if request.method == "POST":
         print(request.POST)
@@ -284,7 +285,7 @@ def proveedor(request):
             selection = Proveedor.objects.get(id=request.POST.get("id"))
             id_ = selection.id
             deleting = True
-        
+
         elif "deleting" in request.POST:
             deleting = False
             id_ = None
@@ -292,13 +293,19 @@ def proveedor(request):
                 print()
                 return redirect('moduloproveedores')
             elif "confirmar_delete" in request.POST: 
-                Proveedor.objects.get(id=request.POST.get("id")).delete()
-                return redirect('moduloproveedores')
+                try:
+                    Proveedor.objects.get(id=request.POST.get("id")).delete()
+                    return redirect('moduloproveedores')
+                except:
+                    error_eliminar = True
+        elif "cerrarmodalerror" in request.POST:
+            return redirect('moduloproveedores')
 
     return render(request, "AppInventario/modulo_proveedor.html", {
         "proveedor": proveedor,
         "form": form,
         "editing": editing,
         "deleting": deleting,
+        "error_eliminar": error_eliminar,
         "id": id_
     })
