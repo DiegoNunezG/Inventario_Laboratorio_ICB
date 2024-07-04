@@ -6,6 +6,7 @@ from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LogoutView
 from django.urls import reverse_lazy
+from django.views.generic import TemplateView
 
 def login_web(request):
     if request.method == "POST":
@@ -280,3 +281,21 @@ def orden_egreso(request):
         "detalles": detalles,
         "form": form,
     })
+
+
+class AddEgreso(TemplateView):
+    template_name="AppInventario/interfaz_ingreso.html"
+
+    def get(self, *args, **kargs):
+        formset = ProductoFormSet(queryset=Producto.objects.none())
+        print(formset)
+        return self.render_to_response({'producto_formset': formset})
+    
+    def post(self, *args, **kargs):
+        formset = ProductoFormSet(data=self.request.POST)
+
+        if formset.is_valid():
+            formset.save()
+            return redirect(reverse_lazy("orden_ingreso"))
+        
+        return self.render_to_response({'producto_formset': formset})
