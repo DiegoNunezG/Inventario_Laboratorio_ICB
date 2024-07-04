@@ -137,8 +137,10 @@ def modulo_tipo_equipo(request):
     editing = False
     deleting = False
     error_eliminar = False
+    id_ = None
 
     if request.method == "POST":
+        print(request.POST)
         if "agregar" in request.POST:
             form = TipoEquipoForm(request.POST)
             if "editing" in request.POST:
@@ -167,6 +169,7 @@ def modulo_tipo_equipo(request):
             
         elif "eliminar" in request.POST:
             selection = TipoEquipo.objects.get(id=request.POST.get("id"))
+            print("#"*100,selection)
             id_ = selection.id
             deleting = True
 
@@ -174,12 +177,12 @@ def modulo_tipo_equipo(request):
             deleting = False
             id_ = None
             if "cancelar_delete" in request.POST:
-                print()
                 return redirect('modulotipoequipo')
             elif "confirmar_delete" in request.POST: 
                 try:
                     TipoEquipo.objects.get(id=request.POST.get("id")).delete()
                     return redirect('modulotipoequipo')
+
                 except:
                     error_eliminar = True
         elif "cerrarmodalerror" in request.POST:
@@ -190,6 +193,7 @@ def modulo_tipo_equipo(request):
         {
             "tipos_de_equipo": tipos_de_equipo,
             "form": form,
+            "id": id_,
             "editing": editing,"deleting": deleting, "error_eliminar": error_eliminar
         },
     )
