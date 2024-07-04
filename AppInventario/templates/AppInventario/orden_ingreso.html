@@ -5,6 +5,13 @@
     <p class="my-3 px-5 fs-4 fw-bold">Órdenes de Ingreso</p>
 </div>
 
+<div class="row mt-3 mx-3">
+    <div class="col-12 text-end">
+        <button class="btn btn-success fs-5 fw-bold" id ="btn_nueva_orden" name="agregar">+</button>
+    </div>
+</div>
+
+<!-- Tabla de visualización -->
 <div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -52,3 +59,15 @@
 
 
 {% endblock content %}
+
+{% block scripts %}
+<script>
+    var btn_nueva_orden = document.getElementById("btn_nueva_orden");
+
+    btn_nueva_orden.addEventListener("click", abrir_ventana_ingreso);
+
+    function abrir_ventana_ingreso() {
+        open("{% url 'interfaz_ingreso' %}", "_parent")
+    }
+</script>
+{% endblock scripts %}
