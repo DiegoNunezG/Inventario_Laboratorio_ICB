@@ -1,5 +1,6 @@
 from django.forms import ModelForm, TextInput, Select, ModelMultipleChoiceField, CheckboxSelectMultiple, DateInput
-from .models import TipoProducto, UnidadMedida, TipoEquipo, Marca, Equipo, Producto, OrdenIngreso, OrdenEgreso
+from .models import TipoProducto, UnidadMedida, TipoEquipo, Marca, Equipo, Producto, Proveedor, OrdenIngreso, OrdenEgreso
+
 
 class TipoProductoForm(ModelForm):
     class Meta:
@@ -76,6 +77,28 @@ class ProductoForm(ModelForm):
         }
 
 
+class ProveedorForm(ModelForm):
+    class Meta:
+        model = Proveedor
+        fields = ['nombre', 'rut', 'email_contacto', 'telefono_contacto', 'direccion', 'region', 'comuna']
+        widgets = {
+            'nombre': TextInput(attrs={'class': 'form-control rounded-3'}),
+            'rut': TextInput(attrs={'class': 'form-control rounded-3'}),
+            'email_contacto': TextInput(attrs={'class': 'form-control rounded-3'}),
+            'telefono_contacto': TextInput(attrs={'class': 'form-control rounded-3'}),
+            'direccion': TextInput(attrs={'class': 'form-control rounded-3'}),
+            'region': Select(attrs={'class': 'form-control rounded-3'}),
+            'comuna': Select(attrs={'class': 'form-control rounded-3'})
+        }
+    nombre = TextInput()
+    rut = TextInput()
+    email_contacto = TextInput()
+    telefono_contacto = TextInput()
+    direccion = TextInput()
+    region = Select()
+    comuna = Select()
+
+
 class OrdenIngresoForm(ModelForm):
     class Meta:
         model = OrdenIngreso
@@ -95,3 +118,4 @@ class OrdenEgresoForm(ModelForm):
             'fecha': DateInput(attrs={'class': 'form-control rounded-3'}),
             'comentario': TextInput(attrs={'class': 'form-control rounded-3'}),
         }
+

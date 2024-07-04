@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import login, logout, authenticate
-from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca, Equipo, Producto, OrdenIngreso, DetalleIngreso, OrdenEgreso, DetalleEgreso
-from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm, ProductoForm, OrdenIngresoForm, OrdenEgresoForm
+from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca, Equipo, Producto, Proveedor, OrdenIngreso, DetalleIngreso, OrdenEgreso, DetalleEgreso
+from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm, ProductoForm, ProveedorForm, OrdenIngresoForm, OrdenEgresoForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LogoutView
 from django.urls import reverse_lazy
@@ -339,6 +339,77 @@ def producto(request):
         "form": form,
     })
 
+  
+def proveedor(request):
+    proveedor = Proveedor.objects.all()
+    form = ProveedorForm()
+    editing = False
+    deleting = False
+    id_ = None
+    error_eliminar = False
+
+    if request.method == "POST":
+        print(request.POST)
+
+        if "agregar" in request.POST:
+            form = ProveedorForm(request.POST)
+            if "editing" in request.POST:
+                form = ProveedorForm(request.POST, instance=Proveedor.objects.get(id=request.POST.get("id")))
+            if form.is_valid():
+                if "editing" in request.POST:
+                    selection = Proveedor.objects.get(id=request.POST.get("id"))
+                    selection.nombre = form.cleaned_data["nombre"]
+                    selection.rut = form.cleaned_data["rut"]
+                    selection.email_contacto = form.cleaned_data["email_contacto"]
+                    selection.telefono_contacto = form.cleaned_data["telefono_contacto"]
+                    selection.direccion = form.cleaned_data["direccion"]
+                    selection.region = form.cleaned_data["region"]
+                    selection.comuna = form.cleaned_data["comuna"]
+                    selection.save()
+                    editing = False
+                    form = ProveedorForm()
+                else:
+                    form.save()
+                    form = ProveedorForm()
+            return redirect('moduloproveedores')
+        
+        elif "editar" in request.POST:
+            selection = Proveedor.objects.get(id=request.POST.get("id"))
+            data = {'id': selection.id, 'nombre': selection.nombre, 'rut': selection.rut, 'email_contacto': selection.email_contacto, 'telefono_contacto': selection.telefono_contacto,'direccion': selection.direccion, 'region': selection.region, 'comuna': selection.comuna}
+            form = ProveedorForm(initial=data)
+            editing = True
+            id_ = selection.id
+
+        elif "eliminar" in request.POST:
+            selection = Proveedor.objects.get(id=request.POST.get("id"))
+            id_ = selection.id
+            deleting = True
+
+        elif "deleting" in request.POST:
+            deleting = False
+            id_ = None
+            if "cancelar_delete" in request.POST:
+                print()
+                return redirect('moduloproveedores')
+            elif "confirmar_delete" in request.POST: 
+                try:
+                    Proveedor.objects.get(id=request.POST.get("id")).delete()
+                    return redirect('moduloproveedores')
+                except:
+                    error_eliminar = True
+        elif "cerrarmodalerror" in request.POST:
+            return redirect('moduloproveedores')
+
+    return render(request, "AppInventario/modulo_proveedor.html", {
+        "proveedor": proveedor,
+        "form": form,
+        "editing": editing,
+        "deleting": deleting,
+        "error_eliminar": error_eliminar,
+        "id": id_
+    })
+
+  
 @login_required(login_url='login')
 def orden_ingreso(request):
     ordenes = OrdenIngreso.objects.all()

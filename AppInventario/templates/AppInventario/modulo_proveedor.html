@@ -1,8 +1,7 @@
-{% extends './base.html' %}
-
+{% extends "./base.html" %}
 {% block content %}
 <div class="row bg-secondary">
-    <p class="my-3 px-5 fs-4 fw-bold">Tipos de Equipo</p>
+    <p class="my-3 px-5 fs-4 fw-bold">Proveedores</p>
 </div>
 
 <div class="row mt-3 mx-3">
@@ -10,27 +9,28 @@
         <button class="btn btn-primary" name="editar" id="btnformagregar">Agregar</button>
     </div>
 </div>
-    {% if editing %}
-    <div class="activar_form" id="bloqueformagregar" style="display:block;">
-    {% else %}
-    <div class="" id="bloqueformagregar" style="display:none;">
-    {% endif %}
-        <div class="container border border-secondary rounded p-3 mt-3">
-            <form method="POST">
-                {% csrf_token %}
-                {{ form.as_p }}
-                {% if editing %}
-                <input type="hidden" name="editing" value="{{ editing }}">
-                <input type="hidden" name="id" value="{{ id }}">
-                {% endif %}
-                <div class="text-end mt-3">
-                    <button id="botoncerrarform" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button name="agregar" type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-            </form>
-        </div>
+
+{% if editing %}
+<div class="activar_form" id="bloqueformagregar" style="display:block;">
+{% else %}
+<div class="" id="bloqueformagregar" style="display:none;">
+{% endif %}
+    <div class="container border border-secondary rounded p-3 mt-3">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% if editing %}
+            <input type="hidden" name="editing" value="{{ editing }}">
+            <input type="hidden" name="id" value="{{ id }}">
+            {% endif %}
+            <div class="text-end mt-3">
+                <button id="botoncerrarform" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button name="agregar" type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+        </form>
     </div>
 </div>
+
 {% if deleting %}
 
 <button type="button" id="botonmodaleliminar" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="display:none;">modal</button>
@@ -72,7 +72,7 @@
             </div>
             <div class="modal-body">
                 <h2 class="text-center mt-3 mb-4 fw-bold">No se puede eliminar el registro</h2>
-                <p class="text-center">Hay equipos que dependen de este registro. Para eliminar este tipo de equipo, primero elimina todos los equipos asociados a él y vuelve a intentar.</p>
+                <p class="text-center">Hay productos que dependen de este registro. Para eliminar esta marca, primero elimina todos los productos asociados a ella y vuelve a intentar.</p>
             </div>
             <div class="modal-footer">
                 <form method="POST">
@@ -93,28 +93,32 @@
                 <thead>
                     <tr>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Tipos de Producto</th>
-                        <th scope="col">Acciones</th>
+                        <th scope="col">RUT</th>
+                        <th scope="col">email</th>
+                        <th scope="col">teléfono</th>
+                        <th scope="col">dirección</th>
+                        <th scope="col">región</th>
+                        <th scope="col">comuna</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for tipoequipo in tipos_de_equipo %}
+                    {% for prov in proveedor %}
                     <form method="POST">
                         {% csrf_token %}
-                        <input type="hidden" name="id" value="{{tipoequipo.id}}">
+                        <input type="hidden" name="id" value="{{prov.id}}">
                         <tr>
-                            <td>{{ tipoequipo.nombre }}</td>
-                            <td>
-                                <ul class="list-group" style="list-style: none;">
-                                    {% for item in tipoequipo.tipo_producto.all %}
-                                    <li class="">{{item}}</li>
-                                    {% endfor %}
-
-                                </ul>
-                            </td>
+                            <td>{{ prov.nombre }}</td>
+                            <td>{{ prov.rut }}</td>
+                            <td>{{ prov.email_contacto }}</td>
+                            <td>{{ prov.telefono_contacto }}</td>
+                            <td>{{ prov.direccion }}</td>
+                            <td>{{ prov.region }}</td>
+                            <td>{{ prov.comuna }}</td>
                             <td>
                                 {% comment %} <a href="" class="text-white btn btn-secondary btn-sm disabled-link">Editar</a> {% endcomment %}
                                 <button class="btn btn-warning" id="editarregistro_te" name="editar" type="submit">Editar</button>
+                            </td>
+                            <td>                               
                                 <button type="submit" class="btn btn-danger text-white" name="eliminar"
                                 data-bs-toggle="modal" data-bs-target="#eliminarequipo">Eliminar</button>
                             </td>
@@ -127,13 +131,13 @@
     </div>
 </div>
 
-{% endblock content %}
+{% endblock %}
 
 {% block scripts %}
 <script>
     var form_agregar = document.getElementById("bloqueformagregar");
     var btn_agregar = document.getElementById("btnformagregar");
-    var btn_editar = document.getElementById("editarregistro_te");
+    var btn_editar = document.getElementById("botoneditarmarca");
     var btn_cerrar = document.getElementById("botoncerrarform");
 
     btn_agregar.addEventListener("click", toggle_form_agregar);
