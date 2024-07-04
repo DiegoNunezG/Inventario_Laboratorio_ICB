@@ -287,6 +287,7 @@ class AddOrden(TemplateView):
 
     def get(self, *args, **kargs):
         formset = ProductoFormSet(queryset=Producto.objects.none())
+        print(formset)
         return self.render_to_response({'producto_formset': formset})
     
     def post(self, *args, **kargs):

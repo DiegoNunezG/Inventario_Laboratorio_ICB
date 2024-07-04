@@ -67,7 +67,7 @@
     btn_nueva_orden.addEventListener("click", abrir_ventana_ingreso);
 
     function abrir_ventana_ingreso() {
-        open("{% url 'interfaz_ingreso' %}", "_parent")
+        open("{% url 'interfaz_ingreso' %}", "_self")
     }
 </script>
 {% endblock scripts %}

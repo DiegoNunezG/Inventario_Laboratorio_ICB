@@ -72,7 +72,9 @@
                 {{ producto_formset.management_form }}
                 {% for form in producto_formset %}
                 <div class="producto-form">
-                    {{form.as_p}}
+                    <ul class="list-unstyled list-group-horizontal">
+                    {{form.as_ul}}
+                    </ul>
                 </div>
                 {% endfor %}
                 <button id="add-form" type="button">Añadir otro producto</button>
@@ -184,3 +186,30 @@
     </script> {% endcomment %}
 </body>
 </html>
+
+
+{% comment %} 
+<table class="table table-light table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Tipo de Producto</th>
+                            <th scope="col">Modelo</th>
+                            <th scope="col">Marca</th>
+                            <th scope="col">N° serie</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for form in producto_formset %}
+                        <tr>
+                            <div class="producto-form">
+                                {% for field in form %}
+                                <td>
+                                    {{ field }}
+                                </td>
+                                {% endfor %}
+                            </div>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+{% endcomment %}
