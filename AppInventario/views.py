@@ -263,6 +263,7 @@ def proveedor(request):
                     selection.nombre = form.cleaned_data["nombre"]
                     selection.rut = form.cleaned_data["rut"]
                     selection.email_contacto = form.cleaned_data["email_contacto"]
+                    selection.telefono_contacto = form.cleaned_data["telefono_contacto"]
                     selection.direccion = form.cleaned_data["direccion"]
                     selection.region = form.cleaned_data["region"]
                     selection.comuna = form.cleaned_data["comuna"]
@@ -276,7 +277,7 @@ def proveedor(request):
         
         elif "editar" in request.POST:
             selection = Proveedor.objects.get(id=request.POST.get("id"))
-            data = {'id': selection.id, 'nombre': selection.nombre, 'rut': selection.rut, 'email_contacto': selection.email_contacto, 'direccion': selection.direccion, 'region': selection.region, 'comuna': selection.comuna}
+            data = {'id': selection.id, 'nombre': selection.nombre, 'rut': selection.rut, 'email_contacto': selection.email_contacto, 'telefono_contacto': selection.telefono_contacto,'direccion': selection.direccion, 'region': selection.region, 'comuna': selection.comuna}
             form = ProveedorForm(initial=data)
             editing = True
             id_ = selection.id
