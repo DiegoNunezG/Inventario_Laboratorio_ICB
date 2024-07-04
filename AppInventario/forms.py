@@ -1,5 +1,6 @@
-from django.forms import ModelForm, TextInput, Select, ModelMultipleChoiceField, CheckboxSelectMultiple
-from .models import TipoProducto, UnidadMedida, TipoEquipo, Marca, Equipo, Producto, Proveedor
+from django.forms import ModelForm, TextInput, Select, ModelMultipleChoiceField, CheckboxSelectMultiple, DateInput
+from .models import TipoProducto, UnidadMedida, TipoEquipo, Marca, Equipo, Producto, Proveedor, OrdenIngreso, OrdenEgreso
+
 
 class TipoProductoForm(ModelForm):
     class Meta:
@@ -75,6 +76,7 @@ class ProductoForm(ModelForm):
             'numero_serie': TextInput(attrs={'class': 'form-control rounded-3'})
         }
 
+
 class ProveedorForm(ModelForm):
     class Meta:
         model = Proveedor
@@ -95,3 +97,25 @@ class ProveedorForm(ModelForm):
     direccion = TextInput()
     region = Select()
     comuna = Select()
+
+
+class OrdenIngresoForm(ModelForm):
+    class Meta:
+        model = OrdenIngreso
+        fields = ['proveedor', 'fecha']
+        widgets = {
+            'proveedor': Select(attrs={'class': 'form-control rounded-3'}),
+            'fecha': DateInput(attrs={'class': 'form-control rounded-3'})
+        }
+
+
+class OrdenEgresoForm(ModelForm):
+    class Meta:
+        model = OrdenEgreso
+        fields = ['destino', 'fecha', 'comentario']
+        widgets = {
+            'destino': Select(attrs={'class': 'form-control rounded-3'}),
+            'fecha': DateInput(attrs={'class': 'form-control rounded-3'}),
+            'comentario': TextInput(attrs={'class': 'form-control rounded-3'}),
+        }
+

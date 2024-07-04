@@ -1,0 +1,54 @@
+{% extends './base.html' %}
+{% block content %}
+
+<div class="row bg-secondary">
+    <p class="my-3 px-5 fs-4 fw-bold">Órdenes de Ingreso</p>
+</div>
+
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <table class="table table-striped text-center">
+                <thead>
+                    <tr>
+                        <th class="fs-5" scope="col">Código</th>
+                        <th class="fs-5" scope="col">Proveedor</th>
+                        <th class="fs-5" scope="col">Fecha</th>
+                        <th class="fs-5" scope="col">Detalle</th>
+                        <th class="fs-5" scope="col">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for orden in ordenes %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <tr>
+                            <td>{{orden.id}}</td>
+                            <td>{{orden.proveedor}}</td>
+                            <td>{{orden.fecha}}</td>
+                            <td>
+                                <ul class="list-group" style="list-style: none;">
+                                    {% for item in detalles %}
+                                    {% if item.orden.id == orden.id %}
+                                    <li class="">
+                                        <strong>{{item.cantidad}} x {{item.producto.tipo_producto}}:</strong>
+                                        {{item.producto}}
+                                    </li>
+                                    {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>
+                                <button id="verdetalle" class="btn btn-info disabled" name="verdetalle">Ver</button>
+                            </td>
+                        </tr>
+                    </form>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

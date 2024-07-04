@@ -1,5 +1,7 @@
 from django.db import models
+from django.core.validators import MinValueValidator, StepValueValidator
 from phonenumber_field.modelfields import PhoneNumberField
+
 
 # Create your models here.
 class UnidadMedida(models.Model):
@@ -82,14 +84,20 @@ class Proveedor(models.Model):
     
 
 class OrdenIngreso(models.Model):
-    producto = models.ForeignKey(Producto, on_delete=models.PROTECT)
-    cantidad = models.PositiveIntegerField()
     proveedor = models.ForeignKey(Proveedor, on_delete=models.PROTECT)
     fecha = models.DateField()
 
 class OrdenEgreso(models.Model):
-    producto = models.ForeignKey(Producto, on_delete=models.PROTECT)
-    comentario = models.CharField(max_length=250)
-    cantidad = models.PositiveIntegerField()
-    fecha = models.DateField()
     destino = models.CharField(max_length=100)
+    fecha = models.DateField()
+    comentario = models.CharField(max_length=250)
+
+class DetalleIngreso(models.Model):
+    orden = models.ForeignKey(OrdenIngreso, on_delete=models.PROTECT)
+    producto = models.ForeignKey(Producto, on_delete=models.PROTECT)
+    cantidad = models.PositiveIntegerField(default=1, blank=False, validators=[MinValueValidator(1), StepValueValidator(1)])
+
+
+class DetalleEgreso(models.Model):
+    orden = models.ForeignKey(OrdenEgreso, on_delete=models.PROTECT)
+    producto = models.ForeignKey(Producto, on_delete=models.PROTECT)

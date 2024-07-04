@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import login, logout, authenticate
-from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca, Equipo, Producto, Proveedor
-from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm, ProductoForm, ProveedorForm
+from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca, Equipo, Producto, Proveedor, OrdenIngreso, DetalleIngreso, OrdenEgreso, DetalleEgreso
+from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm, ProductoForm, ProveedorForm, OrdenIngresoForm, OrdenEgresoForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LogoutView
+from django.urls import reverse_lazy
 
 def login_web(request):
     if request.method == "POST":
@@ -18,13 +21,19 @@ def login_web(request):
     else:
         form = AuthenticationForm()
     return render(request, "AppInventario/login.html", {"form":form})
+    
+class CustomLogoutView(LogoutView):
+    next_page = reverse_lazy('login') # Redirige a la página de inicio de sesión después de cerrar sesión
 
 
+@login_required(login_url='login')
 def unidades_de_medida(request):
     unidades = UnidadMedida.objects.all()
     form = UnidadMedidaForm()
     editing = False
     id_ = None
+    deleting = False
+    error_eliminar = False
 
     if request.method == "POST":
         if "agregar" in request.POST:
@@ -50,23 +59,43 @@ def unidades_de_medida(request):
             form = UnidadMedidaForm(initial=data)
             editing = True
             id_ = selection.id
+        
+        elif "eliminar" in request.POST:
+            selection = UnidadMedida.objects.get(id=request.POST.get("id"))
+            id_ = selection.id
+            deleting = True
 
-    return render(request, "AppInventario/unidad_medida.html",{
-        "unidades":unidades,
-        "form": form,
-        "editing": editing,
-        "id": id_,})
+        elif "deleting" in request.POST:
+            deleting = False
+            id_ = None
+            if "cancelar_delete" in request.POST:
+                print()
+                return redirect('unidadesmedidas')
+            elif "confirmar_delete" in request.POST: 
+                try:
+                    UnidadMedida.objects.get(id=request.POST.get("id")).delete()
+                    return redirect('unidadesmedidas')
+                except:
+                    error_eliminar = True
+        elif "cerrarmodalerror" in request.POST:
+            return redirect('unidadesmedidas')
 
+    return render(request, "AppInventario/unidad_medida.html",{"unidades":unidades, "form": form,"editing": editing, "id": id_, "deleting": deleting, "error_eliminar": error_eliminar})
 
+@login_required(login_url='login')
 def index(request):
     return render(request, "AppInventario/base.html")
 
+
+@login_required(login_url='login')
 def tipo_de_producto(request):
     tipo_de_producto = TipoProducto.objects.all()
     unidades = UnidadMedida.objects.all()
     form = TipoProductoForm()
     editing = False
-    id = None
+    id_ = None
+    deleting = False
+    error_eliminar = False
     if request.method == "POST":
         if "agregar" in request.POST:
             form = TipoProductoForm(request.POST)
@@ -80,7 +109,7 @@ def tipo_de_producto(request):
                     seleccion.unidad_medida = form.cleaned_data["unidad_medida"]
                     seleccion.save()
                     editing = False
-                    id = None
+                    id_ = None
                 else:
                     form.save()
                     form = TipoProductoForm()
@@ -89,17 +118,39 @@ def tipo_de_producto(request):
             seleccion = TipoProducto.objects.get(id=request.POST.get("id"))
             form = TipoProductoForm(instance=seleccion)
             editing = True
-            id = seleccion.id            
-         
-    return render(request, "AppInventario/tipo_de_producto.html",{"tipo_de_producto":tipo_de_producto, "editing": editing, "id" : id, "form": form})
+            id_ = seleccion.id            
+        elif "eliminar" in request.POST:
+            selection = TipoProducto.objects.get(id=request.POST.get("id"))
+            id_ = selection.id
+            deleting = True
+        elif "deleting" in request.POST:
+            deleting = False
+            id_ = None
+            if "cancelar_delete" in request.POST:
+                print()
+                return redirect('tipo_de_producto')
+            elif "confirmar_delete" in request.POST: 
+                try:
+                    TipoProducto.objects.get(id=request.POST.get("id")).delete()
+                    return redirect('tipo_de_producto')
+                except:
+                    error_eliminar = True
+        elif "cerrarmodalerror" in request.POST:
+            return redirect('tipo_de_producto')
+    return render(request, "AppInventario/tipo_de_producto.html",{"tipo_de_producto":tipo_de_producto, "editing": editing, "id" : id_, "form": form, "deleting": deleting, "error_eliminar": error_eliminar})
 
   
+@login_required(login_url='login')
 def modulo_tipo_equipo(request):
     tipos_de_equipo = TipoEquipo.objects.all()
     form = TipoEquipoForm()
     editing = False
+    deleting = False
+    error_eliminar = False
+    id_ = None
 
     if request.method == "POST":
+        print(request.POST)
         if "agregar" in request.POST:
             form = TipoEquipoForm(request.POST)
             if "editing" in request.POST:
@@ -125,26 +176,49 @@ def modulo_tipo_equipo(request):
             form = TipoEquipoForm(initial=data)
             editing = True
             id_ = selection.id
-            return render(request, "AppInventario/modulo_tipo_equipo.html", {"form":form, "tipos_de_equipo": tipos_de_equipo, "editing":editing, "id":id_})
+            
+        elif "eliminar" in request.POST:
+            selection = TipoEquipo.objects.get(id=request.POST.get("id"))
+            print("#"*100,selection)
+            id_ = selection.id
+            deleting = True
 
+        elif "deleting" in request.POST:
+            deleting = False
+            id_ = None
+            if "cancelar_delete" in request.POST:
+                return redirect('modulotipoequipo')
+            elif "confirmar_delete" in request.POST: 
+                try:
+                    TipoEquipo.objects.get(id=request.POST.get("id")).delete()
+                    return redirect('modulotipoequipo')
+
+                except:
+                    error_eliminar = True
+        elif "cerrarmodalerror" in request.POST:
+            return redirect('modulotipoequipo')
     return render(
         request, 
         "AppInventario/modulo_tipo_equipo.html", 
         {
             "tipos_de_equipo": tipos_de_equipo,
             "form": form,
-            "editing": editing,
+            "id": id_,
+            "editing": editing,"deleting": deleting, "error_eliminar": error_eliminar
         },
     )
-  
+ 
 
+@login_required(login_url='login')
 def marca_de_producto(request):
     marcas = Marca.objects.all()
     form = MarcaForm()
     editing = False
-    id = None
+    deleting = False
+    id_ = None
+    error_eliminar = False
     if request.method == "POST":
-        #print(request.POST)
+        print(request.POST)
         if "Agregar" in request.POST:
             form = MarcaForm(request.POST)
             if "editing" in request.POST:
@@ -155,7 +229,7 @@ def marca_de_producto(request):
                     seleccion.nombre = form.cleaned_data["nombre"]
                     seleccion.save()
                     editing = False
-                    id = None
+                    id_ = None
                 else:
                     form.save()
                     form = MarcaForm()
@@ -164,10 +238,32 @@ def marca_de_producto(request):
             seleccion = Marca.objects.get(id=request.POST.get("id"))
             form = MarcaForm(instance=seleccion)
             editing = True
-            id = seleccion.id
-    return render(request, "AppInventario/marca_de_producto.html",{"marcas":marcas, "editing": editing, "id" : id, "form": form})
+            id_ = seleccion.id
 
+        elif "eliminar" in request.POST:
+            selection = Marca.objects.get(id=request.POST.get("id"))
+            id_ = selection.id
+            deleting = True
 
+        elif "deleting" in request.POST:
+            deleting = False
+            id_ = None
+            if "cancelar_delete" in request.POST:
+                print()
+                return redirect('marcadeproducto')
+            elif "confirmar_delete" in request.POST: 
+                try:
+                    Marca.objects.get(id=request.POST.get("id")).delete()
+                    return redirect('marcadeproducto')
+                except:
+                    error_eliminar = True
+        elif "cerrarmodalerror" in request.POST:
+            return redirect('marcadeproducto')
+
+    return render(request, "AppInventario/marca_de_producto.html",{"marcas":marcas, "editing": editing, "id" : id_, "form": form, "deleting": deleting, "error_eliminar": error_eliminar})
+
+  
+@login_required(login_url='login')
 def equipo(request):
     equipo =   Equipo.objects.all()
     tipo_equipo = TipoEquipo.objects.all()
@@ -178,7 +274,6 @@ def equipo(request):
 
     if request.method == "POST":
         print(request.POST)
-
         if "agregar" in request.POST:
             form = EquipoForm(request.POST)
             if "editing" in request.POST:
@@ -230,6 +325,8 @@ def equipo(request):
         "form": form,
     })
 
+
+@login_required(login_url='login')
 def producto(request):
     producto = Producto.objects.all()
     tipo_producto = TipoProducto.objects.all()
@@ -242,6 +339,7 @@ def producto(request):
         "form": form,
     })
 
+  
 def proveedor(request):
     proveedor = Proveedor.objects.all()
     form = ProveedorForm()
@@ -309,4 +407,30 @@ def proveedor(request):
         "deleting": deleting,
         "error_eliminar": error_eliminar,
         "id": id_
+    })
+
+  
+@login_required(login_url='login')
+def orden_ingreso(request):
+    ordenes = OrdenIngreso.objects.all()
+    detalles = DetalleIngreso.objects.all()
+    form = OrdenIngresoForm()
+
+    return render(request, "AppInventario/orden_ingreso.html", {
+        "ordenes": ordenes,
+        "detalles": detalles,
+        "form": form,
+    })
+
+
+@login_required(login_url='login')
+def orden_egreso(request):
+    ordenes = OrdenEgreso.objects.all()
+    detalles = DetalleEgreso.objects.all()
+    form = OrdenEgresoForm()
+
+    return render(request, "AppInventario/orden_egreso.html", {
+        "ordenes": ordenes,
+        "detalles": detalles,
+        "form": form,
     })
