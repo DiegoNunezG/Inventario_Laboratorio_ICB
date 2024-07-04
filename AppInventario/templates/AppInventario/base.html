@@ -7,14 +7,9 @@
     <title>Inventario</title>
     {% load bootstrap5 %}
     {% bootstrap_css %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'AppInventario/styles.css' %}">
     <style>
-        .disabled-link {
-            pointer-events: none;
-            cursor: not-allowed;
-            color: #6c757d;
-            text-decoration: none;
-        }
-
         body,
         html {
             height: 100%;

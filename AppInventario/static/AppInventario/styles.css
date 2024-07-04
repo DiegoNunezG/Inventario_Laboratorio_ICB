@@ -1,0 +1,118 @@
+/* dark-mode.css */
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.header,
+.navbar-toggler,
+.offcanvas-collapse,
+.nav-link,
+.dropdown-menu {
+    background-color: #1f1f1f;
+    color: #e0e0e0;
+}
+
+.nav-link {
+    color: #e0e0e0;
+}
+
+.nav-link:hover {
+    background-color: #333;
+}
+
+.container {
+    background-color: #1f1f1f;
+}
+
+.table {
+    background-color: #1f1f1f;
+    color: #e0e0e0;
+}
+
+.table thead th {
+    background-color: #333;
+    color: #e0e0e0;
+}
+
+.table tbody tr:hover {
+    background-color: #333;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+.dropdown-menu {
+    background-color: #1f1f1f;
+    color: #e0e0e0;
+}
+
+.dropdown-item {
+    color: #e0e0e0;
+}
+
+.dropdown-item:hover {
+    background-color: #333;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+body,
+html {
+    height: 100%;
+    margin: 0;
+}
+
+main {
+    display: flex;
+    height: calc(100vh - 56px);
+    /* Ajusta la altura del main menos el header */
+    overflow: hidden;
+}
+
+header {
+    height: 56px;
+    /* Ajusta la altura del header */
+}
+
+.offcanvas-collapse {
+    position: fixed;
+    top: 56px;
+    /* Posiciona justo debajo del header */
+    bottom: 0;
+    left: 0;
+    z-index: 1045;
+    visibility: hidden;
+    background-color: #ace9fa;
+    width: 250px;
+    transition: visibility .3s ease-in-out, -webkit-transform .3s ease-in-out;
+    transition: visibility .3s ease-in-out, transform .3s ease-in-out;
+    transition: visibility .3s ease-in-out, transform .3s ease-in-out, -webkit-transform .3s ease-in-out;
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+}
+
+.offcanvas-collapse.open {
+    visibility: visible;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+}
