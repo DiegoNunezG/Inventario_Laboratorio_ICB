@@ -103,8 +103,10 @@
                     </a>
                 </li>
                 <li>
-                    <a href="" class="nav-link link-body-emphasis text-dark disabled-link">
-                        <svg class="" width="16" height="16"></svg>
+                    <a href="{% url 'orden_ingreso' %}" class="nav-link link-body-emphasis">
+                        <svg class="bi pe-none me-2" width="16" height="16">
+                            <use xlink:href="#people-circle"></use>
+                        </svg>
                         Módulo de Ingreso
                     </a>
                 </li>
@@ -140,7 +142,6 @@
                 </ul>
             </div>
         </div>
-
         <div class="container overflow-auto">
             {% block content %}
             {% endblock %}

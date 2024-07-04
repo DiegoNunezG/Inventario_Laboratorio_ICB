@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import login, logout, authenticate
-from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca, Equipo, Producto
-from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm, ProductoForm
+from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca, Equipo, Producto, OrdenIngreso, DetalleIngreso
+from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm, ProductoForm, OrdenIngresoForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LogoutView
 from django.urls import reverse_lazy
@@ -68,6 +68,7 @@ def unidades_de_medida(request):
 def index(request):
     return render(request, "AppInventario/base.html")
 
+
 @login_required(login_url='login')
 def tipo_de_producto(request):
     tipo_de_producto = TipoProducto.objects.all()
@@ -101,6 +102,7 @@ def tipo_de_producto(request):
          
     return render(request, "AppInventario/tipo_de_producto.html",{"tipo_de_producto":tipo_de_producto, "editing": editing, "id" : id, "form": form})
 
+  
 @login_required(login_url='login')
 def modulo_tipo_equipo(request):
     tipos_de_equipo = TipoEquipo.objects.all()
@@ -144,7 +146,8 @@ def modulo_tipo_equipo(request):
             "editing": editing,
         },
     )
-  
+ 
+
 @login_required(login_url='login')
 def marca_de_producto(request):
     marcas = Marca.objects.all()
@@ -175,6 +178,7 @@ def marca_de_producto(request):
             id = seleccion.id
     return render(request, "AppInventario/marca_de_producto.html",{"marcas":marcas, "editing": editing, "id" : id, "form": form})
 
+  
 @login_required(login_url='login')
 def equipo(request):
     equipo =   Equipo.objects.all()
@@ -238,6 +242,7 @@ def equipo(request):
         "form": form,
     })
 
+
 @login_required(login_url='login')
 def producto(request):
     producto = Producto.objects.all()
@@ -248,5 +253,17 @@ def producto(request):
     return render(request, "AppInventario/modulo_producto.html", {
         "productos": producto,
         "tipo_producto": tipo_producto,
+        "form": form,
+    })
+
+@login_required(login_url='login')
+def orden_ingreso(request):
+    ordenes = OrdenIngreso.objects.all()
+    detalles = DetalleIngreso.objects.all()
+    form = OrdenIngresoForm()
+
+    return render(request, "AppInventario/orden_ingreso.html", {
+        "ordenes": ordenes,
+        "detalles": detalles,
         "form": form,
     })
