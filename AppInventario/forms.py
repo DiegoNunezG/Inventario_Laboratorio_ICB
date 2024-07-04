@@ -1,5 +1,9 @@
-from django.forms import ModelForm, TextInput, Select, ModelMultipleChoiceField, CheckboxSelectMultiple, DateInput
+from django import forms
+from django.forms import ModelForm, TextInput, Select, ModelMultipleChoiceField, CheckboxSelectMultiple
 from .models import TipoProducto, UnidadMedida, TipoEquipo, Marca, Equipo, Producto, OrdenIngreso
+
+class DateInput(forms.DateInput):
+    input_type = 'date'
 
 class TipoProductoForm(ModelForm):
     class Meta:
@@ -76,11 +80,14 @@ class ProductoForm(ModelForm):
         }
 
 
+ProductoFormSet = forms.modelformset_factory(Producto, form=ProductoForm, extra=1)
+
+
 class OrdenIngresoForm(ModelForm):
     class Meta:
         model = OrdenIngreso
         fields = ['proveedor', 'fecha']
         widgets = {
-            'proveedor': Select(attrs={'class': 'form-control rounded-3'}),
-            'fecha': DateInput(attrs={'class': 'form-control rounded-3'})
+            'proveedor': Select(attrs={'class': 'form-control rounded-3', 'style': 'width: 50%;'}),
+            'fecha': DateInput(attrs={'class': 'form-control rounded-3', 'style': 'width: 50%;'})
         }
