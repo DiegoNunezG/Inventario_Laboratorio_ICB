@@ -2,10 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import login, logout, authenticate
 from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca, Equipo, Producto, OrdenIngreso, DetalleIngreso
-from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm, ProductoForm, OrdenIngresoForm
+from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm, ProductoForm, OrdenIngresoForm, ProductoFormSet
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LogoutView
 from django.urls import reverse_lazy
+from django.forms import inlineformset_factory
+from django.views.generic import TemplateView, ListView
 
 def login_web(request):
     if request.method == "POST":
@@ -267,3 +269,32 @@ def orden_ingreso(request):
         "detalles": detalles,
         "form": form,
     })
+
+
+@login_required(login_url='login')
+def interfaz_ingreso(request):
+    form_orden = OrdenIngresoForm()
+    formset_producto = ProductoFormSet(queryset=Producto.objects.none())
+
+    return render(request, "AppInventario/interfaz_ingreso.html", {
+        "formset_producto": formset_producto,
+        "form_orden": form_orden,
+    })
+
+
+class AddOrden(TemplateView):
+    template_name="AppInventario/interfaz_ingreso.html"
+
+    def get(self, *args, **kargs):
+        formset = ProductoFormSet(queryset=Producto.objects.none())
+        return self.render_to_response({'producto_formset': formset})
+    
+    def post(self, *args, **kargs):
+        formset = ProductoFormSet(data=self.request.POST)
+
+        if formset.is_valid():
+            formset.save()
+            return redirect(reverse_lazy("orden_ingreso"))
+        
+        return self.render_to_response({'producto_formset': formset})
+        
