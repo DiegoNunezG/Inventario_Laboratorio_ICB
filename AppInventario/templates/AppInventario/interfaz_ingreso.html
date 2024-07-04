@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingresar Productos</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    <style>
+        body {
+            background-color: #222;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            padding-top: 4rem;
+        }
+        .card {
+            background-color: #333;
+            border: 1px solid #444;
+            color: #fff;
+        }
+        .card-header {
+            background-color: #555;
+            border-bottom: 1px solid #444;
+        }
+        .card-body {
+            padding: 2rem;
+        }
+        .container {
+            padding: 2rem;
+        }
+        .fondo-container {
+            background-color: #555;
+            border-bottom: 1px solid #444;
+            padding: 2rem;
+        }
+        .nuevo-bloque {
+            border-style: solid;
+            border-color: #555;
+            border-width: 3px;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+            width: 50%;
+            padding: 0.5rem 1rem; /* Ajuste del padding para hacer el botón más pequeño */
+            font-size: 0.875rem; /* Reducción del tamaño de la fuente */
+        }
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+        label {
+            color: #ccc;
+        }
+        input[type="text"],
+        input[type="password"] {
+            background-color: #444;
+            color: #fff;
+            border-color: #555;
+        }
+    </style>
+</head>
+<body class="d-flex justify-content-center align-items-center">
+
+    <div class="container fondo-container text-center rounded-3">
+        <h2>Nueva Orden de Ingreso</h2>
+        <p class="border-top border-4"></p>
+
+        <div class="container">
+            <form id="form-container" method="POST">
+                {% csrf_token %}
+                {{ producto_formset.management_form }}
+                {% for form in producto_formset %}
+                <div class="producto-form">
+                    {{form.as_p}}
+                </div>
+                {% endfor %}
+                <button id="add-form" type="button">Añadir otro producto</button>
+                <button type="submit">Guardar Orden Ingreso</button>
+            </form>
+
+            {% comment %} <form method="POST" id="productoForm">
+                {% csrf_token %}
+                <fieldset class="form-group border border-success border-3">
+                    <legend class="w-auto px-2">Datos de Orden</legend>
+                    <div class="form-group container text-start">
+                        {{form_orden.as_p}}
+                    </div>
+                </fieldset>
+                <br>
+                <div class="container border border-success border-3 text-start">
+                    {{ formset_producto.management_form }}
+                    <div id="formsetContainer">
+                        {% for form in formset_producto %}
+                            <div class="form-row">
+                                {{form.as_p}}
+                                <button type="button" class="remove-form">Eliminar</button>
+                            </div>
+                    {% endfor %}
+
+
+                        <table class="table bg-light rounded-2">
+                            {% for form in formset_producto %}
+                                <tr>
+                                    {{form.as_p}}
+                                </tr>
+                            {% endfor %}
+    
+    
+                             <tr>
+                                {% for field in form_producto %}
+                                <th>{{field.label}}</th>
+                                {% endfor %}
+                            </tr>
+                            <tr>
+                                {% for field in form_producto %}
+                                <th>{{field}}</th>
+                                {% endfor %}
+                            </tr>
+                        </table>
+                    </div>
+                    <button type="button" id="addForm">Añadir Producto</button>
+                    <button type="submit">Guardar</button>
+                </div>
+            </form> {% endcomment %}
+        </div>
+    </div>
+
+    {% bootstrap_javascript %}
+    <script>
+        let ProductoForm = document.querySelectorAll(".producto-form")
+        let container = document.querySelector("#form-container")
+        let addButton = document.querySelector("#add-form")
+        let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
+        let formNum = ProductoForm.length-1
+
+        addButton.addEventListener('click', addForm)
+
+        function addForm(e) {
+            e.preventDefault()
+        
+            let newForm = ProductoForm[0].cloneNode(true) //Clone the bird form
+            let formRegex = RegExp(`form-(\\d){1}-`,'g') //Regex to find all instances of the form number
+        
+            formNum++ //Increment the form number
+            newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`) //Update the new form to have the correct form number
+            container.insertBefore(newForm, addButton) //Insert the new form at the end of the list of forms
+        
+            totalForms.setAttribute('value', `${formNum+1}`) //Increment the number of total forms in the management form
+        }
+    </script>
+    {% comment %} <script>
+        $(document).ready(function() {
+            var formCount = {{ formset.total_form_count }};
+            var formsetContainer = $('#formsetContainer');
+            var totalForms = $('#id_form-TOTAL_FORMS');
+
+            $('#addForm').click(function() {
+                var newForm = formsetContainer.children('.form-row:first').clone(false);
+                newForm.find(':input').each(function() {
+                    var name = $(this).attr('name').replace(/-\d+-/, '-' + formCount + '-');
+                    var id = 'id_' + name;
+                    $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+                });
+                newForm.find('.remove-form').click(function() {
+                    $(this).parent().remove();
+                    updateTotalForms();
+                });
+                formsetContainer.append(newForm);
+                formCount++;
+                updateTotalForms();
+            });
+
+            function updateTotalForms() {
+                var formRows = formsetContainer.children('.form-row').length;
+                totalForms.val(formRows);
+            }
+
+            $('.remove-form').click(function() {
+                $(this).parent().remove();
+                updateTotalForms();
+            });
+        });
+    </script> {% endcomment %}
+</body>
+</html>
