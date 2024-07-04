@@ -7,6 +7,46 @@
     <title>Iniciar Sesión</title>
     {% load bootstrap5 %}
     {% bootstrap_css %}
+    <style>
+        body {
+            background-color: #222;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            padding-top: 4rem;
+        }
+        .card {
+            background-color: #333;
+            border: 1px solid #444;
+            color: #fff;
+        }
+        .card-header {
+            background-color: #555;
+            border-bottom: 1px solid #444;
+        }
+        .card-body {
+            padding: 2rem;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+            width: 50%;
+            padding: 0.5rem 1rem; /* Ajuste del padding para hacer el botón más pequeño */
+            font-size: 0.875rem; /* Reducción del tamaño de la fuente */
+        }
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+        label {
+            color: #ccc;
+        }
+        input[type="text"],
+        input[type="password"] {
+            background-color: #444;
+            color: #fff;
+            border-color: #555;
+        }
+    </style>
 </head>
 
 <body class="d-flex justify-content-center align-items-center">
@@ -22,7 +62,9 @@
                         <form method="POST">
                             {% csrf_token %}
                             {% bootstrap_form form %}
-                            {% bootstrap_button button_type="submit" content="Iniciar sesión" %}
+                            <div class="text-center">
+                                {% bootstrap_button button_type="submit" content="Iniciar sesión" button_class="btn-success btn-sm" %}
+                            </div>
                         </form>
                     </div>
                 </div>
