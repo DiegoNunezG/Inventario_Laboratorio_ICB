@@ -164,8 +164,7 @@ def modulo_tipo_equipo(request):
             form = TipoEquipoForm(initial=data)
             editing = True
             id_ = selection.id
-            return render(request, "AppInventario/modulo_tipo_equipo.html", {"form":form, "tipos_de_equipo": tipos_de_equipo, "editing":editing, "id":id_})
-
+            
         elif "eliminar" in request.POST:
             selection = TipoEquipo.objects.get(id=request.POST.get("id"))
             id_ = selection.id
