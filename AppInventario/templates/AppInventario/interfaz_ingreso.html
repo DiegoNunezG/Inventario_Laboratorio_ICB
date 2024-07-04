@@ -72,11 +72,41 @@
                 {{ producto_formset.management_form }}
                 {% for form in producto_formset %}
                 <div class="producto-form">
-                    <ul class="list-unstyled list-group-horizontal">
-                    {{form.as_ul}}
-                    </ul>
+                    <table>
+                        {{form.as_table}}
+                    </table>
                 </div>
                 {% endfor %}
+                <button id="add-form" type="button">Añadir otro producto</button>
+                <button type="submit">Guardar Orden Ingreso</button>
+            </form>
+
+            <hr>
+            <hr>
+            <hr>
+
+            <form id="form-container" method="POST">
+                {% csrf_token %}
+                {{ producto_formset.management_form }}
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Tipo de Producto</td>
+                            <td>Modelo</td>
+                            <td>Marca</td>
+                            <td>N° serie</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for form in producto_formset %}
+                        <tr>
+                            {% for field in form %}
+                            <td>{{field}}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
                 <button id="add-form" type="button">Añadir otro producto</button>
                 <button type="submit">Guardar Orden Ingreso</button>
             </form>
