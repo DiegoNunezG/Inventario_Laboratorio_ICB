@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import login, logout, authenticate
-from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca, Equipo, Producto
-from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm, ProductoForm
+from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca, Equipo, Producto, OrdenIngreso, DetalleIngreso
+from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm, ProductoForm, OrdenIngresoForm
 
 def login_web(request):
     if request.method == "POST":
@@ -60,6 +60,7 @@ def unidades_de_medida(request):
 
 def index(request):
     return render(request, "AppInventario/base.html")
+
 
 def tipo_de_producto(request):
     tipo_de_producto = TipoProducto.objects.all()
@@ -230,6 +231,7 @@ def equipo(request):
         "form": form,
     })
 
+
 def producto(request):
     producto = Producto.objects.all()
     tipo_producto = TipoProducto.objects.all()
@@ -239,5 +241,17 @@ def producto(request):
     return render(request, "AppInventario/modulo_producto.html", {
         "productos": producto,
         "tipo_producto": tipo_producto,
+        "form": form,
+    })
+
+
+def orden_ingreso(request):
+    ordenes = OrdenIngreso.objects.all()
+    detalles = DetalleIngreso.objects.all()
+    form = OrdenIngresoForm()
+
+    return render(request, "AppInventario/orden_ingreso.html", {
+        "ordenes": ordenes,
+        "detalles": detalles,
         "form": form,
     })
