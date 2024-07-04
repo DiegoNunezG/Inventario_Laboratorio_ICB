@@ -31,7 +31,7 @@ def create_regions_and_comunas(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('AppInventario', '0023_proveedor_comuna_proveedor_direccion_and_more'),
+        ('AppInventario', '0024_region_comuna_alter_proveedor_comuna_and_more'),
     ]
 
     operations = [
