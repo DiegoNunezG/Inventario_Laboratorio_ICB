@@ -1,5 +1,10 @@
+from django import forms
 from django.forms import ModelForm, TextInput, Select, ModelMultipleChoiceField, CheckboxSelectMultiple, DateInput
 from .models import TipoProducto, UnidadMedida, TipoEquipo, Marca, Equipo, Producto, Proveedor, OrdenIngreso, OrdenEgreso
+
+
+class DateInput(forms.DateInput):
+    input_type = 'date'
 
 
 class TipoProductoForm(ModelForm):
@@ -13,6 +18,7 @@ class TipoProductoForm(ModelForm):
     nombre = TextInput()
     unidad_medida = Select()
 
+    
 class UnidadMedidaForm(ModelForm):
     class Meta:
         model = UnidadMedida
@@ -22,6 +28,7 @@ class UnidadMedidaForm(ModelForm):
             'simbolo': TextInput(attrs={'class': 'form-control rounded-3'}),
         }
 
+        
 class TipoEquipoForm(ModelForm):
     class Meta:
         model = TipoEquipo
@@ -47,6 +54,7 @@ class MarcaForm(ModelForm):
         }
     nombre = TextInput()
 
+    
 class EquipoForm(ModelForm):
     class Meta:
         model = Equipo
@@ -65,6 +73,7 @@ class EquipoForm(ModelForm):
     )
 
 
+    
 class ProductoForm(ModelForm):
     class Meta:
         model = Producto
@@ -75,6 +84,9 @@ class ProductoForm(ModelForm):
             'marca': Select(attrs={'class': 'form-control rounded-3 select-box'}),
             'numero_serie': TextInput(attrs={'class': 'form-control rounded-3'})
         }
+
+
+ProductoFormSet = forms.modelformset_factory(Producto, form=ProductoForm, extra=1)
 
 
 class ProveedorForm(ModelForm):

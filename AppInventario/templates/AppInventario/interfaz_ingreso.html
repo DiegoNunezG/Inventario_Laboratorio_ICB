@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingresar Productos</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    <style>
+        body {
+            background-color: #222;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            padding-top: 4rem;
+        }
+        .card {
+            background-color: #333;
+            border: 1px solid #444;
+            color: #fff;
+        }
+        .card-header {
+            background-color: #555;
+            border-bottom: 1px solid #444;
+        }
+        .card-body {
+            padding: 2rem;
+        }
+        .container {
+            padding: 2rem;
+        }
+        .fondo-container {
+            background-color: #555;
+            border-bottom: 1px solid #444;
+            padding: 2rem;
+        }
+        .nuevo-bloque {
+            border-style: solid;
+            border-color: #555;
+            border-width: 3px;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+            width: 50%;
+            padding: 0.5rem 1rem; /* Ajuste del padding para hacer el botón más pequeño */
+            font-size: 0.875rem; /* Reducción del tamaño de la fuente */
+        }
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+        label {
+            color: #ccc;
+        }
+        input[type="text"],
+        input[type="password"] {
+            background-color: #444;
+            color: #fff;
+            border-color: #555;
+        }
+    </style>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body class="d-flex justify-content-center align-items-center">
+
+    <div class="container fondo-container text-center rounded-3">
+        <p class="border-bottom border-4"></p>
+        <h2 class="bg-secondary py-4 fw-bold">Nueva Orden de Ingreso</h2>
+        <p class="mt-3 border-top border-4"></p>
+
+        <div class="row">
+
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <form method="POST" id="productoForm" class="form">
+                    {% csrf_token %}
+                    <fieldset class="form-group border border-light border-3 mt-4 rounded">
+                        <legend class="px-2 mt-3 fw-bold">Datos de Orden</legend>
+                        <p class="mt-3 border-top border-3"></p>
+                        <div class="form-group container text-center">
+                            {{orden_form.as_p}}
+                        </div>
+                    </fieldset>
+    
+                    <fieldset class="form-group border border-light border-3 mt-4 rounded">
+                        <legend class="px-2 mt-3 fw-bold">Datos de Producto</legend>
+                        <p class="mt-3 border-top border-3"></p>
+                        <div class="form-group container text-center">
+                            {{producto_form.as_p}}
+                            <label for="cantidad">Cantidad</label>
+                            <input type="number" name="cantidad" id="cantidad" class="form-control rounded-3">
+                        </div>
+                    </fieldset>
+
+                    <button class="btn btn-success mt-4 fw-bold fs-4" type="submit">Guardar</button>
+                </form>
+            </div>
+            <div class="col-md-2"></div>
+            
+
+        </div>
+
+    </div>
+
+    {% bootstrap_javascript %}
+</body>
+</html>

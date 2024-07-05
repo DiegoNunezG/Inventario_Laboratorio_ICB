@@ -1,11 +1,36 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import login, logout, authenticate
-from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca, Equipo, Producto, Proveedor, OrdenIngreso, DetalleIngreso, OrdenEgreso, DetalleEgreso
-from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm, ProductoForm, ProveedorForm, OrdenIngresoForm, OrdenEgresoForm
+from .models import (
+    UnidadMedida, 
+    TipoEquipo, 
+    TipoProducto, 
+    Marca, 
+    Equipo, 
+    Producto,
+    Proveedor,
+    OrdenIngreso, 
+    DetalleIngreso,
+    OrdenEgreso,
+    DetalleEgreso
+    )
+from .forms import (
+    UnidadMedidaForm, 
+    TipoEquipoForm, 
+    TipoProductoForm, 
+    MarcaForm, 
+    EquipoForm, 
+    ProductoForm, 
+    ProveedorForm,
+    OrdenIngresoForm,
+    OrdenEgresoForm,
+    ProductoFormSet,
+    )
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LogoutView
 from django.urls import reverse_lazy
+from django.forms import modelformset_factory
+from django.views.generic import TemplateView, ListView
 
 def login_web(request):
     if request.method == "POST":
@@ -339,7 +364,7 @@ def producto(request):
         "form": form,
     })
 
-  
+
 def proveedor(request):
     proveedor = Proveedor.objects.all()
     form = ProveedorForm()
@@ -409,7 +434,7 @@ def proveedor(request):
         "id": id_
     })
 
-  
+
 @login_required(login_url='login')
 def orden_ingreso(request):
     ordenes = OrdenIngreso.objects.all()
@@ -424,6 +449,53 @@ def orden_ingreso(request):
 
 
 @login_required(login_url='login')
+def interfaz_ingreso(request):
+    producto_form = ProductoForm()
+    orden_form = OrdenIngresoForm()
+
+    context = {
+        'producto_form': producto_form,
+        'orden_form': orden_form 
+    }
+
+    if request.method == "POST":
+        producto_form = ProductoForm(request.POST)
+        orden_form = OrdenIngresoForm(request.POST)
+        if producto_form.is_valid() and orden_form.is_valid():
+            try:
+                cantidad = int(request.POST.get('cantidad'))
+            except:
+                print("ERROR")
+
+            ord = orden_form.save()
+            for i in range(cantidad):
+                pcto = ProductoForm(request.POST)
+                pcto = pcto.save()
+            detalle_ingreso = DetalleIngreso(orden=ord, producto=pcto, cantidad=cantidad)
+            detalle_ingreso.save()
+            return redirect(reverse_lazy("orden_ingreso"))
+    return render(request, "AppInventario/interfaz_ingreso.html", context)
+
+
+# Esta clase no se usa por ahora. En el futuro servirá para ingresar multiples productos a la vez
+class AddOrden(TemplateView):
+    template_name="AppInventario/interfaz_ingreso.html"
+
+    def get(self, *args, **kargs):
+        formset = ProductoFormSet(queryset=Producto.objects.none())
+        print(formset)
+        return self.render_to_response({'producto_formset': formset})
+    
+    def post(self, *args, **kargs):
+        formset = ProductoFormSet(data=self.request.POST)
+
+        if formset.is_valid():
+            formset.save()
+            return redirect(reverse_lazy("orden_ingreso"))
+        
+        return self.render_to_response({'producto_formset': formset})
+        
+
 def orden_egreso(request):
     ordenes = OrdenEgreso.objects.all()
     detalles = DetalleEgreso.objects.all()
@@ -434,3 +506,4 @@ def orden_egreso(request):
         "detalles": detalles,
         "form": form,
     })
+
