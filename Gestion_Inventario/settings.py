@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap5',
     'phonenumber_field',
+    'django_bootstrap_icons',
     
     # Custom Apps
     'AppInventario'

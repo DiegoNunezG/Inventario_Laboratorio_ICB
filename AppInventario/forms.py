@@ -8,7 +8,7 @@ class TipoProductoForm(ModelForm):
         fields = ['nombre', 'unidad_medida']
         widgets = {
             'nombre': TextInput(attrs={'class': 'form-control rounded-3'}),
-            'unidad_medida': Select(attrs={'class': 'form-control rounded-3'}),
+            'unidad_medida': Select(attrs={'class': 'form-control rounded-3 select-box'}),
         }
     nombre = TextInput()
     unidad_medida = Select()
@@ -53,7 +53,7 @@ class EquipoForm(ModelForm):
         fields = ['nombre', 'tipo_equipo', 'productos']
         widgets = {
             'nombre': TextInput(attrs={'class': 'form-control rounded-3'}),
-            'tipo_equipo': Select(attrs={'class': 'form-control rounded-3'}),
+            'tipo_equipo': Select(attrs={'class': 'form-control rounded-3 select-box'}),
 
             'productos': CheckboxSelectMultiple(attrs={'class':"form-check-input"}),
         }
@@ -70,9 +70,9 @@ class ProductoForm(ModelForm):
         model = Producto
         fields = ['tipo_producto', 'modelo', 'marca', 'numero_serie']
         widgets = {
-            'tipo_producto': Select(attrs={'class': 'form-control rounded-3'}),
+            'tipo_producto': Select(attrs={'class': 'form-control rounded-3 select-box'}),
             'modelo': TextInput(attrs={'class': 'form-control rounded-3'}),
-            'marca': Select(attrs={'class': 'form-control rounded-3'}),
+            'marca': Select(attrs={'class': 'form-control rounded-3 select-box'}),
             'numero_serie': TextInput(attrs={'class': 'form-control rounded-3'})
         }
 
@@ -85,10 +85,10 @@ class ProveedorForm(ModelForm):
             'nombre': TextInput(attrs={'class': 'form-control rounded-3'}),
             'rut': TextInput(attrs={'class': 'form-control rounded-3'}),
             'email_contacto': TextInput(attrs={'class': 'form-control rounded-3'}),
-            'telefono_contacto': TextInput(attrs={'class': 'form-control rounded-3'}),
+            'telefono_contacto': TextInput(attrs={'class': 'form-control rounded-3 input-texto'}),
             'direccion': TextInput(attrs={'class': 'form-control rounded-3'}),
-            'region': Select(attrs={'class': 'form-control rounded-3'}),
-            'comuna': Select(attrs={'class': 'form-control rounded-3'})
+            'region': Select(attrs={'class': 'form-control rounded-3 select-box'}),
+            'comuna': Select(attrs={'class': 'form-control rounded-3 select-box'})
         }
     nombre = TextInput()
     rut = TextInput()

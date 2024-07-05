@@ -1,6 +1,6 @@
 {% extends "./base.html" %}
 {% block content %}
-<div class="row bg-secondary">
+<div class="row pag-titulo">
     <p class="my-3 px-5 fs-4 fw-bold">Unidades de medida</p>
 </div>
 <div class="row mt-3 mx-3">
@@ -90,33 +90,35 @@
 <div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <table class="table table-striped text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Símbolo</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                    {% for unidad in unidades %}
-                    <form method="post">
-                        {% csrf_token %}
+            <div class="table-responsive">
+                <table class="table table-striped text-center">
+                    <thead>
                         <tr>
-                            <td>{{ unidad.nombre }}</td>
-                            <td>{{ unidad.simbolo }}</td>
-                            <td>
-                                <input type="hidden" name="id" value="{{unidad.id}}">
-                                <button id="editarregistro" class="btn btn-warning" name="editar">Editar</button>
-                                <button type="submit" class="btn btn-danger text-white" name="eliminar"
-                                data-bs-toggle="modal" data-bs-target="#eliminarequipo">Eliminar</button>                               
-                            </td>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Símbolo</th>
+                            <th scope="col">Acciones</th>
                         </tr>
-                    </form>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        
+                        {% for unidad in unidades %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <tr>
+                                <td>{{ unidad.nombre }}</td>
+                                <td>{{ unidad.simbolo }}</td>
+                                <td>
+                                    <input type="hidden" name="id" value="{{unidad.id}}">
+                                    <button id="editarregistro" class="btn btn-warning" name="editar">Editar</button>
+                                    <button type="submit" class="btn btn-danger text-white" name="eliminar"
+                                    data-bs-toggle="modal" data-bs-target="#eliminarequipo">Eliminar</button>                               
+                                </td>
+                            </tr>
+                        </form>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
         </div>
     </div>
