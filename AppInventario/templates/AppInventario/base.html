@@ -8,57 +8,21 @@
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% load static %}
+    {% load bootstrap_icons %}
     <link rel="stylesheet" type="text/css" href="{% static 'AppInventario/styles.css' %}">
-    <style>
-        body,
-        html {
-            height: 100%;
-            margin: 0;
-        }
-
-        main {
-            display: flex;
-            height: calc(100vh - 56px); /* Ajusta la altura del main menos el header */
-            overflow: hidden;
-        }
-
-        header {
-            height: 56px; /* Ajusta la altura del header */
-        }
-
-        .offcanvas-collapse {
-            position: fixed;
-            top: 56px; /* Posiciona justo debajo del header */
-            bottom: 0;
-            left: 0;
-            z-index: 1045;
-            visibility: hidden;
-            background-color: #ace9fa;
-            width: 250px;
-            transition: visibility .3s ease-in-out, -webkit-transform .3s ease-in-out;
-            transition: visibility .3s ease-in-out, transform .3s ease-in-out;
-            transition: visibility .3s ease-in-out, transform .3s ease-in-out, -webkit-transform .3s ease-in-out;
-            -webkit-transform: translateX(-100%);
-            transform: translateX(-100%);
-        }
-
-        .offcanvas-collapse.open {
-            visibility: visible;
-            -webkit-transform: translateX(0);
-            transform: translateX(0);
-        }
-    </style>
+    
 </head>
 
 <body>
-    <header class="d-flex flex-wrap justify-content-center bg-info py-3 border-bottom">
-        <button class="navbar-toggler ml-3 collapsed border bg-dark border-danger" type="button" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+    <header class="d-flex flex-wrap justify-content-center bg-dark py-3">
+        <button class="navbar-toggler ml-3 collapsed bg-transparent" type="button" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" >
+            <span class="navbar-toggler-icon">{% bs_icon 'list' size='1.5em' %}
+            </span>
         </button>
         
-        <a href="" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-dark text-decoration-none">
-            <svg class="bi me-2" width="40" height="32">
-                <use xlink:href="#bootstrap"></use>
+        <a href="" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-white text-decoration-none">
+            <svg class="bi me-2" width="40" height="32" >
+                {% bs_icon 'pc-display' size='1.5em' %}
             </svg>
             <span class="fs-4">Inventario Laboratorio ICB</span>
         </a>
@@ -68,70 +32,72 @@
         <div class="offcanvas-collapse" id="navbar">
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item">
-                    <a href="{% url 'modulotipoequipo' %}" class="nav-link link-body-emphasis text-dark" aria-current="page">
+                    <a href="{% url 'modulotipoequipo' %}" class="nav-link link-body-emphasis" aria-current="page">
                         <svg class="" width="16" height="16"></svg>
                         Tipo de Equipo
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'tipo_de_producto' %}" class="nav-link link-body-emphasis text-dark">
+                    <a href="{% url 'tipo_de_producto' %}" class="nav-link link-body-emphasis">
                         <svg class="" width="16" height="16"></svg>
                         Tipo de Producto
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'equipo' %}" class="nav-link link-body-emphasis text-dark">
+                    <a href="{% url 'equipo' %}" class="nav-link link-body-emphasis">
                         <svg class="" width="16" height="16"></svg>
-                        Módulo de Equipos
+                        Equipos
                     </a>
                 </li>
                 <li>
-                    <a href={% url 'producto' %} class="nav-link link-body-emphasis text-dark">
+                    <a href={% url 'producto' %} class="nav-link link-body-emphasis">
                         <svg class="" width="16" height="16"></svg>
-                        Módulo de Productos
+                        Inventario
                     </a>
                 </li>
                 <li>
-                    <a href={% url 'orden_egreso'%} class="nav-link link-body-emphasis text-dark">
+                    <a href={% url 'orden_egreso'%} class="nav-link link-body-emphasis">
                         <svg class="" width="16" height="16"></svg>
                         Módulo de Egreso
                     </a>
                 </li>
                 <li>
                     <a href="{% url 'orden_ingreso' %}" class="nav-link link-body-emphasis">
-                        <svg class="bi pe-none me-2" width="16" height="16">
+                        <svg class="" width="16" height="16">
                             <use xlink:href="#people-circle"></use>
                         </svg>
                         Módulo de Ingreso
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'unidadesmedidas' %}" class="nav-link link-body-emphasis text-dark">
+                    <a href="{% url 'unidadesmedidas' %}" class="nav-link link-body-emphasis">
                         <svg class="" width="16" height="16"></svg>
                         Unidad de Medida
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'marcadeproducto' %}" class="nav-link link-body-emphasis text-dark">
+                    <a href="{% url 'marcadeproducto' %}" class="nav-link link-body-emphasis">
                         <svg class="" width="16" height="16"></svg>
                         Marca de Producto
                     </a>
                 </li>
                 <li>
                     <a href="{% url 'moduloproveedores' %}" class="nav-link link-body-emphasis">
-                        <svg class="bi pe-none me-2" width="16" height="16">
+                        <svg class="" width="16" height="16">
                             <use xlink:href="#people-circle"></use>
                         </svg>
-                        Módulo Proveedores
+                        Proveedores
                     </a>
                 </li>
             </ul>
 
-            <div class="dropdown mt-auto">
-                <a href="" class="d-flex align-items-center link-body-emphasis text-dark text-decoration-none dropdown-toggle"
+            <div class="dropdown mt-auto nav-link">
+                <a href="" class="d-flex align-items-center link-body-emphasis text-white text-decoration-none dropdown-toggle"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://cdn-icons-png.flaticon.com/512/9187/9187604.png" alt="" width="32" height="32"
-                        class="rounded-circle me-2">
+                    <svg class="bi me-2 svg-icon" width="40" height="40" >
+                        {% bs_icon 'person-circle' size='1.9em' %}
+                    </svg>
+                    
                     <strong>{{user.username | upper}}</strong>
                 </a>
                 <ul class="dropdown-menu text-small shadow">

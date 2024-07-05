@@ -1,6 +1,6 @@
 {% extends "./base.html" %}
 {% block content %}
-<div class="row bg-secondary">
+<div class="row pag-titulo">
     <p class="my-3 px-5 fs-4 fw-bold">Proveedores</p>
 </div>
 
@@ -99,6 +99,7 @@
                         <th scope="col">dirección</th>
                         <th scope="col">región</th>
                         <th scope="col">comuna</th>
+                        <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -117,11 +118,10 @@
                             <td>
                                 {% comment %} <a href="" class="text-white btn btn-secondary btn-sm disabled-link">Editar</a> {% endcomment %}
                                 <button class="btn btn-warning" id="editarregistro_te" name="editar" type="submit">Editar</button>
-                            </td>
-                            <td>                               
                                 <button type="submit" class="btn btn-danger text-white" name="eliminar"
                                 data-bs-toggle="modal" data-bs-target="#eliminarequipo">Eliminar</button>
                             </td>
+                        
                         </tr>
                     </form>
                     {% endfor %}
