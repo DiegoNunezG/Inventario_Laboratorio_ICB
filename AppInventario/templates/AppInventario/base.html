@@ -31,16 +31,28 @@
     <main>
         <div class="offcanvas-collapse" id="navbar">
             <ul class="nav nav-pills flex-column">
+                <li>
+                    <p></p>
+                </li>
+                <li>
+                    <a href={% url 'producto' %} class="nav-link link-body-emphasis">
+                        <svg class="" width="16" height="16"></svg>
+                        Productos
+                    </a>
+                </li>
+                <li>
+                    <p></p>
+                </li>
                 <li class="nav-item">
                     <a href="{% url 'modulotipoequipo' %}" class="nav-link link-body-emphasis" aria-current="page">
                         <svg class="" width="16" height="16"></svg>
-                        Tipo de Equipo
+                        Tipos de Equipo
                     </a>
                 </li>
                 <li>
                     <a href="{% url 'tipo_de_producto' %}" class="nav-link link-body-emphasis">
                         <svg class="" width="16" height="16"></svg>
-                        Tipo de Producto
+                        Tipos de Producto
                     </a>
                 </li>
                 <li>
@@ -49,16 +61,11 @@
                         Equipos
                     </a>
                 </li>
-                <li>
-                    <a href={% url 'producto' %} class="nav-link link-body-emphasis">
-                        <svg class="" width="16" height="16"></svg>
-                        Inventario
-                    </a>
-                </li>
+                
                 <li>
                     <a href={% url 'orden_egreso'%} class="nav-link link-body-emphasis">
                         <svg class="" width="16" height="16"></svg>
-                        Módulo de Egreso
+                        Órdenes de Egreso
                     </a>
                 </li>
                 <li>
@@ -66,19 +73,19 @@
                         <svg class="" width="16" height="16">
                             <use xlink:href="#people-circle"></use>
                         </svg>
-                        Módulo de Ingreso
+                        Órdenes de Ingreso
                     </a>
                 </li>
                 <li>
                     <a href="{% url 'unidadesmedidas' %}" class="nav-link link-body-emphasis">
                         <svg class="" width="16" height="16"></svg>
-                        Unidad de Medida
+                        Unidades de Medida
                     </a>
                 </li>
                 <li>
                     <a href="{% url 'marcadeproducto' %}" class="nav-link link-body-emphasis">
                         <svg class="" width="16" height="16"></svg>
-                        Marca de Producto
+                        Marcas de Producto
                     </a>
                 </li>
                 <li>
