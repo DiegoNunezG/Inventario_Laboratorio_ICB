@@ -147,7 +147,8 @@ header {
 }
 
 input[type="text"],
-input[type="email"] {
+input[type="email"],
+input[type="password"] {
     background-color: #3a3a3a;
     border: none;
     border-radius: 5px;
@@ -157,7 +158,8 @@ input[type="email"] {
 
 input[type="text"]:focus,
 input[type="email"]:focus,
-textarea:focus {
+textarea:focus,
+input[type="password"]:focus {
     border-color: black;
     box-shadow: none;
     background-color: #3a3a3a;
@@ -194,4 +196,38 @@ select option {
     padding: 8px;
     border: 1px solid #181818;
     border-radius: 4px;
+}
+
+.card {
+    background-color: #333;
+    border: 1px solid #444;
+    color: #fff;
+}
+
+.card-header {
+    background-color: #555;
+    border-bottom: 1px solid #444;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+    width: 50%;
+    padding: 0.5rem 1rem;
+    /* Ajuste del padding para hacer el botón más pequeño */
+    font-size: 0.875rem;
+    /* Reducción del tamaño de la fuente */
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+label {
+    color: #ccc;
 }
