@@ -89,40 +89,42 @@
 <div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <table class="table table-striped text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Tipos de Producto</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for tipoequipo in tipos_de_equipo %}
-                    <form method="POST">
-                        {% csrf_token %}
-                        <input type="hidden" name="id" value="{{tipoequipo.id}}">
+            <div class="table-responsive">
+                <table class="table table-striped text-center">
+                    <thead>
                         <tr>
-                            <td>{{ tipoequipo.nombre }}</td>
-                            <td>
-                                <ul class="list-group" style="list-style: none;">
-                                    {% for item in tipoequipo.tipo_producto.all %}
-                                    <li class="">{{item}}</li>
-                                    {% endfor %}
-
-                                </ul>
-                            </td>
-                            <td>
-                                {% comment %} <a href="" class="text-white btn btn-secondary btn-sm disabled-link">Editar</a> {% endcomment %}
-                                <button class="btn btn-warning" id="editarregistro_te" name="editar" type="submit">Editar</button>
-                                <button type="submit" class="btn btn-danger text-white" name="eliminar"
-                                data-bs-toggle="modal" data-bs-target="#eliminarequipo">Eliminar</button>
-                            </td>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Tipos de Producto</th>
+                            <th scope="col">Acciones</th>
                         </tr>
-                    </form>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for tipoequipo in tipos_de_equipo %}
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{tipoequipo.id}}">
+                            <tr>
+                                <td>{{ tipoequipo.nombre }}</td>
+                                <td>
+                                    <ul class="list-group" style="list-style: none;">
+                                        {% for item in tipoequipo.tipo_producto.all %}
+                                        <li class="">{{item}}</li>
+                                        {% endfor %}
+    
+                                    </ul>
+                                </td>
+                                <td>
+                                    {% comment %} <a href="" class="text-white btn btn-secondary btn-sm disabled-link">Editar</a> {% endcomment %}
+                                    <button class="btn btn-warning" id="editarregistro_te" name="editar" type="submit">Editar</button>
+                                    <button type="submit" class="btn btn-danger text-white" name="eliminar"
+                                    data-bs-toggle="modal" data-bs-target="#eliminarequipo">Eliminar</button>
+                                </td>
+                            </tr>
+                        </form>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

@@ -89,44 +89,46 @@
 <div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <table class="table table-striped text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">RUT</th>
-                        <th scope="col">email</th>
-                        <th scope="col">teléfono</th>
-                        <th scope="col">dirección</th>
-                        <th scope="col">región</th>
-                        <th scope="col">comuna</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for prov in proveedor %}
-                    <form method="POST">
-                        {% csrf_token %}
-                        <input type="hidden" name="id" value="{{prov.id}}">
+            <div class="table-responsive">
+                <table class="table table-striped text-center">
+                    <thead>
                         <tr>
-                            <td>{{ prov.nombre }}</td>
-                            <td>{{ prov.rut }}</td>
-                            <td>{{ prov.email_contacto }}</td>
-                            <td>{{ prov.telefono_contacto }}</td>
-                            <td>{{ prov.direccion }}</td>
-                            <td>{{ prov.region }}</td>
-                            <td>{{ prov.comuna }}</td>
-                            <td>
-                                {% comment %} <a href="" class="text-white btn btn-secondary btn-sm disabled-link">Editar</a> {% endcomment %}
-                                <button class="btn btn-warning" id="editarregistro_te" name="editar" type="submit">Editar</button>
-                                <button type="submit" class="btn btn-danger text-white" name="eliminar"
-                                data-bs-toggle="modal" data-bs-target="#eliminarequipo">Eliminar</button>
-                            </td>
-                        
+                            <th scope="col">Nombre</th>
+                            <th scope="col">RUT</th>
+                            <th scope="col">email</th>
+                            <th scope="col">teléfono</th>
+                            <th scope="col">dirección</th>
+                            <th scope="col">región</th>
+                            <th scope="col">comuna</th>
+                            <th scope="col">Acciones</th>
                         </tr>
-                    </form>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for prov in proveedor %}
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{prov.id}}">
+                            <tr>
+                                <td>{{ prov.nombre }}</td>
+                                <td>{{ prov.rut }}</td>
+                                <td>{{ prov.email_contacto }}</td>
+                                <td>{{ prov.telefono_contacto }}</td>
+                                <td>{{ prov.direccion }}</td>
+                                <td>{{ prov.region }}</td>
+                                <td>{{ prov.comuna }}</td>
+                                <td>
+                                    {% comment %} <a href="" class="text-white btn btn-secondary btn-sm disabled-link">Editar</a> {% endcomment %}
+                                    <button class="btn btn-warning" id="editarregistro_te" name="editar" type="submit">Editar</button>
+                                    <button type="submit" class="btn btn-danger text-white" name="eliminar"
+                                    data-bs-toggle="modal" data-bs-target="#eliminarequipo">Eliminar</button>
+                                </td>
+                            
+                            </tr>
+                        </form>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

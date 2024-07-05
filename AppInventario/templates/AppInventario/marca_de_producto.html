@@ -99,32 +99,34 @@
 <div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <table class="table table-striped text-center border-collapse">
-                <thead>
-                    <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for marca in marcas %}
-                    <form method="POST">
-                        {% csrf_token %}
-                    <tr>
-                        <input id="inputidmarca" type="hidden" name="id" value="{{ marca.id }}">
-                        <input type="hidden" name="editing" value="{{ editing}}">
-                        <input type="hidden" id="inputnombremarca" value="{{marca.nombre}}">
-                        <td>{{ marca.nombre }}</td>
-                        <td>
-                            <button type="submit" name="Editar" class="btn btn-warning" id="botoneditarmarca">Editar</button>
-                            <button type="submit" class="btn btn-danger text-white" name="eliminar"
-                            data-bs-toggle="modal" data-bs-target="#eliminarequipo">Eliminar</button>
-                        </td>
-                    </tr>
-                </form>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-striped text-center border-collapse">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for marca in marcas %}
+                        <form method="POST">
+                            {% csrf_token %}
+                        <tr>
+                            <input id="inputidmarca" type="hidden" name="id" value="{{ marca.id }}">
+                            <input type="hidden" name="editing" value="{{ editing}}">
+                            <input type="hidden" id="inputnombremarca" value="{{marca.nombre}}">
+                            <td>{{ marca.nombre }}</td>
+                            <td>
+                                <button type="submit" name="Editar" class="btn btn-warning" id="botoneditarmarca">Editar</button>
+                                <button type="submit" class="btn btn-danger text-white" name="eliminar"
+                                data-bs-toggle="modal" data-bs-target="#eliminarequipo">Eliminar</button>
+                            </td>
+                        </tr>
+                    </form>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
         </div>
     </div>

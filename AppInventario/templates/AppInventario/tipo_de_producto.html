@@ -92,30 +92,32 @@
 <div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <table class="table table-striped text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Unidad de medida</th>
-                        <th scope="col">Acción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {%for producto in tipo_de_producto%}
-                    <form method="POST">
-                        {% csrf_token %}
-                        <input type="hidden" name="id" value="{{producto.id}}">
+            <div class="table-responsive">
+                <table class="table table-striped text-center">
+                    <thead>
                         <tr>
-                            <td>{{producto.nombre}}</td>
-                            <td>{{producto.unidad_medida}}</td>
-                            <td> <button class="btn btn-warning text-white" type="submit" name="Editar" id="botoneditarmarca">Editar</button>
-                                <button type="submit" class="btn btn-danger text-white" name="eliminar"
-                                data-bs-toggle="modal" data-bs-target="#eliminarequipo">Eliminar</button></td>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Unidad de medida</th>
+                            <th scope="col">Acción</th>
                         </tr>
-                    </form>
-                    {%endfor%}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {%for producto in tipo_de_producto%}
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{producto.id}}">
+                            <tr>
+                                <td>{{producto.nombre}}</td>
+                                <td>{{producto.unidad_medida}}</td>
+                                <td> <button class="btn btn-warning text-white" type="submit" name="Editar" id="botoneditarmarca">Editar</button>
+                                    <button type="submit" class="btn btn-danger text-white" name="eliminar"
+                                    data-bs-toggle="modal" data-bs-target="#eliminarequipo">Eliminar</button></td>
+                            </tr>
+                        </form>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
