@@ -1,7 +1,7 @@
 {% extends './base.html' %}
 
 {% block content %}
-<div class="row bg-secondary">
+<div class="row pag-titulo">
     <p class="my-3 px-5 fs-4 fw-bold">Tipos de Equipo</p>
 </div>
 
@@ -10,62 +10,121 @@
         <button class="btn btn-primary" name="editar" id="btnformagregar">Agregar</button>
     </div>
 </div>
-{% if editing %}
-<div class="activar_form" id="bloqueformagregar" style="display:block;">
-{% else %}
-<div class="" id="bloqueformagregar" style="display:none;">
-{% endif %}
-    <div class="container border border-secondary rounded p-3 mt-3">
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            {% if editing %}
-            <input type="hidden" name="editing" value="{{ editing }}">
-            <input type="hidden" name="id" value="{{ id }}">
-            {% endif %}
-            <div class="text-end mt-3">
-                <button id="botoncerrarform" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button name="agregar" type="submit" class="btn btn-primary">Guardar</button>
+    {% if editing %}
+    <div class="activar_form" id="bloqueformagregar" style="display:block;">
+    {% else %}
+    <div class="" id="bloqueformagregar" style="display:none;">
+    {% endif %}
+        <div class="container border border-secondary rounded p-3 mt-3">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                {% if editing %}
+                <input type="hidden" name="editing" value="{{ editing }}">
+                <input type="hidden" name="id" value="{{ id }}">
+                {% endif %}
+                <div class="text-end mt-3">
+                    <button id="botoncerrarform" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button name="agregar" type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% if deleting %}
+
+<button type="button" id="botonmodaleliminar" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="display:none;">modal</button>
+
+<div class="modal fade" id="exampleModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-        </form>
+            <div class="modal-body">
+                <h2 class="text-center mt-3 mb-4 fw-bold">Se eliminará el registro seleccionado.</h2>
+                <h5 class="text-center">Esta acción no se puede revertir.</h5>
+                <h2 class="text-danger text-center mb-3 fw-bold">¿Estás seguro?</h2>
+            </div>
+            <div class="modal-footer">
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{id}}">
+                    <input type="hidden" name="deleting" value="{{deleting}}">
+                    <button type="submit" name="cancelar_delete" value="si" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" name="confirmar_delete" value="si" class="btn btn-danger">Confirmar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
+{% endif %}
+
+{% if error_eliminar %}
+
+<button type="button" id="erroreliminar" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalerroreliminar" style="display:none;">modal</button>
+
+<div class="modal fade" id="modalerroreliminar" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h2 class="text-center mt-3 mb-4 fw-bold">No se puede eliminar el registro</h2>
+                <p class="text-center">Hay equipos que dependen de este registro. Para eliminar este tipo de equipo, primero elimina todos los equipos asociados a él y vuelve a intentar.</p>
+            </div>
+            <div class="modal-footer">
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="cerrarmodalerror" value="cerrarmodalerror">
+                <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+               </form>
+            </div>
+        </div>
     </div>
 </div>
+{% endif %}
 
 <div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <table class="table table-striped text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Tipos de Producto</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for tipoequipo in tipos_de_equipo %}
-                    <form method="POST">
-                        {% csrf_token %}
-                        <input type="hidden" name="id" value="{{tipoequipo.id}}">
+            <div class="table-responsive">
+                <table class="table table-striped text-center">
+                    <thead>
                         <tr>
-                            <td>{{ tipoequipo.nombre }}</td>
-                            <td>
-                                <ul class="list-group" style="list-style: none;">
-                                    {% for item in tipoequipo.tipo_producto.all %}
-                                    <li class="">{{item}}</li>
-                                    {% endfor %}
-
-                                </ul>
-                            </td>
-                            <td>
-                                {% comment %} <a href="" class="text-white btn btn-secondary btn-sm disabled-link">Editar</a> {% endcomment %}
-                                <button class="btn btn-warning" id="editarregistro_te" name="editar" type="submit">Editar</button>
-                            </td>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Tipos de Producto</th>
+                            <th scope="col">Acciones</th>
                         </tr>
-                    </form>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for tipoequipo in tipos_de_equipo %}
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{tipoequipo.id}}">
+                            <tr>
+                                <td>{{ tipoequipo.nombre }}</td>
+                                <td>
+                                    <ul class="list-group" style="list-style: none;">
+                                        {% for item in tipoequipo.tipo_producto.all %}
+                                        <li class="">{{item}}</li>
+                                        {% endfor %}
+    
+                                    </ul>
+                                </td>
+                                <td>
+                                    {% comment %} <a href="" class="text-white btn btn-secondary btn-sm disabled-link">Editar</a> {% endcomment %}
+                                    <button class="btn btn-warning" id="editarregistro_te" name="editar" type="submit">Editar</button>
+                                    <button type="submit" class="btn btn-danger text-white" name="eliminar"
+                                    data-bs-toggle="modal" data-bs-target="#eliminarequipo">Eliminar</button>
+                                </td>
+                            </tr>
+                        </form>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -93,5 +152,13 @@
             form_agregar.style.display = "none";
         }
     }
+</script>
+<script>
+    var boton_eliminar = document.getElementById("botonmodaleliminar");
+    boton_eliminar.click();
+</script>
+<script>
+    var boton_error_eliminar = document.getElementById("erroreliminar");
+    boton_error_eliminar.click();
 </script>
 {% endblock scripts %}
