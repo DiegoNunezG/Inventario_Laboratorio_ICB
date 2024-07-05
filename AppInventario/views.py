@@ -1,8 +1,26 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import login, logout, authenticate
-from .models import UnidadMedida, TipoEquipo, TipoProducto, Marca, Equipo, Producto, OrdenIngreso, DetalleIngreso
-from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm, EquipoForm, ProductoForm, OrdenIngresoForm, ProductoFormSet
+from .models import (
+    UnidadMedida, 
+    TipoEquipo, 
+    TipoProducto, 
+    Marca, 
+    Equipo, 
+    Producto, 
+    OrdenIngreso, 
+    DetalleIngreso
+    )
+from .forms import (
+    UnidadMedidaForm, 
+    TipoEquipoForm, 
+    TipoProductoForm, 
+    MarcaForm, 
+    EquipoForm, 
+    ProductoForm, 
+    OrdenIngresoForm, 
+    ProductoFormSet
+    )
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LogoutView
 from django.urls import reverse_lazy
@@ -258,6 +276,7 @@ def producto(request):
         "form": form,
     })
 
+
 @login_required(login_url='login')
 def orden_ingreso(request):
     ordenes = OrdenIngreso.objects.all()
@@ -273,33 +292,34 @@ def orden_ingreso(request):
 
 @login_required(login_url='login')
 def interfaz_ingreso(request):
-    form_orden = OrdenIngresoForm()
-    formset_producto = ProductoFormSet(request.POST or None, queryset=Producto.objects.none())
-    #formset_producto = modelformset_factory(Producto, form=ProductoForm, extra=1)
+    producto_form = ProductoForm()
+    orden_form = OrdenIngresoForm()
 
     context = {
-        "formset_producto": formset_producto,
-        "form": form_orden,
+        'producto_form': producto_form,
+        'orden_form': orden_form 
     }
 
     if request.method == "POST":
-        #print(formset_producto)
-        print("*"*80)
-        print(formset_producto.is_valid())
-        if formset_producto.is_valid():
-            for form_ in formset_producto:
-                print("#")
-                tipo = form_
-                print(tipo)
-        # if formset_producto.is_valid():
-        #     parent = form_orden.save(commit=False)
-            #parent.save()
-                #child = form_.save(commit=False)
-                #form_.save()
+        producto_form = ProductoForm(request.POST)
+        orden_form = OrdenIngresoForm(request.POST)
+        if producto_form.is_valid() and orden_form.is_valid():
+            try:
+                cantidad = int(request.POST.get('cantidad'))
+            except:
+                print("ERROR")
 
+            ord = orden_form.save()
+            for i in range(cantidad):
+                pcto = ProductoForm(request.POST)
+                pcto = pcto.save()
+            detalle_ingreso = DetalleIngreso(orden=ord, producto=pcto, cantidad=cantidad)
+            detalle_ingreso.save()
+            return redirect(reverse_lazy("orden_ingreso"))
     return render(request, "AppInventario/interfaz_ingreso.html", context)
 
 
+# Esta clase no se usa por ahora. En el futuro servirá para ingresar multiples productos a la vez
 class AddOrden(TemplateView):
     template_name="AppInventario/interfaz_ingreso.html"
 

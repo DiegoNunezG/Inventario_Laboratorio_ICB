@@ -88,6 +88,6 @@ class OrdenIngresoForm(ModelForm):
         model = OrdenIngreso
         fields = ['proveedor', 'fecha']
         widgets = {
-            'proveedor': Select(attrs={'class': 'form-control rounded-3', 'style': 'width: 50%;'}),
-            'fecha': DateInput(attrs={'class': 'form-control rounded-3', 'style': 'width: 50%;'})
+            'proveedor': Select(attrs={'class': 'form-control rounded-3'}),
+            'fecha': DateInput(attrs={'class': 'form-control rounded-3'})
         }

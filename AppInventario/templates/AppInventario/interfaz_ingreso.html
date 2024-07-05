@@ -68,295 +68,44 @@
 <body class="d-flex justify-content-center align-items-center">
 
     <div class="container fondo-container text-center rounded-3">
-        <h2>Nueva Orden de Ingreso</h2>
-        <p class="border-top border-4"></p>
+        <p class="border-bottom border-4"></p>
+        <h2 class="bg-secondary py-4 fw-bold">Nueva Orden de Ingreso</h2>
+        <p class="mt-3 border-top border-4"></p>
 
-        <form method="POST">
-            {% csrf_token %}
+        <div class="row">
 
-            {% if formset_producto %}
-            {{ formset_producto.management_form }}
-            <table class="table table-dark">
-
-                <thead>
-                    <tr>
-                        <th scope="col">Tipo de Producto</th>
-                        <th scope="col">Modelo</th>
-                        <th scope="col">Marca</th>
-                        <th scope="col">N° serie</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-
-                <tbody id="producto-form-list">
-                {% for form_p in formset_producto %}
-                <div class="producto-form">
-                    <tr>
-                        {% for field in formset_producto.empty_form %}
-                            <td>{{ field }}</td>
-                        {% endfor %}
-                    </tr>
-                </div>
-                {% endfor %}
-                </tbody>
-
-            </table>
-            {% comment %} <div  class="hidden">{{ formset_producto.empty_form }}</div> {% endcomment %}
-
-            <button id="add-more" type="button">Añadir otro producto</button>
-
-            {% endif %}
-
-            <button class="btn btn-success" type="submit">Guardar</button>
-        </form>
-        {% comment %} <div class="container">
-            <form id="form-container" method="POST">
-                {% csrf_token %}
-                {{ producto_formset.management_form }}
-                {% for form in producto_formset %}
-                <div class="producto-form">
-                    <table>
-                        {{form.as_table}}
-                    </table>
-                </div>
-                {% endfor %}
-                <button id="add-form" type="button">Añadir otro producto</button>
-                <button type="submit">Guardar Orden Ingreso</button>
-            </form> 
-
-            <hr>
-            <hr>
-            {{ producto_formset.non_form_errors.as_ul }}
-                <table id="formset" class="form">
-                {% for form in producto_formset.forms %}
-                {% if forloop.first %}
-                <thead><tr>
-                    {% for field in form.visible_fields %}
-                    <th>{{ field.label|capfirst }}</th>
-                    {% endfor %}
-                </tr></thead>
-                {% endif %}
-                <tr class="{% cycle row1 row2 %}">
-                {% for field in form.visible_fields %}
-                    <td>
-                    {# Include the hidden fields in the form #}
-                    {% if forloop.first %}
-                    {% for hidden in form.hidden_fields %}
-                    {{ hidden }}
-                    {% endfor %}
-                    {% endif %}
-                    {{ field.errors.as_ul }}
-                    {{ field }}
-                    </td>
-                {% endfor %}
-                </tr>
-                {% endfor %}
-                </table>
-            <hr>
-            <hr>
-
-            <form id="form-container" method="POST">
-                {% csrf_token %}
-                {{ producto_formset.management_form }}
-                <table>
-                    <thead>
-                        <tr>
-                            <td>Tipo de Producto</td>
-                            <td>Modelo</td>
-                            <td>Marca</td>
-                            <td>N° serie</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for form in producto_formset %}
-                        <div class="producto-form">
-                            <tr>
-                                {% for field in form %}
-                                <td>{{field}}</td>
-                                {% endfor %}
-                                <td><button id="delete-form" type="button" class="btn btn-danger">Eliminar</button></td>
-                            </tr>
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <form method="POST" id="productoForm" class="form">
+                    {% csrf_token %}
+                    <fieldset class="form-group border border-light border-3 mt-4 rounded">
+                        <legend class="px-2 mt-3 fw-bold">Datos de Orden</legend>
+                        <p class="mt-3 border-top border-3"></p>
+                        <div class="form-group container text-center">
+                            {{orden_form.as_p}}
                         </div>
-                    {% endfor %}
-                    <button id="marker" type="button" style="display: none;" disabled></button>
-                    </tbody>
-                </table>
-                <button id="add-form" type="button">Añadir otro producto</button>
-                <button type="submit">Guardar Orden Ingreso</button>
-            </form>
-
-            {% comment %} <form method="POST" id="productoForm">
-                {% csrf_token %}
-                <fieldset class="form-group border border-success border-3">
-                    <legend class="w-auto px-2">Datos de Orden</legend>
-                    <div class="form-group container text-start">
-                        {{form_orden.as_p}}
-                    </div>
-                </fieldset>
-                <br>
-                <div class="container border border-success border-3 text-start">
-                    {{ formset_producto.management_form }}
-                    <div id="formsetContainer">
-                        {% for form in formset_producto %}
-                            <div class="form-row">
-                                {{form.as_p}}
-                                <button type="button" class="remove-form">Eliminar</button>
-                            </div>
-                    {% endfor %}
-
-
-                        <table class="table bg-light rounded-2">
-                            {% for form in formset_producto %}
-                                <tr>
-                                    {{form.as_p}}
-                                </tr>
-                            {% endfor %}
+                    </fieldset>
     
-    
-                             <tr>
-                                {% for field in form_producto %}
-                                <th>{{field.label}}</th>
-                                {% endfor %}
-                            </tr>
-                            <tr>
-                                {% for field in form_producto %}
-                                <th>{{field}}</th>
-                                {% endfor %}
-                            </tr>
-                        </table>
-                    </div>
-                    <button type="button" id="addForm">Añadir Producto</button>
-                    <button type="submit">Guardar</button>
-                </div>
-            </form> 
-        </div> {% endcomment %}
+                    <fieldset class="form-group border border-light border-3 mt-4 rounded">
+                        <legend class="px-2 mt-3 fw-bold">Datos de Producto</legend>
+                        <p class="mt-3 border-top border-3"></p>
+                        <div class="form-group container text-center">
+                            {{producto_form.as_p}}
+                            <label for="cantidad">Cantidad</label>
+                            <input type="number" name="cantidad" id="cantidad" class="form-control rounded-3">
+                        </div>
+                    </fieldset>
+
+                    <button class="btn btn-success mt-4 fw-bold fs-4" type="submit">Guardar</button>
+                </form>
+            </div>
+            <div class="col-md-2"></div>
+            
+
+        </div>
+
     </div>
 
     {% bootstrap_javascript %}
-
-    <script>
-        const addMoreBtn = document.getElementById('add-more');
-        addMoreBtn.addEventListener('click', add_new_form);
-
-        const totalNewForms = document.getElementById('id_form-TOTAL_FORMS');
-
-        
-
-        function add_new_form(event) {
-            if (event) {
-                event.preventDefault();
-            }
-
-            const re = new RegExp('__prefix__', 'g');
-
-            if (totalNewForms.value == 1) {
-                var form1 = document.getElementById('producto-form-list');
-                form1.innerHTML = form1.innerHTML.replace(re, 0);
-            }
-            const formTarget = document.getElementById('producto-form-list');
-            
-            const currentProductForms = document.getElementsByClassName('producto-form');
-
-            var newFormHTML = `
-            <div id="form-${currentProductForms.length}" class="producto-form">
-                <tr>
-                    {% for field in formset_producto.empty_form %}
-                        <td>{{ field }}</td>
-                    {% endfor %}
-                </tr>
-            </div>`;
-            newFormHTML = newFormHTML.replace(re, currentProductForms.length);
-            totalNewForms.setAttribute('value', currentProductForms.length+1);
-            formTarget.innerHTML = formTarget.innerHTML + newFormHTML;
-
-        }
-    </script>
-
-
-
-
-    {% comment %} <script>
-        let ProductoForm = document.querySelectorAll(".producto-form");
-        let container = document.querySelector("#form-container");
-        let addButton = document.querySelector("#add-form");
-        let markerButton = document.querySelector("#marker");
-        let totalForms = document.querySelector("#id_form-TOTAL_FORMS");
-        let formNum = ProductoForm.length-1;
-
-        addButton.addEventListener('click', addForm);
-
-        function addForm(e) {
-            e.preventDefault();
-        
-            let newForm = ProductoForm[0].cloneNode(true) //Clone the bird form
-            let formRegex = RegExp(`form-(\\d){1}-`,'g') //Regex to find all instances of the form number
-        
-            formNum++ //Increment the form number
-            newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`) //Update the new form to have the correct form number
-            container.insertBefore(newForm, addButton) //Insert the new form at the end of the list of forms
-        
-            totalForms.setAttribute('value', `${formNum+1}`) //Increment the number of total forms in the management form
-        }
-    </script> {% endcomment %}
-    {% comment %} <script>
-        $(document).ready(function() {
-            var formCount = {{ formset.total_form_count }};
-            var formsetContainer = $('#formsetContainer');
-            var totalForms = $('#id_form-TOTAL_FORMS');
-
-            $('#addForm').click(function() {
-                var newForm = formsetContainer.children('.form-row:first').clone(false);
-                newForm.find(':input').each(function() {
-                    var name = $(this).attr('name').replace(/-\d+-/, '-' + formCount + '-');
-                    var id = 'id_' + name;
-                    $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
-                });
-                newForm.find('.remove-form').click(function() {
-                    $(this).parent().remove();
-                    updateTotalForms();
-                });
-                formsetContainer.append(newForm);
-                formCount++;
-                updateTotalForms();
-            });
-
-            function updateTotalForms() {
-                var formRows = formsetContainer.children('.form-row').length;
-                totalForms.val(formRows);
-            }
-
-            $('.remove-form').click(function() {
-                $(this).parent().remove();
-                updateTotalForms();
-            });
-        });
-    </script> {% endcomment %}
 </body>
 </html>
-
-
-{% comment %} 
-<table class="table table-light table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">Tipo de Producto</th>
-                            <th scope="col">Modelo</th>
-                            <th scope="col">Marca</th>
-                            <th scope="col">N° serie</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for form in producto_formset %}
-                        <tr>
-                            <div class="producto-form">
-                                {% for field in form %}
-                                <td>
-                                    {{ field }}
-                                </td>
-                                {% endfor %}
-                            </div>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-{% endcomment %}
