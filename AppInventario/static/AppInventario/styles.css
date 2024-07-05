@@ -29,6 +29,8 @@ body {
 .pag-titulo {
     background-color: #2b2b2b;
     border-radius: 10px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .container {
@@ -130,4 +132,58 @@ header {
 .modal-content {
     background-color: #1f1f1f;
     border: 1px solid #000000;
+}
+
+.header-icono {
+    margin-left: 15px;
+}
+
+input[type="text"],
+input[type="email"] {
+    background-color: #3a3a3a;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    color: white;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    border-color: black;
+    box-shadow: #121212;
+    background-color: #3a3a3a;
+    color: white;
+    outline: none;
+}
+
+.input-texto {
+    background-color: #3a3a3a;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    color: white;
+}
+
+.input-texto:focus {
+    border-color: black;
+    box-shadow: #121212;
+    background-color: #3a3a3a;
+    color: white;
+    outline: none;
+}
+
+select option {
+    border: none;
+    border-radius: 4px;
+    background-color: #3a3a3a;
+    color: white;
+}
+
+.select-box {
+    background-color: #2c2c2c;
+    color: white;
+    padding: 8px;
+    border: 1px solid #181818;
+    border-radius: 4px;
 }
