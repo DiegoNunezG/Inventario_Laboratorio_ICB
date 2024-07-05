@@ -465,7 +465,7 @@ def interfaz_ingreso(request):
             try:
                 cantidad = int(request.POST.get('cantidad'))
             except:
-                print("ERROR")
+                return redirect(reverse_lazy("orden_ingreso"))
 
             ord = orden_form.save()
             for i in range(cantidad):

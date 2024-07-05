@@ -7,7 +7,7 @@
 
 <div class="row mt-3 mx-3">
     <div class="col-12 text-end">
-        <button class="btn btn-success fs-5 fw-bold" id ="btn_nueva_orden" name="agregar">+</button>
+        <button class="btn btn-primary" id ="btnformagregar" name="agregar">Agregar</button>
     </div>
 </div>
 
@@ -23,7 +23,6 @@
                             <th class="fs-5" scope="col">Proveedor</th>
                             <th class="fs-5" scope="col">Fecha</th>
                             <th class="fs-5" scope="col">Detalle</th>
-                            <th class="fs-5" scope="col">Acción</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,14 +39,11 @@
                                         {% if item.orden.id == orden.id %}
                                         <li class="">
                                             <strong>{{item.cantidad}} x {{item.producto.tipo_producto}}:</strong>
-                                            {{item.producto}}
+                                            {{item.producto.marca}} {{item.producto}}
                                         </li>
                                         {% endif %}
                                         {% endfor %}
                                     </ul>
-                                </td>
-                                <td>
-                                    <button id="verdetalle" class="btn btn-info disabled" name="verdetalle">Ver</button>
                                 </td>
                             </tr>
                         </form>
