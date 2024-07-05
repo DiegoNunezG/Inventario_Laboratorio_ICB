@@ -59,6 +59,11 @@
             border-color: #555;
         }
     </style>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body class="d-flex justify-content-center align-items-center">
 
@@ -66,7 +71,45 @@
         <h2>Nueva Orden de Ingreso</h2>
         <p class="border-top border-4"></p>
 
-        <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+
+            {% if formset_producto %}
+            {{ formset_producto.management_form }}
+            <table class="table table-dark">
+
+                <thead>
+                    <tr>
+                        <th scope="col">Tipo de Producto</th>
+                        <th scope="col">Modelo</th>
+                        <th scope="col">Marca</th>
+                        <th scope="col">N° serie</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+
+                <tbody id="producto-form-list">
+                {% for form_p in formset_producto %}
+                <div class="producto-form">
+                    <tr>
+                        {% for field in formset_producto.empty_form %}
+                            <td>{{ field }}</td>
+                        {% endfor %}
+                    </tr>
+                </div>
+                {% endfor %}
+                </tbody>
+
+            </table>
+            {% comment %} <div  class="hidden">{{ formset_producto.empty_form }}</div> {% endcomment %}
+
+            <button id="add-more" type="button">Añadir otro producto</button>
+
+            {% endif %}
+
+            <button class="btn btn-success" type="submit">Guardar</button>
+        </form>
+        {% comment %} <div class="container">
             <form id="form-container" method="POST">
                 {% csrf_token %}
                 {{ producto_formset.management_form }}
@@ -79,9 +122,36 @@
                 {% endfor %}
                 <button id="add-form" type="button">Añadir otro producto</button>
                 <button type="submit">Guardar Orden Ingreso</button>
-            </form>
+            </form> 
 
             <hr>
+            <hr>
+            {{ producto_formset.non_form_errors.as_ul }}
+                <table id="formset" class="form">
+                {% for form in producto_formset.forms %}
+                {% if forloop.first %}
+                <thead><tr>
+                    {% for field in form.visible_fields %}
+                    <th>{{ field.label|capfirst }}</th>
+                    {% endfor %}
+                </tr></thead>
+                {% endif %}
+                <tr class="{% cycle row1 row2 %}">
+                {% for field in form.visible_fields %}
+                    <td>
+                    {# Include the hidden fields in the form #}
+                    {% if forloop.first %}
+                    {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                    {% endfor %}
+                    {% endif %}
+                    {{ field.errors.as_ul }}
+                    {{ field }}
+                    </td>
+                {% endfor %}
+                </tr>
+                {% endfor %}
+                </table>
             <hr>
             <hr>
 
@@ -99,12 +169,16 @@
                     </thead>
                     <tbody>
                     {% for form in producto_formset %}
-                        <tr>
-                            {% for field in form %}
-                            <td>{{field}}</td>
-                            {% endfor %}
-                        </tr>
+                        <div class="producto-form">
+                            <tr>
+                                {% for field in form %}
+                                <td>{{field}}</td>
+                                {% endfor %}
+                                <td><button id="delete-form" type="button" class="btn btn-danger">Eliminar</button></td>
+                            </tr>
+                        </div>
                     {% endfor %}
+                    <button id="marker" type="button" style="display: none;" disabled></button>
                     </tbody>
                 </table>
                 <button id="add-form" type="button">Añadir otro producto</button>
@@ -154,22 +228,65 @@
                     <button type="button" id="addForm">Añadir Producto</button>
                     <button type="submit">Guardar</button>
                 </div>
-            </form> {% endcomment %}
-        </div>
+            </form> 
+        </div> {% endcomment %}
     </div>
 
     {% bootstrap_javascript %}
-    <script>
-        let ProductoForm = document.querySelectorAll(".producto-form")
-        let container = document.querySelector("#form-container")
-        let addButton = document.querySelector("#add-form")
-        let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
-        let formNum = ProductoForm.length-1
 
-        addButton.addEventListener('click', addForm)
+    <script>
+        const addMoreBtn = document.getElementById('add-more');
+        addMoreBtn.addEventListener('click', add_new_form);
+
+        const totalNewForms = document.getElementById('id_form-TOTAL_FORMS');
+
+        
+
+        function add_new_form(event) {
+            if (event) {
+                event.preventDefault();
+            }
+
+            const re = new RegExp('__prefix__', 'g');
+
+            if (totalNewForms.value == 1) {
+                var form1 = document.getElementById('producto-form-list');
+                form1.innerHTML = form1.innerHTML.replace(re, 0);
+            }
+            const formTarget = document.getElementById('producto-form-list');
+            
+            const currentProductForms = document.getElementsByClassName('producto-form');
+
+            var newFormHTML = `
+            <div id="form-${currentProductForms.length}" class="producto-form">
+                <tr>
+                    {% for field in formset_producto.empty_form %}
+                        <td>{{ field }}</td>
+                    {% endfor %}
+                </tr>
+            </div>`;
+            newFormHTML = newFormHTML.replace(re, currentProductForms.length);
+            totalNewForms.setAttribute('value', currentProductForms.length+1);
+            formTarget.innerHTML = formTarget.innerHTML + newFormHTML;
+
+        }
+    </script>
+
+
+
+
+    {% comment %} <script>
+        let ProductoForm = document.querySelectorAll(".producto-form");
+        let container = document.querySelector("#form-container");
+        let addButton = document.querySelector("#add-form");
+        let markerButton = document.querySelector("#marker");
+        let totalForms = document.querySelector("#id_form-TOTAL_FORMS");
+        let formNum = ProductoForm.length-1;
+
+        addButton.addEventListener('click', addForm);
 
         function addForm(e) {
-            e.preventDefault()
+            e.preventDefault();
         
             let newForm = ProductoForm[0].cloneNode(true) //Clone the bird form
             let formRegex = RegExp(`form-(\\d){1}-`,'g') //Regex to find all instances of the form number
@@ -180,7 +297,7 @@
         
             totalForms.setAttribute('value', `${formNum+1}`) //Increment the number of total forms in the management form
         }
-    </script>
+    </script> {% endcomment %}
     {% comment %} <script>
         $(document).ready(function() {
             var formCount = {{ formset.total_form_count }};

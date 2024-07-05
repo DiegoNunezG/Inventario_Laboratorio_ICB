@@ -6,7 +6,7 @@ from .forms import UnidadMedidaForm, TipoEquipoForm, TipoProductoForm, MarcaForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LogoutView
 from django.urls import reverse_lazy
-from django.forms import inlineformset_factory
+from django.forms import modelformset_factory
 from django.views.generic import TemplateView, ListView
 
 def login_web(request):
@@ -274,12 +274,30 @@ def orden_ingreso(request):
 @login_required(login_url='login')
 def interfaz_ingreso(request):
     form_orden = OrdenIngresoForm()
-    formset_producto = ProductoFormSet(queryset=Producto.objects.none())
+    formset_producto = ProductoFormSet(request.POST or None, queryset=Producto.objects.none())
+    #formset_producto = modelformset_factory(Producto, form=ProductoForm, extra=1)
 
-    return render(request, "AppInventario/interfaz_ingreso.html", {
+    context = {
         "formset_producto": formset_producto,
-        "form_orden": form_orden,
-    })
+        "form": form_orden,
+    }
+
+    if request.method == "POST":
+        #print(formset_producto)
+        print("*"*80)
+        print(formset_producto.is_valid())
+        if formset_producto.is_valid():
+            for form_ in formset_producto:
+                print("#")
+                tipo = form_
+                print(tipo)
+        # if formset_producto.is_valid():
+        #     parent = form_orden.save(commit=False)
+            #parent.save()
+                #child = form_.save(commit=False)
+                #form_.save()
+
+    return render(request, "AppInventario/interfaz_ingreso.html", context)
 
 
 class AddOrden(TemplateView):

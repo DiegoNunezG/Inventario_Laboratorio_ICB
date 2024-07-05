@@ -16,5 +16,5 @@ urlpatterns = [
     path('modulo-de-equipo/', equipo, name='equipo'),
     path('modulo-de-producto/', producto, name='producto'),
     path('orden-ingreso/', orden_ingreso, name= 'orden_ingreso'),
-    path('add/', AddOrden.as_view(), name= 'interfaz_ingreso'),
+    path('add/', interfaz_ingreso, name= 'interfaz_ingreso'),
 ]
