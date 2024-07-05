@@ -9,7 +9,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('logout/', CustomLogoutView.as_view(), name='logout'),
     path('login/', login_web, name="login"),
-    path('', index),
+    path('', index, name='index'),
     path('unidades-de-medidas/', unidades_de_medida, name='unidadesmedidas'),
     path('tipos-de-equipo/', modulo_tipo_equipo, name='modulotipoequipo'),
     path('tipos-de-producto/', tipo_de_producto, name='tipo_de_producto'),
